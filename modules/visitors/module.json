@@ -1,0 +1,22 @@
+{
+  "code": "visitors",
+  "version": "1.0.0",
+  "pack": "workplace",
+  "spec": "M43",
+  "name": { "th": "ผู้มาติดต่อ", "en": "Visitors" },
+  "icon": "user-check",
+  "sort_order": 96,
+  "depends_on": ["employees", "privacy"],
+  "permissions": { "visitors.invite": "normal", "visitors.gate": "normal", "visitors.manage": "normal" },
+  "grants": { "*": ["visitors.invite"], "WPA": ["visitors.gate", "visitors.manage"], "SFO": ["visitors.gate"] },
+  "menu": [
+    { "group": "work", "label": "visitors.nav_mine", "icon": "user-check", "href": "/visitors", "permission": "visitors.invite" },
+    { "group": "work", "label": "visitors.nav_gate", "icon": "door-enter", "href": "/visitors/gate", "permission": "visitors.gate" },
+    { "group": "work", "label": "visitors.nav_admin", "icon": "settings", "href": "/visitors/admin", "permission": "visitors.manage" }
+  ],
+  "public_paths": ["/visit/"],
+  "jobs": {
+    "visitors.tick": { "every": 15, "call": "Blue\\Modules\\Visitors\\VisitorService::tickJob" }
+  },
+  "routes": "routes.php"
+}

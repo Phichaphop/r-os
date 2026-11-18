@@ -1,0 +1,28 @@
+visitor notice: เผยแพร่ประกาศแล้ว
+mine: /visitors overflow=0 axe=[]
+invite: ลงทะเบียนแล้ว — คัดลอกลิงก์ส่งให้ผู้มาติดต่อ
+visit-host: /visitors/v/01M7PVZZGPZGCDZYN031M336FC overflow=0 axe=[]
+  link http://127.0.0.1:8100/visit/<token> · QR svg 1
+visitor page HTTP 200
+public: /visit/5d38841960f9484eed0df54f24a8f4f8 overflow=0 axe=[]
+  notice link: true
+  notice page: /privacy-notice/DEMO1/visitor · ประกาศความเป็นส่วนตัวสำหรับผู้มาติดต่อ
+public-390-dark: /visit/5d38841960f9484eed0df54f24a8f4f8 overflow=0 axe=[]
+gate: /visitors/gate overflow=0 axe=[]
+desk opened via QR link: true
+visit-desk: /visitors/v/01M7PVZZGPZGCDZYN031M336FC overflow=0 axe=[]
+console ga.demo1: Failed to load resource: the server responded with a status of 422 (Unknown Status Code)
+  check-in without notice: ติ๊กยืนยันว่าแจ้งประกาศความเป็นส่วนตัวแล้ว
+  check-in: เช็กอินแล้ว — แจ้งผู้ที่มาพบแล้ว · host notified 1
+  check-out: เช็กเอาต์แล้ว · status checked_out
+console null: Failed to load resource: the server responded with a status of 404 (Not Found)
+  link after visit HTTP 404
+walk-in: บันทึกแล้ว — ตรวจและเช็กอิน (host D1-0001 — ผู้จัดการฝ่ายบุคคล (DEMO))
+admin: /visitors/admin overflow=0 axe=[]
+blacklist: เพิ่มในรายชื่อห้ามเข้าแล้ว
+gate-390-dark: /visitors/gate overflow=0 axe=[]
+--- rerun after the public-page fix (greeting, no nested card)
+public: /visit/2945398d6aa278bc6c165365d8c4b41c overflow=0 axe=[]
+  greeting: คุณสมศรี ผู้มาเยือน — ยินดีต้อนรับสู่ บริษัทตัวอย่าง จำกัด (DEMO)
+public-390-dark: /visit/2945398d6aa278bc6c165365d8c4b41c overflow=0 axe=[]
+notice-public-390-dark: /privacy-notice/DEMO1/visitor overflow=0 axe=[]

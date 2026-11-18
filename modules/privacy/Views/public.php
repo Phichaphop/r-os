@@ -8,9 +8,9 @@ use Blue\Modules\Privacy\PrivacyCenterService;
 ?>
 <div class="stack privacy-public">
 <?php if ($n === null): ?>
-  <section class="card stack-sm"><h1 class="card__title"><?= $e($t('privacy.public.none_title')) ?></h1><p><?= $e($t('privacy.public.none_text')) ?></p></section>
+  <section class="stack-sm"><h1 class="card__title"><?= $e($t('privacy.public.none_title')) ?></h1><p><?= $e($t('privacy.public.none_text')) ?></p></section>
 <?php else: ?>
-  <article class="card stack-sm privacy-text" aria-labelledby="pp-h">
+  <article class="stack-sm privacy-text" aria-labelledby="pp-h">
     <h1 id="pp-h"><?= $e((string) $n['title']) ?></h1>
     <p class="text-sm text-muted"><?= $e((string) $n['company']) ?> · <?= $e($t('privacy.version_n', ['n' => (string) $n['version']])) ?> · <?= $e($t('privacy.effective', ['d' => (string) $n['effective_from']])) ?></p>
     <?= PrivacyCenterService::render((string) $n['body']) ?>
