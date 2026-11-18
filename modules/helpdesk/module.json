@@ -1,0 +1,62 @@
+{
+  "code": "helpdesk",
+  "version": "1.0.0",
+  "pack": "workplace",
+  "spec": "M15",
+  "name": {
+    "th": "แจ้งปัญหา/แจ้งซ่อม",
+    "en": "Helpdesk"
+  },
+  "icon": "tool",
+  "sort_order": 94,
+  "depends_on": [
+    "core"
+  ],
+  "permissions": {
+    "helpdesk.use": "normal",
+    "helpdesk.manage": "normal"
+  },
+  "grants": {
+    "*": [
+      "helpdesk.use"
+    ],
+    "WPA": [
+      "helpdesk.manage"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "helpdesk.nav",
+      "icon": "tool",
+      "href": "/helpdesk",
+      "permission": "helpdesk.use"
+    }
+  ],
+  "document_classes": {
+    "helpdesk.attachment": [
+      "C",
+      "helpdesk.manage",
+      "helpdesk.manage",
+      [
+        "pdf",
+        "png",
+        "jpeg",
+        "webp"
+      ],
+      10,
+      true,
+      "general_confidential",
+      "finalized"
+    ]
+  },
+  "jobs": {
+    "helpdesk.tick": {
+      "every": 15,
+      "call": "Blue\\Modules\\Helpdesk\\HelpdeskService::tickJob"
+    }
+  },
+  "demo": "Blue\\Modules\\Helpdesk\\HelpdeskDemo::run",
+  "personal_data": "Blue\\Modules\\Helpdesk\\HelpdeskPersonalData",
+  "routes": "routes.php"
+}

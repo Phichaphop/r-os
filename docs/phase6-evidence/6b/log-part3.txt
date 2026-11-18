@@ -1,0 +1,9 @@
+01-run-before-publish: /payroll/runs/01M5VHW5BWAK6JCMSJYN6BBCQN overflow=0 axe=[]
+publish: เผยแพร่สลิปแล้ว 7 คน · แจ้งแล้ว 4 คน
+02-run-published: /payroll/runs/01M5VHW5BWAK6JCMSJYN6BBCQN overflow=0 axe=[]
+07-my-payslips: /me/payslips overflow=0 axe=[]
+open → /reauth
+08-reauth: /reauth overflow=0 axe=[]
+09-my-payslip: /me/payslips/01M5W0BYWN6NPVEH4J6SFPG3MM overflow=0 axe=[]
+pdf 200 application/pdf 37063 bytes
+11-my-payslip-dark: /me/payslips/01M5W0BYWN6NPVEH4J6SFPG3MM overflow=0 axe=[]

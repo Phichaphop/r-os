@@ -1,0 +1,113 @@
+{
+  "code": "overtime",
+  "version": "1.0.0",
+  "pack": "hr",
+  "nav_section": "hr_time",
+  "spec": "M33",
+  "name": {
+    "th": "ขอทำงานล่วงเวลา (OT)",
+    "en": "Overtime"
+  },
+  "icon": "clock",
+  "sort_order": 74,
+  "depends_on": [
+    "employees",
+    "attendance"
+  ],
+  "permissions": {
+    "overtime.use": "normal",
+    "overtime.approve": "normal",
+    "overtime.manage": "high",
+    "overtime.policy": "high",
+    "overtime.policy_approve": "high",
+    "overtime.export": "high"
+  },
+  "grants": {
+    "*": [
+      "overtime.use"
+    ],
+    "HRA": [
+      "overtime.approve",
+      "overtime.manage",
+      "overtime.policy",
+      "overtime.policy_approve",
+      "overtime.export"
+    ],
+    "HRT": [
+      "overtime.approve",
+      "overtime.manage",
+      "overtime.export"
+    ],
+    "PYA": [
+      "overtime.export"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "overtime.nav",
+      "icon": "clock",
+      "href": "/overtime",
+      "permission": "overtime.use"
+    },
+    {
+      "group": "settings",
+      "label": "overtime.nav_admin",
+      "icon": "settings",
+      "href": "/overtime/admin",
+      "permission": "overtime.export"
+    }
+  ],
+  "config": {
+    "overtime.rules": [
+      "overtime",
+      "json",
+      null,
+      "organization,legal_entity",
+      {},
+      "high",
+      "LAW",
+      false
+    ]
+  },
+  "config_owners": {
+    "overtime.rules": {
+      "propose": "overtime.policy",
+      "workflow": "overtime.rules",
+      "describe": "Blue\\Modules\\Overtime\\OtRules::describe"
+    }
+  },
+  "workflows": {
+    "overtime.request": {
+      "subject": "ot_request",
+      "class": "Blue\\Modules\\Overtime\\OvertimeSubject",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "manager",
+            "value": "overtime.approve"
+          },
+          "scope": "subject",
+          "sla_hours": 24
+        }
+      ]
+    },
+    "overtime.rules": {
+      "subject": "config_version",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "permission",
+            "value": "overtime.policy_approve"
+          },
+          "scope": "subject",
+          "sla_hours": 72
+        }
+      ]
+    }
+  },
+  "measures": "Blue\\Modules\\Overtime\\OvertimeMeasures",
+  "routes": "routes.php"
+}

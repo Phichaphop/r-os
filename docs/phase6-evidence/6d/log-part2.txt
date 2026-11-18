@@ -1,0 +1,33 @@
+12b-edit-files-outside-form: /welfare/claims/01M5WAMD6GMDJ3V2YW4BAQSYPY/edit overflow=0 axe=[]
+first submit button in the claim form: บันทึกและตรวจสอบ
+edit: บันทึกแล้ว — ตรวจผลก่อนส่ง || ฝ่ายบุคคลขอข้อมูลเพิ่ม ขอสำเนาใบมรณบัตร
+resend: ส่งเบิกแล้ว — รอฝ่ายบุคคลตรวจ
+pass funeral: ส่งต่อให้ผู้อนุมัติแล้ว || รอผู้อนุมัติ (คนละคนกับผู้ตรวจ)
+approve /welfare/claims/01M5WAMD6GMDJ3V2YW4BAQSYPY: บันทึกการอนุมัติแล้ว
+13-types: /welfare/types overflow=0 axe=[]
+type errors: ใส่อ้างอิงระเบียบสวัสดิการ (5–300 ตัวอักษร)
+type saved: บันทึกร่างแล้ว — ให้อีกคนเปิดใช้ || สวัสดิการเป็นนโยบายของบริษัท — ระบบไม่มีวงเงินตั้งต้น ใส่ตามระเบียบสวัสดิการพร้อมอ้างอิง และให้ฝ่ายภาษีกำหนดว่ารายการเงิ
+author sees activate: 0
+activate: เปิดใช้ประเภทสวัสดิการแล้ว || สวัสดิการเป็นนโยบายของบริษัท — ระบบไม่มีวงเงินตั้งต้น ใส่ตามระเบียบสวัสดิการพร้อมอ้างอิง และให้ฝ่ายภาษีกำหนดว่ารายการเงิ
+14-types-active: /welfare/types overflow=0 axe=[]
+15-payout-ready: /welfare/payout overflow=0 axe=[]
+payroll batch: สร้างชุด WFB-2026-0001 แล้ว — เลือกในข้อมูลที่ใช้ของรอบเงินเดือน
+payment batch: สร้างชุด WFB-2026-0002 และชุดจ่ายเงินแล้ว — ส่งอนุมัติที่หน้าชุดจ่ายเงิน
+16-payout-batches: /welfare/payout overflow=0 axe=[]
+run: สร้างรอบแล้ว — ตรวจข้อมูลที่ใช้แล้วกดคำนวณ
+sources: บันทึกข้อมูลที่ใช้แล้ว — คำนวณใหม่
+calculate: คำนวณแล้ว
+17-run-with-welfare: /payroll/runs/01M5WAPQZY728S6K7AHFHQ6ETF overflow=0 axe=[]
+D1-0004 welfare lines: WELFARE · เงินสวัสดิการ (DEMO) เงินได้ — — 12,000.00 เบิกสวัสดิการ — WFB-2026-0001 · MED · WF-2026-00001
+18-person-welfare-line: /payroll/runs/01M5WAPQZY728S6K7AHFHQ6ETF/e/01M57N3W7W9TQ6FQDHWPPNWTKW overflow=0 axe=[]
+run submit: ส่งอนุมัติแล้ว
+checker approved /approvals/01M5WAPV34NZ5QSFZFPN9TXY26: อนุมัติและดำเนินการแล้ว
+checker approved: 1
+19-payout-paid: /welfare/payout overflow=0 axe=[]
+batches: ชุด วิธีจ่าย จำนวนเคลม รวม สถานะ อยู่ที่ || WFB-2026-0002 26 ต.ค. 2569 21:44 · Payroll Officer (DEMO) โอนเข้าบัญชีแยก 1 5,000.00 ส่งต่อแล้ว เปิดชุดจ่ายเงิน || WFB-2026-0001 26 ต.ค. 2569 21:44 · Payroll Officer (DEMO) จ่ายพร้อมเงินเดือน 1 12,000.00 จ่ายแล้ว เงินเดือน ธ.ค. 2569 (ทดสอบ)
+20-report: /welfare/report overflow=0 axe=[]
+export → /reauth
+export saved 3131 bytes
+21-my-welfare-paid: /welfare overflow=0 axe=[]
+22-claim-dark: /welfare/claims/01M5WAM0YZPKG6HHFJC6XNF7V3 overflow=0 axe=[]
+manager opens the claim → 404

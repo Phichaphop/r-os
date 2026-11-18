@@ -1,0 +1,27 @@
+appearance-form: /admin/settings/appearance overflow=0 axe=[] RAWKEYS=fonts.googleapis.com
+builtin-default: / overflow=0 axe=[]
+login-builtin-logo-only: /login overflow=0 axe=[]
+logo upload: บันทึกไฟล์แบรนด์แล้ว
+shell-logo-original: /admin/settings/appearance overflow=0 axe=[] RAWKEYS=fonts.googleapis.com
+appearance save: บันทึกรูปลักษณ์แล้ว
+shell-logo-only-white: / overflow=0 axe=[]
+sidebar logo box {"x":28,"y":43.1875,"width":192,"height":48}
+home-390-dark: / overflow=0 axe=[]
+login-logo-only-390-dark: /login overflow=0 axe=[]
+login-logo-only: /login overflow=0 axe=[]
+appearance save 2: บันทึกรูปลักษณ์แล้ว
+shell-name-accent-tint: / overflow=0 axe=[]
+font family: /fonts/manage/01M6X1DMEMCX8C4NSHFEK8QHKA สร้างฟอนต์เป็นร่างแล้ว — อัปโหลดไฟล์ต่อได้เลย
+zip import: นำเข้าจาก ZIP แล้ว 1 ไฟล์ · ข้าม 2 ไฟล์: IBMPlexMono-Regular.woff (มีไฟล์นี้ในคลังแล้ว (ไฟล์เหมือนกันทุกไบต์)) · IBMPlex
+fonts-after-zip: /fonts/manage/01M6X1DMEMCX8C4NSHFEK8QHKA overflow=0 axe=[]
+publish (self): เผยแพร่แล้ว — ผู้ใช้เห็นฟอนต์นี้ในคลัง
+fonts-published: /fonts/manage/01M6X1DMEMCX8C4NSHFEK8QHKA overflow=0 axe=[]
+emp-recruitment-jobs: /recruit/jobs overflow=0 axe=[]
+emp sections: ["work","sec_core_plus","sec_hr_people","sec_recruitment","sec_hr_time","sec_hr_pay","sec_workplace","tools"]
+auditor-projects: /projects overflow=0 axe=[]
+auditor overseeing links: 1
+auditor-project-readonly: /projects/p/01M6X19AB3AK4X6V7V2E9ABJ0B overflow=0 axe=[]
+write buttons visible: 0
+auditor-project-390-dark: /projects/p/01M6X19AB3AK4X6V7V2E9ABJ0B overflow=0 axe=[]
+reset look: บันทึกรูปลักษณ์แล้ว
+reset logo: กลับไปใช้ค่าเริ่มต้นแล้ว

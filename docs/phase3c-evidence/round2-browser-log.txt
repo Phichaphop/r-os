@@ -1,0 +1,20 @@
+# Round 2 (user requests 2026-10-13) — radius, sidebar, tagline, own colours, picture shrinking
+01-update-done: /system/update overflow=0 axe=[] flash=อัปเดตแล้ว (1 รายการ)
+radius {"input":"10px","button":"10px","segmentedOrSelect":"n/a","card":"16px","colorPicker":"10px","sidebarLink":"10px"}
+sidebar scrollbar-width=0px scrollable=true (1137/768) wheel scrollTop=369
+pale menu → {"hidden":false,"text":"บางสีอ่านยาก (contrast ไม่ถึง 4.5 : 1) — ลองใช้ สีแถบเมนู #455362","save":true}
+02-appearance-bad-menu: /admin/settings/appearance overflow=0 axe=["serious:color-contrast(2) a[href$=\"appearance\"] > .sidebar__label | .is-active"]
+03-appearance-own-colours-preview: /admin/settings/appearance overflow=0 axe=[]
+04-appearance-saved: /admin/settings/appearance overflow=0 axe=[] flash=บันทึกรูปลักษณ์แล้ว
+05-home-own-colours: / overflow=0 axe=[]
+client shrink note="ย่อรูปในเครื่องแล้ว (512×341 px · 9 KB) — กดอัปโหลดเพื่อบันทึก" file=big-logo.jpg 8822 bytes image/jpeg
+06-logo-uploaded: /admin/settings/appearance overflow=0 axe=[] flash=บันทึกไฟล์แบรนด์แล้ว
+logo natural size 512x341
+07-appearance-dark: /admin/settings/appearance overflow=0 axe=[]
+08-appearance-360: /admin/settings/appearance overflow=0 axe=[]
+10-appearance-spacing: /admin/settings/appearance overflow=0 axe=[]
+11-workflows: /admin/workflows overflow=0 axe=[]
+12-calendars: /calendars overflow=0 axe=[]
+13-users: /admin/users overflow=0 axe=[]
+14-showcase: /system/ui-showcase overflow=0 axe=[]
+# 02-appearance-bad-menu: the axe colour-contrast finding is the live preview of the deliberately unreadable menu colour; saving is blocked (button disabled) and the server refuses it (422).

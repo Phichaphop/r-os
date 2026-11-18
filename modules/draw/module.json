@@ -1,0 +1,17 @@
+{
+  "code": "draw",
+  "version": "1.0.0",
+  "pack": "utilities",
+  "spec": "M29",
+  "name": { "th": "สุ่มรางวัล", "en": "Lucky draw" },
+  "icon": "gift",
+  "sort_order": 60,
+  "depends_on": ["core"],
+  "permissions": { "draw.view": "normal", "draw.use": "normal", "draw.manage": "high" },
+  "grants": { "*": ["draw.view", "draw.use"], "SYS": ["draw.manage"] },
+  "menu": [
+    { "group": "tools", "label": "draw.nav", "icon": "gift", "href": "/draw", "permission": "draw.view" }
+  ],
+  "guest": {"paths": ["(GET|POST) /draw/quick"], "permissions": ["draw.use"], "href": "/draw/quick"},
+  "routes": "routes.php"
+}

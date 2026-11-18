@@ -1,0 +1,68 @@
+--- upgrade 0.4.2 -> 0.4.3, final run (the employee already received FNM in the first run, so no request button) ---
+01-admin-home: / overflow=0 axe=[]
+admin tiles {"open":28,"locked":2,"visible":["รออนุมัติ","คำขอของฉัน","เอกสาร","ออกเอกสารจากแม่แบบ","ปฏิทินวันทำงาน","ชุดเครื่องคำนวณ","สร้าง QR Code","เครื่องมือเข้ารหัส","คลังฟอนต์","ลิงก์เว็บภายนอก","เครื่องมือ PDF","สุ่มรางวัล","โครงสร้างองค์กร","ผู้ใช้งาน","บทบาทและสิทธิ์","ความปลอดภัย","บันทึกการใช้งาน (Audit)","รูปลักษณ์และแบรนด์","ค่ากำหนดระบบ","การเก็บรักษาเอกสาร","สำรองและกู้คืนข้อมูล","การเชื่อมต่อระบบ","สายอนุมัติ","โมดูล","อัปเดตฐานข้อมูล","สถานะระบบ","UI Showcase","กล่องจดหมายทดสอบ","บัญชี (Finance Core)","ไฟล์โอนเงิน"]}
+02-emp-home: / overflow=0 axe=[]
+emp tiles {"open":13,"locked":2,"visible":["รออนุมัติ","คำขอของฉัน","ปฏิทินวันทำงาน","ชุดเครื่องคำนวณ","สร้าง QR Code","เครื่องมือเข้ารหัส","คลังฟอนต์","ลิงก์เว็บภายนอก","เครื่องมือ PDF","สุ่มรางวัล","บัญชี (Finance Core)","ไฟล์โอนเงิน","โครงสร้างองค์กร","เอกสาร","ออกเอกสารจากแม่แบบ"]}
+03-search-pdf: / overflow=0 axe=[]
+search pdf ["เครื่องมือ PDF"] live= พบ 1 แอป
+search การเงิน ["บัญชี (Finance Core)","ไฟล์โอนเงิน"]
+search เครื่องมือ 7
+search none: noneVisible= true
+04-search-none: / overflow=0 axe=[]
+after esc visible 15
+enter opens /qr
+NO finance request button
+07-inbox: /approvals overflow=0 axe=[]
+NO approval link
+10-emp-after: / overflow=0 axe=[]
+finance open 1
+11-emp-360: / overflow=0 axe=[]
+12-emp-360-dark: / overflow=0 axe=[]
+13-hr-dark: / overflow=0 axe=[]
+hr tiles {"open":13,"locked":2,"visible":["รออนุมัติ","คำขอของฉัน","เอกสาร","ออกเอกสารจากแม่แบบ","ปฏิทินวันทำงาน","ชุดเครื่องคำนวณ","สร้าง QR Code","เครื่องมือเข้ารหัส","คลังฟอนต์","ลิงก์เว็บภายนอก","เครื่องมือ PDF","สุ่มรางวัล","โครงสร้างองค์กร","บัญชี (Finance Core)","ไฟล์โอนเงิน"]}
+14-nojs: / overflow=0 axe=skip
+nojs search hidden true
+tab after search -> /approvals
+--- fresh install 0.4.3 (migration 15), final code ---
+01-admin-home: / overflow=0 axe=[]
+admin tiles {"open":28,"locked":2,"visible":["รออนุมัติ","คำขอของฉัน","เอกสาร","ออกเอกสารจากแม่แบบ","ปฏิทินวันทำงาน","ชุดเครื่องคำนวณ","สร้าง QR Code","เครื่องมือเข้ารหัส","คลังฟอนต์","ลิงก์เว็บภายนอก","เครื่องมือ PDF","สุ่มรางวัล","โครงสร้างองค์กร","ผู้ใช้งาน","บทบาทและสิทธิ์","ความปลอดภัย","บันทึกการใช้งาน (Audit)","รูปลักษณ์และแบรนด์","ค่ากำหนดระบบ","การเก็บรักษาเอกสาร","สำรองและกู้คืนข้อมูล","การเชื่อมต่อระบบ","สายอนุมัติ","โมดูล","อัปเดตฐานข้อมูล","สถานะระบบ","UI Showcase","กล่องจดหมายทดสอบ","บัญชี (Finance Core)","ไฟล์โอนเงิน"]}
+02-emp-home: / overflow=0 axe=[]
+emp tiles {"open":10,"locked":4,"visible":["รออนุมัติ","คำขอของฉัน","ปฏิทินวันทำงาน","ชุดเครื่องคำนวณ","สร้าง QR Code","เครื่องมือเข้ารหัส","คลังฟอนต์","ลิงก์เว็บภายนอก","เครื่องมือ PDF","สุ่มรางวัล","เอกสาร","ออกเอกสารจากแม่แบบ","บัญชี (Finance Core)","ไฟล์โอนเงิน"]}
+03-search-pdf: / overflow=0 axe=[]
+search pdf ["เครื่องมือ PDF"] live= พบ 1 แอป
+search การเงิน ["บัญชี (Finance Core)","ไฟล์โอนเงิน"]
+search เครื่องมือ 7
+search none: noneVisible= true
+04-search-none: / overflow=0 axe=[]
+after esc visible 14
+enter opens /qr
+05-request-form: /me/access?app=core.finance overflow=0 axe=[] flash=คุณกำลังขอใช้แอป: บัญชี (Finance Core) แสดงเฉพาะบทบาทที่เปิดแอปนี้ได้ เรียงจากสิทธิ์น้อยที่สุด เลือกบทบาทที่น้อยที่สุดที
+roles offered ["","FNM*"] scope= legal_entity:1
+06-home-pending: / overflow=0 axe=[] flash=ส่งคำขอแล้ว — ติดตามได้ที่คำขอของฉัน
+pending badge 2
+07-inbox: /approvals overflow=0 axe=[]
+08-approval: /approvals/01M573R90RZQ09VH4TDZATYTJD overflow=0 axe=[]
+approval rows ผู้ขอ พนักงานตัวอย่าง (DEMO) · 18 ต.ค. 2569 15:58 ผู้ใช้ พนักงานตัวอย่าง (DEMO) (employee.demo1) แอปที่ขอ บัญชี (Finance Core) บทบาท FNM — ผู้บันทึกบัญชี ขอบเขตข้อมูล บริษัท DEMO1 เหตุผล ปิดงวดบัญชีสิ้นเดือน (ทดสอบ)
+09-approved: /approvals overflow=0 axe=[] flash=อนุมัติและดำเนินการแล้ว
+10-emp-after: / overflow=0 axe=[]
+finance open 1
+11-emp-360: / overflow=0 axe=[]
+12-emp-360-dark: / overflow=0 axe=[]
+13-hr-dark: / overflow=0 axe=[]
+hr tiles {"open":13,"locked":2,"visible":["รออนุมัติ","คำขอของฉัน","เอกสาร","ออกเอกสารจากแม่แบบ","ปฏิทินวันทำงาน","ชุดเครื่องคำนวณ","สร้าง QR Code","เครื่องมือเข้ารหัส","คลังฟอนต์","ลิงก์เว็บภายนอก","เครื่องมือ PDF","สุ่มรางวัล","โครงสร้างองค์กร","บัญชี (Finance Core)","ไฟล์โอนเงิน"]}
+14-nojs: / overflow=0 axe=skip
+nojs search hidden true
+tab after search -> /approvalslogin-rights axe= [] สิทธิ์การใช้งานของคุณเปลี่ยนแล้ว (เช่น คำขอสิทธิ์ได้รับอนุมัติ) — กรุณาเข้าสู่ระบบอีกครั้งเพื่อใช้สิทธิ์ใหม่
+
+tab after search -> /approvals--- upgrade 0.4.2 -> 0.4.3, FIRST run (copied from the console; the folder was reused by the second run) ---
+00-update-page: /system/update overflow=0 axe=[]
+00-update-done: /system/update overflow=0 axe=[] flash=อัปเดตแล้ว (1 รายการ)
+01-admin-home: / overflow=0 axe=[]
+02-emp-home: / overflow=0 axe=[]
+05-request-form: /me/access?app=core.finance overflow=0 axe=[]
+roles offered ["","FNM*"] scope= legal_entity:1
+06-home-pending: / overflow=0 axe=[] flash=ส่งคำขอแล้ว — ติดตามได้ที่คำขอของฉัน
+pending badge 2
+08-approval: approval rows ... แอปที่ขอ บัญชี (Finance Core) บทบาท FNM — ผู้บันทึกบัญชี ขอบเขตข้อมูล บริษัท DEMO1 ...
+09-approved: /approvals overflow=0 axe=[] flash=อนุมัติและดำเนินการแล้ว
+10-emp-after: /login?expired=1  (expected: granting a role ends the user's open sessions; the script did not sign in again — fixed in the script)

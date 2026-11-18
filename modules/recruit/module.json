@@ -1,0 +1,68 @@
+{
+  "code": "recruit",
+  "version": "1.0.0",
+  "pack": "hr",
+  "nav_section": "recruitment",
+  "spec": "M08",
+  "name": { "th": "รับสมัครงาน", "en": "Recruitment" },
+  "icon": "briefcase",
+  "sort_order": 34,
+  "depends_on": ["core", "employees"],
+  "permissions": {
+    "recruit.apply": "normal",
+    "recruit.request": "normal",
+    "recruit.manage": "high",
+    "recruit.approve": "high",
+    "recruit.settings": "high"
+  },
+  "grants": {
+    "*": ["recruit.apply"],
+    "MGR": ["recruit.request"],
+    "HRA": ["recruit.request", "recruit.manage", "recruit.approve", "recruit.settings"],
+    "HRT": ["recruit.request", "recruit.manage"]
+  },
+  "menu": [
+    { "group": "work", "label": "recruit.nav_requests", "icon": "send", "href": "/recruit/requisitions", "permission": "recruit.request" },
+    { "group": "work", "label": "recruit.nav", "icon": "briefcase", "href": "/recruit", "permission": "recruit.manage" },
+    { "group": "work", "label": "recruit.nav_jobs", "icon": "search", "href": "/recruit/jobs", "permission": "recruit.apply" },
+    { "group": "settings", "label": "recruit.nav_settings", "icon": "settings", "href": "/recruit/settings", "permission": "recruit.settings" }
+  ],
+  "guest": {
+    "paths": [
+      "GET /recruit/jobs",
+      "GET /recruit/jobs/[0-9A-HJKMNP-TV-Z]{26}",
+      "(GET|POST) /recruit/jobs/[0-9A-HJKMNP-TV-Z]{26}/apply",
+      "(GET|POST) /recruit/status",
+      "(GET|POST) /recruit/eval/[A-Za-z0-9_-]{32}"
+    ],
+    "permissions": ["recruit.apply"],
+    "href": "/recruit/jobs"
+  },
+  "document_classes": {
+    "recruit.applicant": ["C", "recruit.manage", "recruit.manage", ["pdf", "jpeg", "png"], 5, true, "applicant_unsuccessful", "related_closed"]
+  },
+  "workflows": {
+    "recruit.requisition": {
+      "subject": "rec_requisition",
+      "class": "Blue\\Modules\\Recruit\\RequisitionSubject",
+      "no_fallback": true,
+      "steps": [
+        { "approver": { "type": "manager", "value": "recruit.approve" }, "scope": "subject", "sla_hours": 48 },
+        { "approver": { "type": "permission", "value": "recruit.approve" }, "scope": "subject", "sla_hours": 48 }
+      ]
+    },
+    "recruit.offer": {
+      "subject": "rec_offer",
+      "class": "Blue\\Modules\\Recruit\\OfferSubject",
+      "no_fallback": true,
+      "steps": [
+        { "approver": { "type": "permission", "value": "recruit.approve" }, "scope": "subject", "sla_hours": 24 }
+      ]
+    }
+  },
+  "jobs": {
+    "recruit.retention": { "every": 1440, "call": "Blue\\Modules\\Recruit\\RecruitService::retentionTask" }
+  },
+  "measures": "Blue\\Modules\\Recruit\\RecruitMeasures",
+  "routes": "routes.php"
+}

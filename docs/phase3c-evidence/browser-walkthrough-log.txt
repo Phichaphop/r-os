@@ -1,0 +1,43 @@
+# Phase 3C browser walkthrough (Chromium/Playwright, local php -S, upgrade 3B -> 3C on scratch install, DEMO data)
+# 1366px run:
+02-backups-empty: /admin/backups overflow=0 axe=[]
+03-backup-verified: /admin/backups/01M4RDGE0S10A6YSPPBQ2NAQFQ overflow=0 axe=[]
+04-drill-report: /admin/backups/drills/01M4RDGFB0GT01RQHTFSPRBD31 overflow=0 axe=[] flash=ผ่าน กู้คืนได้ครบ ข้อมูลตรงทุกตาราง
+05-integrations: /admin/integrations overflow=0 axe=[]
+06-integration-key-once: /admin/integrations/01M4RDD7QP82PT0YQ24V15YC14 overflow=0 axe=[] flash=แสดงครั้งเดียว ระบบเก็บแบบเข้ารหัสและจะไม่แสดงอีก
+key shown once: yes
+key gone after reload: yes
+admin /finance status: 403
+07-finance-overview: /finance overflow=0 axe=[] flash=ใช้กับข้อมูลจำลองเท่านั้น (Built — Demo only) ระบบบัญชียังไม่เปิดใช้จริงสำหรับบริษัทนี้ (DEC-50) — ต
+08-accounts: /finance/accounts overflow=0 axe=[] flash=ใช้กับข้อมูลจำลองเท่านั้น (Built — Demo only) ระบบบัญชียังไม่เปิดใช้จริงสำหรับบริษัทนี้ (DEC-50) — ต
+09-periods: /finance/periods overflow=0 axe=[] flash=ใช้กับข้อมูลจำลองเท่านั้น (Built — Demo only) ระบบบัญชียังไม่เปิดใช้จริงสำหรับบริษัทนี้ (DEC-50) — ต
+10-rules: /finance/rules overflow=0 axe=[] flash=ใช้กับข้อมูลจำลองเท่านั้น (Built — Demo only) ระบบบัญชียังไม่เปิดใช้จริงสำหรับบริษัทนี้ (DEC-50) — ต
+11-journal-form: /finance/journals/new overflow=0 axe=[] flash=ใช้กับข้อมูลจำลองเท่านั้น (Built — Demo only) ระบบบัญชียังไม่เปิดใช้จริงสำหรับบริษัทนี้ (DEC-50) — ต
+12-journal-submitted: /finance/journals/01M4RDGSBSC220KFQGY2QV17B5 overflow=0 axe=[] flash=ส่งให้ผู้ตรวจแล้ว
+approved (journal) → /approvals
+13-journal-posted: /finance/journals/01M4RDGSBSC220KFQGY2QV17B5 overflow=0 axe=[] flash=ใช้กับข้อมูลจำลองเท่านั้น (Built — Demo only) ระบบบัญชียังไม่เปิดใช้จริงสำหรับบริษัทนี้ (DEC-50) — ต
+14-payment-new: /payments/new overflow=0 axe=[]
+15-payment-import-preview: /import/batch/01M4RDGZ3SQF8FKNQTQPC6M4AB overflow=0 axe=[]
+16-payment-submitted: /payments/01M4RDGYH89HST5RD4PD1QG06T overflow=0 axe=[] flash=ส่งให้ผู้ตรวจแล้ว
+approved (payment batch) → /approvals
+17-payment-file-ready: /payments/01M4RDGYH89HST5RD4PD1QG06T overflow=0 axe=[] flash=สร้างไฟล์แล้ว
+bank file downloaded: PAY-202611-0001_ROS_STANDARD_XLSX_v1.xlsx 3441 bytes
+18-payment-sent: /payments/01M4RDGYH89HST5RD4PD1QG06T overflow=0 axe=[] flash=บันทึกว่าส่งธนาคารแล้ว
+19-payment-reconciled: /payments/01M4RDGYH89HST5RD4PD1QG06T overflow=0 axe=[] flash=ข้อมูลจำลอง (DEMO) — ห้ามใช้เลขบัญชีจริง
+20-posting-requests: /finance/requests overflow=0 axe=[] flash=ใช้กับข้อมูลจำลองเท่านั้น (Built — Demo only) ระบบบัญชียังไม่เปิดใช้จริงสำหรับบริษัทนี้ (DEC-50) — ต
+21-trial-balance: /finance/trial-balance overflow=0 axe=[] flash=ใช้กับข้อมูลจำลองเท่านั้น (Built — Demo only) ระบบบัญชียังไม่เปิดใช้จริงสำหรับบริษัทนี้ (DEC-50) — ต
+
+# 360px re-check after mobile fixes (m360.mjs):
+/finance overflow=0
+/finance/journals overflow=0
+/finance/journals/new overflow=0
+/finance/requests overflow=0
+/finance/accounts overflow=0
+/finance/rules overflow=0
+/finance/periods overflow=0
+/finance/trial-balance overflow=0
+/payments overflow=0
+/payments/new overflow=0
+/payments/01M4RDGYH89HST5RD4PD1QG06T overflow=0
+# 25-backup-360-dark overflow=0 (first run)
+# Screenshot 06 (integration key shown once) is intentionally not included: it shows a demo secret.

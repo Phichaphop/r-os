@@ -1,0 +1,17 @@
+s1-draw-start: /draw overflow=0 axe=[]
+s2-draw-ready: /draw overflow=0 axe=[]
+take-out checked by default: true
+s3-draw-winner: /draw/01M5SPARG4P2GVDH7CSEJQ44ZW overflow=0 axe=[]
+winner 1: ชูใจ
+url after first spin: /draw/01M5SPARG4P2GVDH7CSEJQ44ZW
+names left: 7
+race winners: สมหญิง,ปิติ
+saved list: ลำดับที่ 3 · ปิติ · รางวัลที่ 1 · ทีวี | ลำดับที่ 2 · สมหญิง · รางวัลที่ 1 · ทีวี | ลำดับที่ 1 · ชูใจ · รางวัลที่ 3 · ร่ม
+s4-draw-history: /draw/01M5SPARG4P2GVDH7CSEJQ44ZW overflow=0 axe=[]
+s5-draw-reopened: /draw/01M5SPARG4P2GVDH7CSEJQ44ZW overflow=0 axe=[]
+after reload — saved list: 3 · names: 5
+after finish: /draw/01M5SPARG4P2GVDH7CSEJQ44ZW/results · ยืนยันผลแล้ว — เปิดเผย seed ให้ตรวจสอบได้
+s6-draw-results: /draw/01M5SPARG4P2GVDH7CSEJQ44ZW/results overflow=0 axe=[]
+s7-draw-390: /draw overflow=0 axe=[]
+s8-draw-dark: /draw overflow=0 axe=[]
+s9-quick-still: /draw/quick overflow=0 axe=[]

@@ -1,0 +1,34 @@
+race-start: /draw/quick overflow=0 axe=[]
+  PLAN {"ducks":8,"winners":2,"photo":true,"gapMs":53,"leadChanges":6,"scriptedLeaders":[1,4,5,2,4,3]}
+  run 1 announced: ผู้โชคดี: กนกวรรณ, สมชาย
+  run 1 dialog: กนกวรรณ สมชาย
+  PLAN {"ducks":8,"winners":2,"photo":true,"gapMs":51,"leadChanges":7,"scriptedLeaders":[4,5,4,3,5,3]}
+  run 2 announced: ผู้โชคดี: วิชัย, ประยุทธ
+  run 2 dialog: วิชัย ประยุทธ
+  PLAN {"ducks":8,"winners":2,"photo":true,"gapMs":56,"leadChanges":7,"scriptedLeaders":[7,1,3,6,2,1]}
+  run 3 announced: ผู้โชคดี: ประยุทธ, สมชาย
+  run 3 dialog: ประยุทธ สมชาย
+race-390-dark: /draw/quick overflow=0 axe=[]
+  demo accounts signed in: 23/23
+  companies=DEMO1 units=24 employees=35 demo_profile=company
+org-chart: /admin/org overflow=0 axe=[]
+  org page lists: คณะผู้บริหาร=1 สายงานปฏิบัติการ=1 หน่วยผลิต A กะเช้า=1 ฝ่ายซ่อมบำรุง=1 โรงงานตัวอย่าง=1
+  org page text check: [] missing
+console worker.prod1: Failed to load resource: the server responded with a status of 422 (Unknown Status Code)
+  leave types=6 after submit: /leave · ยังยื่นลาป่วยไม่ได้ — HR ยังไม่ได้ตั้งนโยบายของประเภทนี้
+mgr-prod-approvals: /approvals overflow=0 axe=[]
+  manager.prod1: no approval item found
+mgr-prod-leave-team: /leave/team overflow=0 axe=[]
+  ticket after submit: /helpdesk/t/01M6XVZVT2NF186JQ7KCDHEXA2
+  GA queue shows the ticket: true
+ga-helpdesk-queue: /helpdesk/queue overflow=0 axe=[]
+  ga.demo1 /requisition/admin → 200 /requisition/admin
+  ga.demo1 /rooms → 200 /rooms
+  ga.demo1 /lockers/admin → 200 /lockers/admin
+  ga.demo1 /vehicles/admin → 200 /vehicles/admin
+  tech.demo1 /helpdesk → 200 /helpdesk
+  tech.demo1 /inspection → 200 /inspection
+  driver.demo1 /vehicles → 200 /vehicles
+  hr.officer1 /recruit → 200 /recruit
+  wallet.officer1 /eid → 200 /eid
+  worker.prod1 /requisition → 200 /requisition

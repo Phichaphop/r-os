@@ -1,0 +1,161 @@
+{
+  "code": "eid",
+  "version": "1.0.0",
+  "pack": "hr",
+  "nav_section": "hr_people",
+  "spec": "M13",
+  "name": {
+    "th": "บัตรพนักงานออนไลน์ + Wallet",
+    "en": "Employee e-ID + Wallet"
+  },
+  "icon": "id-badge-2",
+  "sort_order": 76,
+  "depends_on": [
+    "employees"
+  ],
+  "permissions": {
+    "eid.use": "normal",
+    "eid.verify": "normal",
+    "eid.manage": "high",
+    "eid.wallet_topup": "high",
+    "eid.wallet_approve": "high",
+    "eid.wallet_policy": "high",
+    "eid.wallet_policy_approve": "high",
+    "eid.wallet_view": "normal"
+  },
+  "grants": {
+    "*": [
+      "eid.use"
+    ],
+    "HRA": [
+      "eid.verify",
+      "eid.manage",
+      "eid.wallet_topup",
+      "eid.wallet_policy",
+      "eid.wallet_view"
+    ],
+    "HRT": [
+      "eid.verify",
+      "eid.manage"
+    ],
+    "WAL": [
+      "eid.wallet_topup",
+      "eid.wallet_approve",
+      "eid.wallet_policy",
+      "eid.wallet_policy_approve",
+      "eid.wallet_view"
+    ],
+    "FNC": [
+      "eid.wallet_approve",
+      "eid.wallet_policy_approve",
+      "eid.wallet_view"
+    ],
+    "AUD": [
+      "eid.wallet_view"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "eid.nav",
+      "icon": "id-badge-2",
+      "href": "/eid",
+      "permission": "eid.use"
+    },
+    {
+      "group": "work",
+      "label": "eid.nav_verify",
+      "icon": "qrcode",
+      "href": "/eid/verify",
+      "permission": "eid.verify"
+    },
+    {
+      "group": "settings",
+      "label": "eid.nav_admin",
+      "icon": "settings",
+      "href": "/eid/admin",
+      "permission": "eid.manage"
+    },
+    {
+      "group": "settings",
+      "label": "eid.nav_wallet",
+      "icon": "wallet",
+      "href": "/eid/wallet/admin",
+      "permission": "eid.wallet_view"
+    }
+  ],
+  "config": {
+    "eid.wallet_rules": [
+      "eid",
+      "json",
+      null,
+      "organization,legal_entity",
+      {},
+      "high",
+      "COMPANY_POLICY",
+      false
+    ]
+  },
+  "config_owners": {
+    "eid.wallet_rules": {
+      "propose": "eid.wallet_policy",
+      "workflow": "eid.wallet_rules",
+      "describe": "Blue\\Modules\\Eid\\WalletRules::describe"
+    }
+  },
+  "document_classes": {
+    "eid.photo": [
+      "C",
+      "eid.manage",
+      "eid.manage",
+      [
+        "png",
+        "jpeg",
+        "webp"
+      ],
+      2,
+      true,
+      "employee_file",
+      "employment_ended"
+    ]
+  },
+  "workflows": {
+    "eid.wallet_topup": {
+      "subject": "wallet_topup",
+      "class": "Blue\\Modules\\Eid\\TopupSubject",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "permission",
+            "value": "eid.wallet_approve"
+          },
+          "scope": "subject",
+          "sla_hours": 48
+        }
+      ]
+    },
+    "eid.wallet_rules": {
+      "subject": "config_version",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "permission",
+            "value": "eid.wallet_policy_approve"
+          },
+          "scope": "subject",
+          "sla_hours": 72
+        }
+      ]
+    }
+  },
+  "jobs": {
+    "eid.housekeeping": {
+      "every": 1440,
+      "call": "Blue\\Modules\\Eid\\CardService::housekeepingJob"
+    }
+  },
+  "personal_data": "Blue\\Modules\\Eid\\EidPersonalData",
+  "routes": "routes.php"
+}

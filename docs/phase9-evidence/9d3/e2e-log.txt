@@ -1,0 +1,34 @@
+01-library-manage: /library/manage overflow=0 axe=[]
+02-item-new: /library/manage/new overflow=0 axe=[]
+item: บันทึกร่างแล้ว — แนบไฟล์หรือเพิ่มเล่มแล้วเผยแพร่
+upload: อัปโหลดแล้ว — 2 หน้า ค้นข้อความได้ทุกหน้า
+publish: เผยแพร่แล้ว
+03-item-manage: /library/m/01M6DT372H5X9T84JXWRCZ6K19 overflow=0 axe=[]
+04-search-content: /library overflow=0 axe=[]
+hit link: /library/i/01M6DT372H5X9T84JXWRCZ6K19/read?page=2
+05-item: /library/i/01M6DT372H5X9T84JXWRCZ6K19 overflow=0 axe=[]
+reader ms=698 status: หน้า 2 / 2 canvas=900x1272
+dark pixels on page 2: 1277
+after prev: หน้า 1 / 2
+page text: นโยบายการลา 2569 พนักงานมีสิทธิลาพักร้อนตามอายุงาน Annual le
+saved page: 1
+bookmark: บันทึกบุ๊กมาร์กแล้ว
+reader console errors: []
+07-reader: /library/i/01M6DT372H5X9T84JXWRCZ6K19/read overflow=0 axe=[]
+reserve: จองแล้ว — มีเล่มรอให้คุณที่ห้องสมุด || มีเล่มรอให้คุณแล้ว — มารับที่ห้องสมุดภายใน 2026-11-05
+08-book-reserved: /library/i/01M6DSTM2AFZ8DA84PHFVWTY6T overflow=0 axe=[]
+09-my-loans: /library/loans overflow=0 axe=[]
+lend: ให้ พนักงานตัวอย่าง (DEMO) ยืมเล่ม DEMO-001 แล้ว — กำหนดคืน 2026-11-16
+10-book-manage: /library/m/01M6DSTM2AFZ8DA84PHFVWTY6T overflow=0 axe=[]
+11-desk: /library/desk overflow=0 axe=[]
+return DEMO-001: รับคืนจาก พนักงานตัวอย่าง (DEMO) แล้ว — เล่มกลับขึ้นชั้น
+12-library-home: /library overflow=0 axe=[]
+13-library-390-dark: /library overflow=0 axe=[]
+14-item-390-dark: /library/i/01M6DT372H5X9T84JXWRCZ6K19 overflow=0 axe=[]
+390 reader: หน้า 2 / 2
+15-reader-390-dark: /library/i/01M6DT372H5X9T84JXWRCZ6K19/read overflow=0 axe=[]
+16-loans-390-dark: /library/loans overflow=0 axe=[]
+17-book-manage-390-dark: /library/m/01M6DSTM2AFZ8DA84PHFVWTY6T overflow=0 axe=[]
+18-manage-390-dark: /library/manage overflow=0 axe=[]
+19-desk-390-dark: /library/desk overflow=0 axe=[]
+loans: returned

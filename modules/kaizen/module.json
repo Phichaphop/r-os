@@ -1,0 +1,99 @@
+{
+  "code": "kaizen",
+  "version": "1.0.0",
+  "pack": "workplace",
+  "spec": "M41",
+  "name": {
+    "th": "ข้อเสนอแนะ/Kaizen + แบบสำรวจ",
+    "en": "Suggestions / Kaizen & surveys"
+  },
+  "icon": "pencil",
+  "sort_order": 98,
+  "depends_on": [
+    "employees"
+  ],
+  "permissions": {
+    "kaizen.submit": "normal",
+    "kaizen.manage": "normal",
+    "kaizen.reward": "high",
+    "kaizen.survey": "normal"
+  },
+  "grants": {
+    "*": [
+      "kaizen.submit"
+    ],
+    "WPA": [
+      "kaizen.manage"
+    ],
+    "HRA": [
+      "kaizen.manage",
+      "kaizen.reward",
+      "kaizen.survey"
+    ],
+    "HRT": [
+      "kaizen.survey"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "kaizen.nav",
+      "icon": "pencil",
+      "href": "/kaizen",
+      "permission": "kaizen.submit"
+    },
+    {
+      "group": "work",
+      "label": "kaizen.nav_surveys",
+      "icon": "clipboard-check",
+      "href": "/kaizen/surveys",
+      "permission": "kaizen.submit"
+    },
+    {
+      "group": "work",
+      "label": "kaizen.nav_admin",
+      "icon": "list-check",
+      "href": "/kaizen/admin",
+      "permission": "kaizen.manage"
+    },
+    {
+      "group": "work",
+      "label": "kaizen.nav_survey_admin",
+      "icon": "layout-dashboard",
+      "href": "/kaizen/surveys/admin",
+      "permission": "kaizen.survey"
+    },
+    {
+      "group": "settings",
+      "label": "kaizen.nav_settings",
+      "icon": "settings",
+      "href": "/kaizen/settings",
+      "permission": "kaizen.manage"
+    }
+  ],
+  "document_classes": {
+    "kaizen.photo": [
+      "I",
+      "kaizen.manage",
+      "kaizen.manage",
+      [
+        "png",
+        "jpeg",
+        "webp",
+        "pdf"
+      ],
+      10,
+      false,
+      "general_document",
+      "finalized"
+    ]
+  },
+  "jobs": {
+    "kaizen.tick": {
+      "every": 60,
+      "call": "Blue\\Modules\\Kaizen\\SurveyService::tickJob"
+    }
+  },
+  "demo": "Blue\\Modules\\Kaizen\\KaizenDemo::run",
+  "routes": "routes.php"
+}

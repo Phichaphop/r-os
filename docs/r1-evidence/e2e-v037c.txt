@@ -1,0 +1,19 @@
+login-1366: /login overflow=0 axe=[]
+  geometry {"brand":[0,0,683,800],"form":[683,0,683,800],"cardCentreOffset":0}
+login-1920: /login overflow=0 axe=[]
+  geometry {"brand":[0,0,960,1080],"form":[960,0,960,1080],"cardCentreOffset":0}
+login-1024: /login overflow=0 axe=[]
+  geometry {"brand":[0,0,512,768],"form":[512,0,512,768],"cardCentreOffset":0}
+login-820: /login overflow=0 axe=[]
+  geometry {"brand":[0,0,820,197],"form":[0,197,820,983],"cardCentreOffset":0}
+login-390: /login overflow=0 axe=[]
+  geometry {"brand":[0,0,390,197],"form":[0,197,390,647],"cardCentreOffset":0}
+login-390-dark: /login overflow=0 axe=[]
+  geometry {"brand":[0,0,390,197],"form":[0,197,390,647],"cardCentreOffset":0}
+login-1366-dark: /login overflow=0 axe=[]
+  geometry {"brand":[0,0,683,800],"form":[683,0,683,800],"cardCentreOffset":0}
+forgot-1366: /password/forgot overflow=0 axe=[]
+login-error: /login overflow=0 axe=[]
+login-logo-only: /login overflow=0 axe=[]
+login-logo-only-390-dark: /login overflow=0 axe=[]
+signed in → /

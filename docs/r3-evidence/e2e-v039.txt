@@ -1,0 +1,28 @@
+pdf-home-1366: /pdf overflow=0 axe=[]
+  tool cards=14 groups=4 sign card=1
+pdf-organize-step1: /pdf/tool/organize overflow=0 axe=[]
+  staged 01M6XQ4F43XMZ2CS54P8JWD8TF drawn thumbnails=3 / 3
+pdf-organize-step2: /pdf/job/01M6XQ4F43XMZ2CS54P8JWD8TF overflow=0 axe=[]
+  order after move/rotate/drop/drag: ["หน้า 3 pos=1 rot=90 keep=true thumbTurn=90","หน้า 2 pos=2 rot=0 keep=false thumbTurn=0","หน้า 1 pos=3 rot=0 keep=true thumbTurn=0"]
+  params={"order":["3@90","1"]} files=01M6XQ4F43XMZ2CS54P8JWD8TF-out0.bin
+  ttl minutes=60 saved_at=NULL
+  result thumbnails drawn=1
+pdf-organize-result: /pdf/job/01M6XQ4F43XMZ2CS54P8JWD8TF overflow=0 axe=[]
+  downloaded a-organized.pdf pages=[(90, 595, 13), (0, 595, 13)]
+  unsaved listed on /pdf: false
+  saved listed on /pdf: true saved_at set=true
+pdf-home-saved: /pdf overflow=0 axe=[]
+  extract picked → pages field "1, 3"
+pdf-extract-pick: /pdf/job/01M6XQ4MKVR5M1CE0Q55RWFZGH overflow=0 axe=[]
+  merge order inputs: ["b.pdf=1","a.pdf=2"]
+pdf-merge-step2: /pdf/job/01M6XQ4PM33M28C48FY9JJTH32 overflow=0 axe=[]
+pdf-home-390-dark: /pdf overflow=0 axe=[]
+pdf-organize-390-dark: /pdf/job/01M6XQ4TEMPX15AZYJD947WT0F overflow=0 axe=[]
+sign-1366: /pdf/sign overflow=0 axe=[]
+  signature.png (465, 1126, 4) alpha corners 0 0 ink px 17028
+  base64 copied=true same as box=true length=59566
+sign-placed: /pdf/sign overflow=0 axe=[]
+  placements: ["ลายเซ็นที่ 1 (หน้า 1)","ลายเซ็นที่ 2 (หน้า 2)"] page2 box=["0.185","0.177","0.250","0.151","640","453"]
+  signed a_rot-signed.pdf pages=[(0, 595, 13), (90, 595, 13), (0, 595, 13)]
+  requests after load: [] any POST/body=false
+sign-390-dark: /pdf/sign overflow=0 axe=[]

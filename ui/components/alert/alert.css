@@ -1,0 +1,10 @@
+.alert {
+  display: flex; gap: var(--space-3); align-items: flex-start; padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-surface); border: var(--border-width) solid var(--color-border); border-left-width: 4px; background: var(--color-surface);
+}
+.alert__title { font-weight: var(--font-weight-semibold); }
+.alert__body { flex: 1; min-width: 0; }
+.alert--info { border-left-color: var(--color-info); } .alert--info > .icon { color: var(--color-info); }
+.alert--success { border-left-color: var(--color-success); } .alert--success > .icon { color: var(--color-success); }
+.alert--warning { border-left-color: var(--color-warning); background: var(--color-warning-subtle); } .alert--warning > .icon { color: var(--color-warning); }
+.alert--danger { border-left-color: var(--color-danger); background: var(--color-danger-subtle); } .alert--danger > .icon { color: var(--color-danger); }

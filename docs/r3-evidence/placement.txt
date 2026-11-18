@@ -1,0 +1,2 @@
+page 1 rendered 414 x 585 signature ink bbox (fraction of the page as shown): x 0.575-0.821 y 0.814-0.884
+page 2 rendered 585 x 414 signature ink bbox (fraction of the page as shown): x 0.188-0.429 y 0.181-0.316

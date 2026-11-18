@@ -1,0 +1,127 @@
+# Phase 3U-C browser walkthrough (Chromium headless + axe-core, WCAG 2.2 AA rules)
+
+## Upgrade test machine 0.4.1 -> 0.4.2
+### S01 PDF toolkit
+index 200
+01-index: /pdf overflow=0 axe=[] flash=ไฟล์ไม่ถูกส่งออกนอกระบบ ประมวลผลบนเซิร์ฟเวอร์ของบริษัทเท่านั้น · ไฟล์ชั่วคราวเข้ารหัสและลบอัตโนมัติใน 24 ชั่วโมง · ไฟล์ล
+02-merge-staged: /pdf/job/01M56Y8FCTZ6YHD4J3J5NBF31E overflow=0 axe=[]
+03-merge-done: /pdf/job/01M56Y8FCTZ6YHD4J3J5NBF31E overflow=0 axe=[]
+merged a-merged.pdf
+save: บันทึกเข้าทะเบียนเอกสารแล้ว (สถานะร่าง)
+04-saved: /pdf/job/01M56Y8FCTZ6YHD4J3J5NBF31E overflow=0 axe=[] flash=บันทึกเข้าทะเบียนเอกสารแล้ว (สถานะร่าง)
+merge one: ต้องเลือกอย่างน้อย 2 ไฟล์
+fake: ไม่ใช่ไฟล์ PDF (ตรวจจากเนื้อไฟล์ ไม่ใช่นามสกุล)
+enc no pw: ไฟล์นี้ตั้งรหัสผ่าน — ใส่รหัสผ่านของไฟล์
+05-organize-staged: /pdf/job/01M56Y8MJSYCDV6KM17HZNTEW1 overflow=0 axe=[] flash=ควรรู้ก่อนทำ ไฟล์เข้ารหัส — ระบบทำงานกับสำเนาที่ถอดรหัสแล้ว ผลลัพธ์จะไม่มีรหัส (ใช้ "ใส่รหัสผ่าน" ต่อได้)
+06-organize-done: /pdf/job/01M56Y8MJSYCDV6KM17HZNTEW1 overflow=0 axe=[] flash=ควรรู้ก่อนทำ ไฟล์เข้ารหัส — ระบบทำงานกับสำเนาที่ถอดรหัสแล้ว ผลลัพธ์จะไม่มีรหัส (ใช้ "ใส่รหัสผ่าน" ต่อได้)
+07-watermark-done: /pdf/job/01M56Y8Q1KA5QC8REKZ6C0ZKAH overflow=0 axe=[]
+08-split-done: /pdf/job/01M56Y8RTVAJQ6V8CAZJS9QJMP overflow=0 axe=[]
+short pw: รหัสผ่านต้องมี 6–100 ตัวอักษร | ข้อจำกัดการพิมพ์/คัดลอกเป็นเพียงคำขอให้โปรแกรมอ่าน บางโปรแกรมไม่ทำตาม — รหัสผ่านเปิดไฟล์คือการป้องกันจริง เก็บรหัสผ่านไว้ให้ดี — ระบบกู้คืนให้ไม่ได้
+09-protect-done: /pdf/job/01M56Y8TXEF380NZ59VT13KK78 overflow=0 axe=[]
+10-metadata-staged: /pdf/job/01M56Y8WZA7TEGPTKKHTCRWZZY overflow=0 axe=[]
+11-images-done: /pdf/job/01M56Y8YGSZ1GYZ3N2GNRYS79Q overflow=0 axe=[]
+compress:  ขนาดก่อน 14.5 KB → หลัง 13.9 KB บีบอัดข้อมูล 0 ส่วน รูปภาพไม่ถูกลดความละเอียด
+12-index-jobs: /pdf overflow=0 axe=[] flash=ไฟล์ไม่ถูกส่งออกนอกระบบ ประมวลผลบนเซิร์ฟเวอร์ของบริษัทเท่านั้น · ไฟล์ชั่วคราวเข้ารหัสและลบอัตโนมัติใน 24 ชั่วโมง · ไฟล์ล
+admin page as hr: 403
+13-admin: /pdf/admin overflow=0 axe=[]
+admin save: บันทึกการตั้งค่าแล้ว
+repair card disabled: 1
+repair tool status 200
+14-index-360: /pdf overflow=0 axe=[] flash=ไฟล์ไม่ถูกส่งออกนอกระบบ ประมวลผลบนเซิร์ฟเวอร์ของบริษัทเท่านั้น · ไฟล์ชั่วคราวเข้ารหัสและลบอัตโนมัติใน 24 ชั่วโมง · ไฟล์ล
+15-tool-360: /pdf/tool/merge overflow=0 axe=[]
+16-index-dark: /pdf overflow=0 axe=[] flash=ไฟล์ไม่ถูกส่งออกนอกระบบ ประมวลผลบนเซิร์ฟเวอร์ของบริษัทเท่านั้น · ไฟล์ชั่วคราวเข้ารหัสและลบอัตโนมัติใน 24 ชั่วโมง · ไฟล์ล
+DONE
+### M29 lucky draw
+index 200
+01-index: /draw overflow=0 axe=[] flash=ใช้รายชื่อจริงเมื่อย้ายขึ้นเซิร์ฟเวอร์จริงแล้วเท่านั้น ระบบต้นแบบ (InfinityFree) ใช้ข้อมูลจำลองเท่านั้น · รายชื่อผู้มีสิ
+02-created: /draw/01M56Y9DM4BNF9M367K9NSAT49 overflow=0 axe=[] flash=สร้างกิจกรรมแล้ว — นำเข้ารายชื่อและรางวัลต่อ
+event http://127.0.0.1:8096/draw/01M56Y9DM4BNF9M367K9NSAT49
+import: นำเข้า 30 คน — รวม 30 คน ข้ามแถวที่ซ้ำ: 32. แถวที่ผิดรูปแบบ: 34 (ยาวเกิน/มีอักขระควบคุม)
+03-imported: /draw/01M56Y9DM4BNF9M367K9NSAT49/participants overflow=0 axe=[] flash=นำเข้า 30 คน — รวม 30 คน ข้ามแถวที่ซ้ำ: 32. แถวที่ผิดรูปแบบ: 34 (ยาวเกิน/มีอักขระควบคุม)
+prizes: บันทึกรางวัลแล้ว
+lock no ack: ติ๊กยืนยันเรื่องกฎหมายก่อนล็อก | ติ๊กยืนยันเรื่องกฎหมายก่อนล็อก
+lock: ล็อกแล้ว — เปิดหน้าจอสุ่มได้
+04-locked: /draw/01M56Y9DM4BNF9M367K9NSAT49 overflow=0 axe=[] flash=ล็อกแล้ว — เปิดหน้าจอสุ่มได้
+05-show: /draw/01M56Y9DM4BNF9M367K9NSAT49/show overflow=0 axe=[]
+07-wheel-winner: /draw/01M56Y9DM4BNF9M367K9NSAT49/show overflow=0 axe=[]
+announce: ผู้โชคดี รางวัลใหญ่ ทีวี: พนักงานทดสอบ 20
+09-race-winners: /draw/01M56Y9DM4BNF9M367K9NSAT49/show overflow=0 axe=[]
+announce2: ผู้โชคดี บัตรของขวัญ 500 บาท: พนักงานทดสอบ 14, พนักงานทดสอบ 15, พนักงานทดสอบ 10, พนักงานทดสอบ 22, พนักงานทดสอบ 6
+board after reload: 6
+10-drawing: /draw/01M56Y9DM4BNF9M367K9NSAT49 overflow=0 axe=[]
+redraw: สุ่มใหม่แล้ว (รอบใหม่ บันทึกเหตุผลไว้)
+confirm: ยืนยันผลแล้ว — seed เปิดเผยให้ตรวจได้
+11-confirmed: /draw/01M56Y9DM4BNF9M367K9NSAT49 overflow=0 axe=[] flash=ยืนยันผลแล้ว — seed เปิดเผยให้ตรวจได้
+verify badge: ตรงทุกรอบ
+publish: บันทึกการประกาศแล้ว
+export draw-results-NSAT49.xlsx
+12-employee-index: /draw overflow=0 axe=[]
+13-employee-results: /draw/01M56Y9DM4BNF9M367K9NSAT49/results overflow=0 axe=[]
+employee edit page: 404
+14-results-360: /draw/01M56Y9DM4BNF9M367K9NSAT49/results overflow=0 axe=[]
+15-index-360: /draw overflow=0 axe=[] flash=ใช้รายชื่อจริงเมื่อย้ายขึ้นเซิร์ฟเวอร์จริงแล้วเท่านั้น ระบบต้นแบบ (InfinityFree) ใช้ข้อมูลจำลองเท่านั้น · รายชื่อผู้มีสิ
+16-edit-dark: /draw/01M56Y9DM4BNF9M367K9NSAT49 overflow=0 axe=[]
+DONE
+
+## Fresh install from git archive (empty DB, 14 migrations)
+### S01 PDF toolkit
+index 200
+01-index: /pdf overflow=0 axe=[] flash=ไฟล์ไม่ถูกส่งออกนอกระบบ ประมวลผลบนเซิร์ฟเวอร์ของบริษัทเท่านั้น · ไฟล์ชั่วคราวเข้ารหัสและลบอัตโนมัติใน 24 ชั่วโมง · ไฟล์ล
+02-merge-staged: /pdf/job/01M56YCNAHMSQ8B2XSZMZAW1YY overflow=0 axe=[]
+03-merge-done: /pdf/job/01M56YCNAHMSQ8B2XSZMZAW1YY overflow=0 axe=[]
+merged a-merged.pdf
+save: บันทึกเข้าทะเบียนเอกสารแล้ว (สถานะร่าง)
+04-saved: /pdf/job/01M56YCNAHMSQ8B2XSZMZAW1YY overflow=0 axe=[] flash=บันทึกเข้าทะเบียนเอกสารแล้ว (สถานะร่าง)
+merge one: ต้องเลือกอย่างน้อย 2 ไฟล์
+fake: ไม่ใช่ไฟล์ PDF (ตรวจจากเนื้อไฟล์ ไม่ใช่นามสกุล)
+enc no pw: ไฟล์นี้ตั้งรหัสผ่าน — ใส่รหัสผ่านของไฟล์
+05-organize-staged: /pdf/job/01M56YCTEE64SH6JHG6GF6XMFT overflow=0 axe=[] flash=ควรรู้ก่อนทำ ไฟล์เข้ารหัส — ระบบทำงานกับสำเนาที่ถอดรหัสแล้ว ผลลัพธ์จะไม่มีรหัส (ใช้ "ใส่รหัสผ่าน" ต่อได้)
+06-organize-done: /pdf/job/01M56YCTEE64SH6JHG6GF6XMFT overflow=0 axe=[] flash=ควรรู้ก่อนทำ ไฟล์เข้ารหัส — ระบบทำงานกับสำเนาที่ถอดรหัสแล้ว ผลลัพธ์จะไม่มีรหัส (ใช้ "ใส่รหัสผ่าน" ต่อได้)
+07-watermark-done: /pdf/job/01M56YCX42HWBS9XGHVZQ2NSME overflow=0 axe=[]
+08-split-done: /pdf/job/01M56YCYYXZB8YP4H6XS66M5ZQ overflow=0 axe=[]
+short pw: รหัสผ่านต้องมี 6–100 ตัวอักษร | ข้อจำกัดการพิมพ์/คัดลอกเป็นเพียงคำขอให้โปรแกรมอ่าน บางโปรแกรมไม่ทำตาม — รหัสผ่านเปิดไฟล์คือการป้องกันจริง เก็บรหัสผ่านไว้ให้ดี — ระบบกู้คืนให้ไม่ได้
+09-protect-done: /pdf/job/01M56YD0V9FNCPH12ZRFDFCRZC overflow=0 axe=[]
+10-metadata-staged: /pdf/job/01M56YD30KX4H4H806A330FVWB overflow=0 axe=[]
+11-images-done: /pdf/job/01M56YD4PJER7D11RG0FPTDNAF overflow=0 axe=[]
+compress:  ขนาดก่อน 14.5 KB → หลัง 13.9 KB บีบอัดข้อมูล 0 ส่วน รูปภาพไม่ถูกลดความละเอียด
+12-index-jobs: /pdf overflow=0 axe=[] flash=ไฟล์ไม่ถูกส่งออกนอกระบบ ประมวลผลบนเซิร์ฟเวอร์ของบริษัทเท่านั้น · ไฟล์ชั่วคราวเข้ารหัสและลบอัตโนมัติใน 24 ชั่วโมง · ไฟล์ล
+admin page as hr: 403
+13-admin: /pdf/admin overflow=0 axe=[]
+admin save: บันทึกการตั้งค่าแล้ว
+repair card disabled: 1
+repair tool status 200
+14-index-360: /pdf overflow=0 axe=[] flash=ไฟล์ไม่ถูกส่งออกนอกระบบ ประมวลผลบนเซิร์ฟเวอร์ของบริษัทเท่านั้น · ไฟล์ชั่วคราวเข้ารหัสและลบอัตโนมัติใน 24 ชั่วโมง · ไฟล์ล
+15-tool-360: /pdf/tool/merge overflow=0 axe=[]
+16-index-dark: /pdf overflow=0 axe=[] flash=ไฟล์ไม่ถูกส่งออกนอกระบบ ประมวลผลบนเซิร์ฟเวอร์ของบริษัทเท่านั้น · ไฟล์ชั่วคราวเข้ารหัสและลบอัตโนมัติใน 24 ชั่วโมง · ไฟล์ล
+DONE
+### M29 lucky draw
+index 200
+01-index: /draw overflow=0 axe=[] flash=ใช้รายชื่อจริงเมื่อย้ายขึ้นเซิร์ฟเวอร์จริงแล้วเท่านั้น ระบบต้นแบบ (InfinityFree) ใช้ข้อมูลจำลองเท่านั้น · รายชื่อผู้มีสิ
+02-created: /draw/01M56YDKZJ1W6ZQZCDN4VRZKFY overflow=0 axe=[] flash=สร้างกิจกรรมแล้ว — นำเข้ารายชื่อและรางวัลต่อ
+event http://127.0.0.1:8098/draw/01M56YDKZJ1W6ZQZCDN4VRZKFY
+import: นำเข้า 30 คน — รวม 30 คน ข้ามแถวที่ซ้ำ: 32. แถวที่ผิดรูปแบบ: 34 (ยาวเกิน/มีอักขระควบคุม)
+03-imported: /draw/01M56YDKZJ1W6ZQZCDN4VRZKFY/participants overflow=0 axe=[] flash=นำเข้า 30 คน — รวม 30 คน ข้ามแถวที่ซ้ำ: 32. แถวที่ผิดรูปแบบ: 34 (ยาวเกิน/มีอักขระควบคุม)
+prizes: บันทึกรางวัลแล้ว
+lock no ack: ติ๊กยืนยันเรื่องกฎหมายก่อนล็อก | ติ๊กยืนยันเรื่องกฎหมายก่อนล็อก
+lock: ล็อกแล้ว — เปิดหน้าจอสุ่มได้
+04-locked: /draw/01M56YDKZJ1W6ZQZCDN4VRZKFY overflow=0 axe=[] flash=ล็อกแล้ว — เปิดหน้าจอสุ่มได้
+05-show: /draw/01M56YDKZJ1W6ZQZCDN4VRZKFY/show overflow=0 axe=[]
+07-wheel-winner: /draw/01M56YDKZJ1W6ZQZCDN4VRZKFY/show overflow=0 axe=[]
+announce: ผู้โชคดี รางวัลใหญ่ ทีวี: พนักงานทดสอบ 2
+09-race-winners: /draw/01M56YDKZJ1W6ZQZCDN4VRZKFY/show overflow=0 axe=[]
+announce2: ผู้โชคดี บัตรของขวัญ 500 บาท: พนักงานทดสอบ 21, พนักงานทดสอบ 16, พนักงานทดสอบ 18, พนักงานทดสอบ 10, พนักงานทดสอบ 30
+board after reload: 6
+10-drawing: /draw/01M56YDKZJ1W6ZQZCDN4VRZKFY overflow=0 axe=[]
+redraw: สุ่มใหม่แล้ว (รอบใหม่ บันทึกเหตุผลไว้)
+confirm: ยืนยันผลแล้ว — seed เปิดเผยให้ตรวจได้
+11-confirmed: /draw/01M56YDKZJ1W6ZQZCDN4VRZKFY overflow=0 axe=[] flash=ยืนยันผลแล้ว — seed เปิดเผยให้ตรวจได้
+verify badge: ตรงทุกรอบ
+publish: บันทึกการประกาศแล้ว
+export draw-results-VRZKFY.xlsx
+12-employee-index: /draw overflow=0 axe=[]
+13-employee-results: /draw/01M56YDKZJ1W6ZQZCDN4VRZKFY/results overflow=0 axe=[]
+employee edit page: 404
+14-results-360: /draw/01M56YDKZJ1W6ZQZCDN4VRZKFY/results overflow=0 axe=[]
+15-index-360: /draw overflow=0 axe=[] flash=ใช้รายชื่อจริงเมื่อย้ายขึ้นเซิร์ฟเวอร์จริงแล้วเท่านั้น ระบบต้นแบบ (InfinityFree) ใช้ข้อมูลจำลองเท่านั้น · รายชื่อผู้มีสิ
+16-edit-dark: /draw/01M56YDKZJ1W6ZQZCDN4VRZKFY overflow=0 axe=[]
+DONE

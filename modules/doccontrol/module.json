@@ -1,0 +1,86 @@
+{
+  "code": "doccontrol",
+  "version": "1.0.0",
+  "pack": "core_plus",
+  "spec": "M40",
+  "name": {
+    "th": "เอกสารควบคุม + รับทราบนโยบาย",
+    "en": "Document control & policy acknowledgement"
+  },
+  "icon": "clipboard-check",
+  "sort_order": 32,
+  "depends_on": [
+    "employees"
+  ],
+  "permissions": {
+    "doccontrol.read": "normal",
+    "doccontrol.manage": "normal",
+    "doccontrol.approve": "high"
+  },
+  "grants": {
+    "*": [
+      "doccontrol.read"
+    ],
+    "HRA": [
+      "doccontrol.manage",
+      "doccontrol.approve"
+    ],
+    "HRT": [
+      "doccontrol.manage"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "doccontrol.nav",
+      "icon": "clipboard-check",
+      "href": "/policies",
+      "permission": "doccontrol.read"
+    },
+    {
+      "group": "settings",
+      "label": "doccontrol.nav_admin",
+      "icon": "settings",
+      "href": "/policies/admin",
+      "permission": "doccontrol.manage"
+    }
+  ],
+  "document_classes": {
+    "doccontrol.version": [
+      "I",
+      "doccontrol.manage",
+      "doccontrol.manage",
+      [
+        "pdf"
+      ],
+      20,
+      false,
+      "general_document",
+      "finalized"
+    ]
+  },
+  "workflows": {
+    "doccontrol.approve": {
+      "subject": "dc_version",
+      "class": "Blue\\Modules\\Doccontrol\\VersionSubject",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "permission",
+            "value": "doccontrol.approve"
+          },
+          "scope": "subject",
+          "sla_hours": 72
+        }
+      ]
+    }
+  },
+  "jobs": {
+    "doccontrol.sync": {
+      "every": 60,
+      "call": "Blue\\Modules\\Doccontrol\\DocControlService::syncJob"
+    }
+  },
+  "routes": "routes.php"
+}

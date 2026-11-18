@@ -1,0 +1,24 @@
+{
+  "code": "calc",
+  "version": "1.0.0",
+  "pack": "utilities",
+  "spec": "M26",
+  "name": { "th": "ชุดเครื่องคำนวณ", "en": "Calculator suite" },
+  "icon": "calculator",
+  "sort_order": 10,
+  "depends_on": ["core"],
+  "permissions": { "calc.use": "normal", "calc.rates": "high" },
+  "grants": { "*": ["calc.use"], "SYS": ["calc.rates"] },
+  "menu": [
+    { "group": "tools", "label": "calc.nav", "icon": "calculator", "href": "/calc", "permission": "calc.use" }
+  ],
+  "config": {
+    "calc.sso.rule": ["calc", "json", null, "organization,legal_entity", {}, "high", "LAW", false],
+    "calc.ewf.rule": ["calc", "json", null, "organization,legal_entity", {}, "high", "LAW", false],
+    "calc.severance.rule": ["calc", "json", null, "organization,legal_entity", {}, "high", "LAW", false],
+    "calc.pit.rule": ["calc", "json", null, "organization,legal_entity", {}, "high", "LAW", false],
+    "calc.share_days": ["calc", "integer", "day", "organization", { "min": 1, "max": 30 }, "normal", "TECHNICAL", false]
+  },
+  "guest": {"paths": ["GET /calc", "POST /calc/(sso|ewf|severance|retirement|pit)"], "permissions": ["calc.use"]},
+  "routes": "routes.php"
+}

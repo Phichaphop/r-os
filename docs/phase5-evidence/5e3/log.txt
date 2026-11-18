@@ -1,0 +1,32 @@
+01-mp-index: /manpower overflow=0 axe=[]
+plan: สร้างแผนแล้ว — ใส่รายการได้เลย → /manpower/p/01M5TD7PFE4N6TW7FBYCR5G82Q
+lines: บันทึกแล้ว
+02-mp-draft: /manpower/p/01M5TD7PFE4N6TW7FBYCR5G82Q overflow=0 axe=[]
+mp submit: ส่งอนุมัติแล้ว || รอผู้มีสิทธิ์อนุมัติแผนอีกคน — แก้ไขไม่ได้ระหว่างนี้
+mp approvers: hr.head1
+03-mp-active: /manpower/p/01M5TD7PFE4N6TW7FBYCR5G82Q overflow=0 axe=[]
+04-req-form: /recruit/requisitions overflow=0 axe=[]
+req: ส่งใบขอคนให้อนุมัติแล้ว → /recruit/r/01M5TD7VK75B7QRCV9PAXPMHD0
+05-req-over-budget: /recruit/r/01M5TD7VK75B7QRCV9PAXPMHD0 overflow=0 axe=[]
+06-mp-after-req: /manpower/p/01M5TD7PFE4N6TW7FBYCR5G82Q overflow=0 axe=[]
+07-mp-whatif: /manpower/p/01M5TD7XRSY97MKQ79KXRCJW91 overflow=0 axe=[]
+08-mp-index-after: /manpower overflow=0 axe=[]
+09-mp-plan-mobile-dark: /manpower/p/01M5TD7PFE4N6TW7FBYCR5G82Q overflow=0 axe=[]
+10-trn-courses: /training/admin/courses overflow=0 axe=[]
+course: บันทึกหลักสูตรแล้ว
+11-trn-admin: /training/admin overflow=0 axe=[]
+session: เพิ่มรอบแล้ว (วางแผน) — กด "เปิดรับลงทะเบียน" เมื่อพร้อม
+open: เปลี่ยนสถานะแล้ว
+12-trn-mine-mobile: /training overflow=0 axe=[]
+13-trn-session-mobile: /training/s/01M5TD83NM7KPDX84SDQA2C96A overflow=0 axe=[]
+enroll: ลงทะเบียนแล้ว
+hr enroll: ลงทะเบียนให้ 2 คน
+scan: เช็คชื่อแล้ว: พนักงานตัวอย่าง (DEMO)
+scan again: เช็คชื่อไปแล้ว: พนักงานตัวอย่าง (DEMO)
+14-trn-checkin: /training/admin/s/01M5TD83NM7KPDX84SDQA2C96A overflow=0 axe=[]
+results: บันทึกผล 3 รายการ
+certs: ออกใบรับรอง 1 ฉบับ
+15-trn-results: /training/admin/s/01M5TD83NM7KPDX84SDQA2C96A overflow=0 axe=[]
+16-trn-mine-after-mobile: /training overflow=0 axe=[]
+cert: 200 true
+18-trn-matrix: /training/admin/matrix overflow=0 axe=[]

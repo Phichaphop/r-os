@@ -1,0 +1,75 @@
+/* SEMANTIC tokens — dark theme. Uses surface lightness instead of shadows (P0-05 §1.4). */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-bg: var(--rds-gray-950);
+  --color-surface: var(--rds-gray-900);
+  --color-surface-2: var(--rds-gray-850);
+  --color-surface-sunken: var(--rds-gray-950);
+  --color-text: var(--rds-gray-50);
+  --color-text-muted: var(--rds-gray-400);
+  --color-action-primary: var(--rds-steel-300);
+  --color-action-primary-hover: var(--rds-steel-200);
+  --color-on-primary: var(--rds-gray-950);
+  --color-primary-soft: var(--rds-steel-900);
+  --color-navy: var(--rds-navy-950);
+  --color-navy-raised: var(--rds-gray-850);
+  --color-navy-accent: var(--rds-steel-300);
+  --color-on-navy: var(--rds-gray-50);
+  --color-on-navy-muted: var(--rds-white-a72);
+  --color-navy-dots: var(--rds-white-a08);
+
+  /* 0.6.2 — sparkle motif (✦, the familiar AI mark) replaces the dot grid on the menu and dark banner cards */
+  --pattern-sparkles: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cpath fill='white' fill-opacity='0.16' d='M38 37C39.62 44.38 39.62 44.38 47 46C39.62 47.62 39.62 47.62 38 55C36.38 47.62 36.38 47.62 29 46C36.38 44.38 36.38 44.38 38 37Z'/%3E%3Cpath fill='white' fill-opacity='0.12' d='M150 23C150.9 27.1 150.9 27.1 155 28C150.9 28.9 150.9 28.9 150 33C149.1 28.9 149.1 28.9 145 28C149.1 27.1 149.1 27.1 150 23Z'/%3E%3Cpath fill='white' fill-opacity='0.1' d='M176 121C177.98 130.02 177.98 130.02 187 132C177.98 133.98 177.98 133.98 176 143C174.02 133.98 174.02 133.98 165 132C174.02 130.02 174.02 130.02 176 121Z'/%3E%3Cpath fill='white' fill-opacity='0.14' d='M84 146C84.72 149.28 84.72 149.28 88 150C84.72 150.72 84.72 150.72 84 154C83.28 150.72 83.28 150.72 80 150C83.28 149.28 83.28 149.28 84 146Z'/%3E%3Cpath fill='white' fill-opacity='0.12' d='M120 89C120.54 91.46 120.54 91.46 123 92C120.54 92.54 120.54 92.54 120 95C119.46 92.54 119.46 92.54 117 92C119.46 91.46 119.46 91.46 120 89Z'/%3E%3Cpath fill='white' fill-opacity='0.1' d='M26 190C27.08 194.92 27.08 194.92 32 196C27.08 197.08 27.08 197.08 26 202C24.92 197.08 24.92 197.08 20 196C24.92 194.92 24.92 194.92 26 190Z'/%3E%3C/svg%3E");
+  --ornament-sparkles: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='160' viewBox='0 0 240 160'%3E%3Cpath fill='white' fill-opacity='0.16' d='M170 16C180.44 63.56 180.44 63.56 228 74C180.44 84.44 180.44 84.44 170 132C159.56 84.44 159.56 84.44 112 74C159.56 63.56 159.56 63.56 170 16Z'/%3E%3Cpath fill='white' fill-opacity='0.22' d='M92 16C94.52 27.48 94.52 27.48 106 30C94.52 32.52 94.52 32.52 92 44C89.48 32.52 89.48 32.52 78 30C89.48 27.48 89.48 27.48 92 16Z'/%3E%3Cpath fill='white' fill-opacity='0.18' d='M222 130C223.8 138.2 223.8 138.2 232 140C223.8 141.8 223.8 141.8 222 150C220.2 141.8 220.2 141.8 212 140C220.2 138.2 220.2 138.2 222 130Z'/%3E%3Cpath fill='white' fill-opacity='0.14' d='M70 111C71.26 116.74 71.26 116.74 77 118C71.26 119.26 71.26 119.26 70 125C68.74 119.26 68.74 119.26 63 118C68.74 116.74 68.74 116.74 70 111Z'/%3E%3C/svg%3E");
+  --icon-select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23A9B4C6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  --color-input-fill: color-mix(in srgb, var(--color-surface) 70%, var(--color-bg));
+  --color-border-field: var(--color-border-input); /* lightest grey that still keeps 3:1 against a white card (WCAG 1.4.11) */
+  --color-navy-hover: var(--rds-white-a12);
+  --color-brand-mark: var(--rds-steel-300);
+
+  --color-success: var(--rds-green-300);
+  --color-success-subtle: var(--rds-green-950);
+  --color-warning: var(--rds-amber-300);
+  --color-warning-subtle: var(--rds-amber-950);
+  --color-danger: var(--rds-red-300);
+  --color-danger-subtle: var(--rds-red-950);
+  --color-info: var(--rds-blue-300);
+  --color-info-subtle: var(--rds-blue-950);
+  --color-neutral: var(--rds-gray-400);
+  --color-neutral-subtle: var(--rds-gray-850);
+
+  --color-border: var(--rds-gray-800);
+  --color-border-input: var(--rds-gray-700);
+  --color-focus-ring: var(--rds-steel-300);
+  --color-focus-ring-on-navy: var(--rds-steel-300);
+  --color-overlay: var(--rds-black-a60);
+  --color-skeleton: var(--rds-gray-850);
+
+  --shadow-1: 0 0 0 1px var(--rds-gray-800);
+  --shadow-2: 0 16px 40px var(--rds-black-a40);
+
+  /* lucky draw wheel slices + the text on them (0.11.1) — same in both themes so the wheel looks the same everywhere */
+  --color-game-1: var(--rds-steel-300);
+  --color-game-2: var(--rds-amber-300);
+  --color-game-3: var(--rds-game-teal);
+  --color-game-4: var(--rds-red-300);
+  --color-game-5: var(--rds-game-yellow);
+  --color-game-6: var(--rds-game-purple);
+  --color-game-7: var(--rds-green-300);
+  --color-game-8: var(--rds-game-pink);
+  --color-game-ink: var(--rds-ink-900);
+  /* duck race scene (0.11.3) — the same in both themes, like the wheel */
+  --color-race-sky: var(--rds-race-sky);
+  --color-race-grass: var(--rds-race-grass);
+  --color-race-bush: var(--rds-race-bush);
+  --color-race-water: var(--rds-race-water);
+  --color-race-deep: var(--rds-race-deep);
+  --color-race-foam: var(--rds-gray-0);
+  /* printed paper (0.12.0 resume) — white paper and dark ink in both themes */
+  --color-paper: var(--rds-gray-0);
+  --color-paper-ink: var(--rds-ink-900);
+  --color-paper-muted: var(--rds-gray-600);
+  --color-paper-rule: var(--rds-gray-200);
+  --color-paper-ink-blue: var(--rds-ink-blue);
+}

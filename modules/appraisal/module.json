@@ -1,0 +1,28 @@
+{
+  "code": "appraisal",
+  "version": "1.0.0",
+  "pack": "hr",
+  "nav_section": "hr_people",
+  "spec": "M38",
+  "name": { "th": "ประเมินผลงาน", "en": "Performance appraisal" },
+  "icon": "star",
+  "sort_order": 41,
+  "depends_on": ["core", "employees"],
+  "permissions": {
+    "appraisal.use": "normal",
+    "appraisal.manage": "high"
+  },
+  "grants": {
+    "*": ["appraisal.use"],
+    "HRA": ["appraisal.manage"]
+  },
+  "menu": [
+    { "group": "work", "label": "appraisal.nav", "icon": "star", "href": "/appraisal", "permission": "appraisal.use" },
+    { "group": "work", "label": "appraisal.nav_admin", "icon": "list-check", "href": "/appraisal/admin", "permission": "appraisal.manage" }
+  ],
+  "jobs": {
+    "appraisal.reminders": { "every": 720, "call": "Blue\\Modules\\Appraisal\\AppraisalService::remindersJob" }
+  },
+  "measures": "Blue\\Modules\\Appraisal\\AppraisalMeasures",
+  "routes": "routes.php"
+}

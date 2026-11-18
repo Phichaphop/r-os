@@ -1,0 +1,197 @@
+{
+  "code": "attendance",
+  "version": "1.1.0",
+  "pack": "hr",
+  "nav_section": "hr_time",
+  "spec": "M34",
+  "name": {
+    "th": "เวลาทำงาน",
+    "en": "Attendance"
+  },
+  "icon": "clock",
+  "sort_order": 72,
+  "depends_on": [
+    "employees"
+  ],
+  "permissions": {
+    "attendance.use": "normal",
+    "attendance.approve": "normal",
+    "attendance.manage": "high",
+    "attendance.policy": "high",
+    "attendance.policy_approve": "high",
+    "attendance.collector": "high",
+    "attendance.period": "high",
+    "attendance.period_approve": "high",
+    "attendance.export": "high"
+  },
+  "grants": {
+    "*": [
+      "attendance.use"
+    ],
+    "HRA": [
+      "attendance.approve",
+      "attendance.manage",
+      "attendance.policy",
+      "attendance.policy_approve",
+      "attendance.collector",
+      "attendance.period",
+      "attendance.period_approve",
+      "attendance.export"
+    ],
+    "HRT": [
+      "attendance.approve",
+      "attendance.manage",
+      "attendance.period",
+      "attendance.export"
+    ],
+    "SYS": [
+      "attendance.collector"
+    ],
+    "PYA": [
+      "attendance.export"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "attendance.nav",
+      "icon": "clock",
+      "href": "/attendance",
+      "permission": "attendance.use"
+    },
+    {
+      "group": "work",
+      "label": "attendance.nav_periods",
+      "icon": "lock",
+      "href": "/attendance/periods",
+      "permission": "attendance.export"
+    },
+    {
+      "group": "settings",
+      "label": "attendance.nav_admin",
+      "icon": "settings",
+      "href": "/attendance/admin",
+      "permission": "attendance.manage"
+    },
+    {
+      "group": "settings",
+      "label": "attendance.nav_collector",
+      "icon": "database",
+      "href": "/attendance/collector",
+      "permission": "attendance.collector"
+    }
+  ],
+  "config": {
+    "attendance.schedule": [
+      "attendance",
+      "json",
+      null,
+      "organization,legal_entity",
+      {},
+      "high",
+      "COMPANY_POLICY",
+      false
+    ]
+  },
+  "config_owners": {
+    "attendance.schedule": {
+      "propose": "attendance.policy",
+      "workflow": "attendance.schedule",
+      "describe": "Blue\\Modules\\Attendance\\WorkSchedule::describe"
+    }
+  },
+  "workflows": {
+    "attendance.correction": {
+      "subject": "att_correction",
+      "class": "Blue\\Modules\\Attendance\\CorrectionSubject",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "manager",
+            "value": "attendance.approve"
+          },
+          "scope": "subject",
+          "sla_hours": 48
+        }
+      ]
+    },
+    "attendance.schedule": {
+      "subject": "config_version",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "permission",
+            "value": "attendance.policy_approve"
+          },
+          "scope": "subject",
+          "sla_hours": 72
+        }
+      ]
+    },
+    "attendance.period_close": {
+      "subject": "att_period_close",
+      "class": "Blue\\Modules\\Attendance\\PeriodCloseSubject",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "permission",
+            "value": "attendance.period_approve"
+          },
+          "scope": "subject",
+          "sla_hours": 48
+        }
+      ]
+    },
+    "attendance.period_reopen": {
+      "subject": "att_period_reopen",
+      "class": "Blue\\Modules\\Attendance\\PeriodReopenSubject",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "permission",
+            "value": "attendance.period_approve"
+          },
+          "scope": "subject",
+          "sla_hours": 48
+        }
+      ]
+    }
+  },
+  "document_classes": {
+    "attendance.evidence": [
+      "C",
+      "attendance.manage",
+      "attendance.manage",
+      [
+        "pdf",
+        "png",
+        "jpeg",
+        "webp"
+      ],
+      10,
+      true,
+      "wage_time_records",
+      "finalized"
+    ]
+  },
+  "imports": [
+    "Blue\\Modules\\Attendance\\PunchImport"
+  ],
+  "jobs": {
+    "attendance.pull": {
+      "every": 240,
+      "call": "Blue\\Modules\\Attendance\\PunchPuller::job"
+    },
+    "attendance.daily": {
+      "every": 360,
+      "call": "Blue\\Modules\\Attendance\\AttendanceService::dailyJob"
+    }
+  },
+  "demo": "Blue\\Modules\\Attendance\\AttendanceDemo::run",
+  "measures": "Blue\\Modules\\Attendance\\AttendanceMeasures",
+  "routes": "routes.php"
+}

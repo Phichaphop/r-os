@@ -1,0 +1,137 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/*
+ * Blue OS Time Collector — command line (office PC).
+ *
+ *   php collector/bin/collector status
+ *   php collector/bin/collector device:add <device-id> --serial=<serial> [--model=CiF510-FP] [--tz=Asia/Bangkok]
+ *   php collector/bin/collector key:add <key-id>              (asks for the secret shown ONCE in Blue OS)
+ *   php collector/bin/collector key:revoke <key-id>
+ *   php collector/bin/collector punch <device-id> <user-code> "<Y-m-d H:i:s local>" [finger|face|card|password]
+ *   php collector/bin/collector simulate <device-id> --from=Y-m-d [--to=Y-m-d] --users=000103,000104
+ *                         [--start=08:00] [--end=17:00] [--late=000104:25] [--miss=000105:out] [--absent=000106@2026-11-10]
+ *                         [--double=000103] [--seed=42] [--weekends]
+ *
+ * Settings: COLLECTOR_DB (SQLite file). The secret of a key is never printed back.
+ */
+
+require dirname(__DIR__) . '/bootstrap.php';
+
+use BlueCollector\Reader\SimulatedReader;
+use BlueCollector\Store;
+
+$args = array_slice($argv, 1);
+$cmd = array_shift($args) ?? 'help';
+$opts = [];
+$pos = [];
+foreach ($args as $a) {
+    if (preg_match('/^--([a-z]+)(?:=(.*))?$/', $a, $m) === 1) {
+        $opts[$m[1]] = $m[2] ?? '1';
+    } else {
+        $pos[] = $a;
+    }
+}
+$out = static function (string $s): void {
+    fwrite(STDOUT, $s . PHP_EOL);
+};
+try {
+    $store = new Store(collector_db_path());
+    $now = time();
+    switch ($cmd) {
+        case 'status':
+            $out('Collector DB: ' . collector_db_path());
+            $out('Punches stored: ' . $store->count());
+            foreach ($store->devices() as $d) {
+                $out(sprintf('Device %s · serial %s · %s · %s · last seen %s', $d['device_id'], $d['serial'], $d['model'], $d['timezone'], $d['last_seen_at'] ?? '-'));
+            }
+            foreach ($store->keys() as $k) {
+                $out(sprintf('Key %s · %s · added %s', $k['key_id'], $k['status'], $k['created_at']));
+            }
+            break;
+        case 'device:add':
+            $id = $pos[0] ?? throw new RuntimeException('device id?');
+            $store->addDevice($id, (string) ($opts['serial'] ?? $id), (string) ($opts['model'] ?? 'CiF510-FP'), (string) ($opts['tz'] ?? 'Asia/Bangkok'), $now);
+            $out('Device saved: ' . $id);
+            break;
+        case 'key:add':
+            $keyId = $pos[0] ?? throw new RuntimeException('key id?');
+            $secret = getenv('COLLECTOR_KEY_SECRET');
+            if (!is_string($secret) || $secret === '') {
+                fwrite(STDOUT, 'Secret (shown once in Blue OS): ');
+                if (function_exists('posix_isatty') && posix_isatty(STDIN)) {
+                    shell_exec('stty -echo');
+                    $secret = trim((string) fgets(STDIN));
+                    shell_exec('stty echo');
+                    fwrite(STDOUT, PHP_EOL);
+                } else {
+                    $secret = trim((string) fgets(STDIN));
+                }
+            }
+            $store->addKey($keyId, $secret, $now);
+            $out('Key saved: ' . $keyId . ' (the secret is not shown again)');
+            break;
+        case 'key:revoke':
+            $out($store->revokeKey($pos[0] ?? '', $now) ? 'Key revoked.' : 'No active key with that id.');
+            break;
+        case 'punch':
+            if (count($pos) < 3) {
+                throw new RuntimeException('punch <device-id> <user-code> "<Y-m-d H:i:s>" [verify]');
+            }
+            $e = $store->record($pos[0], $pos[1], $pos[2], $pos[3] ?? 'finger', $now);
+            $out($e !== null ? 'Recorded ' . $e : 'Already recorded.');
+            break;
+        case 'simulate':
+            $device = $pos[0] ?? throw new RuntimeException('device id?');
+            $from = (string) ($opts['from'] ?? gmdate('Y-m-d'));
+            $to = (string) ($opts['to'] ?? $from);
+            $dates = [];
+            for ($d = new DateTimeImmutable($from, new DateTimeZone('UTC')), $i = 0; $d->format('Y-m-d') <= $to && $i < 62; $d = $d->modify('+1 day'), $i++) {
+                $dates[] = $d->format('Y-m-d');
+            }
+            $users = array_values(array_filter(array_map('trim', explode(',', (string) ($opts['users'] ?? '')))));
+            if ($users === []) {
+                throw new RuntimeException('--users=000103,000104');
+            }
+            $o = [];
+            foreach (array_filter(explode(',', (string) ($opts['late'] ?? ''))) as $x) {
+                [$u, $min] = explode(':', $x) + [1 => '15'];
+                $o[$u]['late'] = (int) $min;
+            }
+            foreach (array_filter(explode(',', (string) ($opts['miss'] ?? ''))) as $x) {
+                [$u, $which] = explode(':', $x) + [1 => 'out'];
+                $o[$u]['miss'] = $which === 'in' ? 'in' : 'out';
+            }
+            foreach (array_filter(explode(',', (string) ($opts['double'] ?? ''))) as $u) {
+                $o[$u]['double'] = true;
+            }
+            $absent = [];
+            foreach (array_filter(explode(',', (string) ($opts['absent'] ?? ''))) as $x) {
+                [$u, $day] = explode('@', $x) + [1 => ''];
+                $absent[$u][] = $day;
+            }
+            $n = 0;
+            foreach ($dates as $date) {
+                $oDay = $o;
+                foreach ($absent as $u => $days) {
+                    if (in_array('', $days, true) || in_array($date, $days, true)) {
+                        $oDay[$u]['absent'] = true;
+                    }
+                }
+                $reader = new SimulatedReader([$date], $users, $oDay, (string) ($opts['start'] ?? '08:00'), (string) ($opts['end'] ?? '17:00'),
+                    isset($opts['seed']) ? (int) $opts['seed'] + crc32($date) % 1000 : 0, !isset($opts['weekends']));
+                foreach ($reader->read() as $p) {
+                    $n += $store->record($device, $p['user_code'], $p['local'], $p['verify'], $now, $p['seq'] ?? null) !== null ? 1 : 0;
+                }
+            }
+            $out('Simulated punches recorded: ' . $n);
+            break;
+        default:
+            $out('Blue OS Time Collector — commands: status · device:add · key:add · key:revoke · punch · simulate (see the top of this file)');
+    }
+} catch (Throwable $e) {
+    fwrite(STDERR, 'Error: ' . $e->getMessage() . PHP_EOL);
+    exit(1);
+}

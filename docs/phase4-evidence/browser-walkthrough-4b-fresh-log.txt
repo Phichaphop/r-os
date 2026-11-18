@@ -1,0 +1,35 @@
+collector page 200
+b00-collector-not-ready: /attendance/collector overflow=0 axe=[] flash=การเชื่อมต่อ hip.time_collector ยังไม่เปิดใช้งาน (ตั้งสถานะ ผลประเมินความเป็นส่วนตัว และที่อยู่ปลายทางในหน้าการเชื่อมต่อ)
+integration /admin/integrations/01M57N3W4KTPN2M1F9EMSC9MN8
+b01-integration-active: /admin/integrations/01M57N3W4KTPN2M1F9EMSC9MN8 overflow=0 axe=[] flash=บันทึกแล้ว
+key issued rk_afe431306b4c40f4
+b02-collector-ready: /attendance/collector overflow=0 axe=[]
+b03-pulled: /attendance/collector overflow=0 axe=[] flash=ดึงข้อมูลแล้ว: ใหม่ 53 รายการ · มีอยู่แล้ว 0 · ยังไม่มีเจ้าของ 6
+second pull flash ดึงข้อมูลแล้ว: ใหม่ 0 รายการ · มีอยู่แล้ว 0 · ยังไม่มีเจ้าของ 0
+b04-device-saved: /attendance/collector overflow=0 axe=[] flash=บันทึกเครื่องสแกนแล้ว
+b05-hr-admin-no-schedule: /attendance/admin overflow=0 axe=[] flash=ยังไม่มีเวลาทำงานมาตรฐาน ระบบแสดงเวลาสแกนและเวลาทำงาน แต่จะยังไม่ระบุว่าใครมาสายหรือออกก่อนเวลาจนกว่าจะมีเวลาทำงานที่อนุมัติแล้ว
+b06-schedule-sent: /attendance/admin?le=1 overflow=0 axe=[] flash=ส่งเวลาทำงานมาตรฐานให้ฝ่ายบุคคลอีกคนอนุมัติแล้ว
+schedule task 1
+b07-schedule-approval: /approvals/01M57N4V7AGMG0YGN59QSRQPR0 overflow=0 axe=[] RAWKEYS=attendance.schedule
+b08-schedule-approved: /approvals overflow=0 axe=[] flash=อนุมัติและดำเนินการแล้ว
+b09-team-month: /attendance/team?month=2026-10 overflow=0 axe=[] flash=คำนวณใหม่แล้ว 7 คน
+b10-hr-admin-unmapped: /attendance/admin overflow=0 axe=[] flash=มี 1 รหัสในเครื่องสแกนที่ยังไม่ได้ผูกกับพนักงาน ระบบเก็บเวลาสแกนไว้แล้ว แต่ยังไม่นับเป็นของใครจนกว่าจะผูกรหัสกับพนักงาน
+b11-my-month: /attendance?month=2026-10 overflow=0 axe=[]
+b12-day-missing-out: /attendance/day/2026-10-15 overflow=0 axe=[]
+b13-correction-sent: /attendance/c/01M57N57KRR3KKNVFC16ZRGQSX overflow=0 axe=[] flash=ส่งคำขอแก้เวลาให้ผู้อนุมัติแล้ว
+correction task 1
+b14-correction-approval: /approvals/01M57N57KS61WGDWNH6FPAMCSF overflow=0 axe=[]
+b15-correction-approved: /approvals overflow=0 axe=[] flash=อนุมัติและดำเนินการแล้ว
+b16-manager-team: /attendance/team?month=2026-10 overflow=0 axe=[]
+b17-day-corrected: /attendance/day/2026-10-15 overflow=0 axe=[]
+b18-my-month-after: /attendance?month=2026-10 overflow=0 axe=[]
+b19-import-form: /import/attendance.punches?le=1 overflow=0 axe=[]
+b20-import-preview: /import/batch/01M57N5JE2HPYK4FB2PAW1NTV6 overflow=0 axe=[]
+b21-import-done: /import/batch/01M57N5JE2HPYK4FB2PAW1NTV6 overflow=0 axe=[] flash=บันทึกแล้ว 2 รายการ
+b22-month-360: /attendance?month=2026-10 overflow=0 axe=[]
+b23-day-360: /attendance/day/2026-10-15 overflow=0 axe=[]
+b24-admin-dark: /attendance/admin overflow=0 axe=[] flash=มี 1 รหัสในเครื่องสแกนที่ยังไม่ได้ผูกกับพนักงาน ระบบเก็บเวลาสแกนไว้แล้ว แต่ยังไม่นับเป็นของใครจนกว่าจะผูกรหัสกับพนักงาน
+b25-collector-dark: /attendance/collector overflow=0 axe=[]
+b26-collector-360: /attendance/collector overflow=0 axe=[]
+employee admin 403 collector 403
+sys attendance admin 403

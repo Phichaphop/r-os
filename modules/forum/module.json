@@ -1,0 +1,66 @@
+{
+  "code": "forum",
+  "version": "1.0.0",
+  "pack": "workplace",
+  "nav_section": "core_plus",
+  "spec": "M54",
+  "name": {
+    "th": "กระดานสนทนา",
+    "en": "Discussion board"
+  },
+  "icon": "users",
+  "sort_order": 100,
+  "depends_on": [
+    "employees"
+  ],
+  "permissions": {
+    "forum.post": "normal",
+    "forum.moderate": "normal"
+  },
+  "grants": {
+    "*": [
+      "forum.post"
+    ],
+    "HRA": [
+      "forum.moderate"
+    ],
+    "WPA": [
+      "forum.moderate"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "forum.nav",
+      "icon": "users",
+      "href": "/forum",
+      "permission": "forum.post"
+    },
+    {
+      "group": "work",
+      "label": "forum.nav_moderate",
+      "icon": "shield-check",
+      "href": "/forum/moderate",
+      "permission": "forum.moderate"
+    }
+  ],
+  "document_classes": {
+    "forum.file": [
+      "I",
+      "forum.moderate",
+      "forum.moderate",
+      [
+        "pdf",
+        "png",
+        "jpeg",
+        "webp"
+      ],
+      5,
+      false,
+      "general_document",
+      "finalized"
+    ]
+  },
+  "demo": "Blue\\Modules\\Forum\\ForumDemo::run",
+  "routes": "routes.php"
+}

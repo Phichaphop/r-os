@@ -1,0 +1,92 @@
+{
+  "code": "announcements",
+  "version": "1.0.0",
+  "pack": "core_plus",
+  "spec": "M19",
+  "name": {
+    "th": "ประกาศ/PR",
+    "en": "Announcements"
+  },
+  "icon": "bell",
+  "sort_order": 20,
+  "depends_on": [
+    "employees"
+  ],
+  "permissions": {
+    "announcements.read": "normal",
+    "announcements.publish": "normal",
+    "announcements.approve": "high"
+  },
+  "grants": {
+    "*": [
+      "announcements.read"
+    ],
+    "HRA": [
+      "announcements.publish",
+      "announcements.approve"
+    ],
+    "HRT": [
+      "announcements.publish"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "announcements.nav",
+      "icon": "bell",
+      "href": "/announcements",
+      "permission": "announcements.read"
+    },
+    {
+      "group": "settings",
+      "label": "announcements.nav_admin",
+      "icon": "settings",
+      "href": "/announcements/admin",
+      "permission": "announcements.publish"
+    }
+  ],
+  "home": "Blue\\Modules\\Announcements\\AnnouncementHome::section",
+  "document_classes": {
+    "announcements.file": [
+      "I",
+      "announcements.publish",
+      "announcements.publish",
+      [
+        "pdf",
+        "png",
+        "jpeg",
+        "webp",
+        "docx",
+        "xlsx"
+      ],
+      10,
+      false,
+      "general_document",
+      "finalized"
+    ]
+  },
+  "workflows": {
+    "announcements.publish": {
+      "subject": "announcement",
+      "class": "Blue\\Modules\\Announcements\\AnnouncementSubject",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "permission",
+            "value": "announcements.approve"
+          },
+          "scope": "subject",
+          "sla_hours": 24
+        }
+      ]
+    }
+  },
+  "jobs": {
+    "announcements.schedule": {
+      "every": 15,
+      "call": "Blue\\Modules\\Announcements\\AnnouncementService::scheduleJob"
+    }
+  },
+  "routes": "routes.php"
+}

@@ -1,0 +1,85 @@
+/*
+ * Blue OS Design System — PRIMITIVE tokens (raw values). P0-05 §1.1
+ * Only semantic files may reference these. Views/components never use them directly.
+ */
+:root {
+  /* Steel Blue — palette C (DEC-37) */
+  --rds-steel-50: #F2F6FA;
+  --rds-steel-100: #E6EDF3;
+  --rds-steel-200: #C9DAE9;
+  --rds-steel-300: #9CC3E6;
+  --rds-steel-500: #4A7AA3;
+  --rds-steel-700: #2F5A7E;
+  --rds-steel-800: #234562;
+  --rds-steel-900: #1A2C3D;
+
+  /* Navy — sidebar / summary panels */
+  --rds-navy-700: #14305E;
+  --rds-navy-800: #0B1F44;
+  --rds-navy-950: #060C17;
+
+  /* Cool neutrals */
+  --rds-gray-0: #FFFFFF;
+  --rds-gray-25: #F6F8FB;
+  --rds-gray-50: #EEF1F6;
+  --rds-gray-100: #E3E8EF;
+  --rds-gray-200: #D8DFE9;
+  --rds-gray-400: #9AA6B8;
+  --rds-gray-500: #7D828C;
+  --rds-gray-600: #556173;
+  --rds-gray-700: #66738A;
+  --rds-gray-800: #243146;
+  --rds-gray-850: #172235;
+  --rds-gray-900: #111A28;
+  --rds-gray-950: #0A111C;
+  --rds-ink-900: #0D1B2E;
+
+  /* Status */
+  --rds-green-700: #127A4B;
+  --rds-green-100: #E3F4EB;
+  --rds-green-300: #4CC38A;
+  --rds-green-950: #0F2A1E;
+  --rds-amber-700: #9A5300;
+  --rds-amber-100: #FCF0DF;
+  --rds-amber-300: #F0A84A;
+  --rds-amber-950: #2E2010;
+  --rds-red-700: #B42318;
+  --rds-red-100: #FCE8E6;
+  --rds-red-300: #FF7A70;
+  --rds-red-950: #33130F;
+  --rds-blue-700: #1F5B9C;
+  --rds-blue-100: #E4EEF9;
+  --rds-blue-300: #8EBDF0;
+
+  /* Game palette — lucky draw wheel slices (0.11.1); dark ink text on all of them ≥ 7:1 */
+  --rds-game-purple: #B8A1F2;
+  --rds-game-teal: #5FCFC4;
+  --rds-game-yellow: #F7D35C;
+  --rds-game-pink: #F59AC2;
+  /* Duck race scene (0.11.3) */
+  --rds-race-sky: #CDE8FB;
+  --rds-race-grass: #8CCB6B;
+  --rds-race-bush: #5DA548;
+  --rds-race-water: #4FA8E6;
+  --rds-race-deep: #2A73B3;
+  --rds-blue-950: #0F2236;
+
+  /* Alpha helpers */
+  --rds-white-a08: rgb(255 255 255 / 0.08);
+  --rds-white-a12: rgb(255 255 255 / 0.12);
+  --rds-white-a72: rgb(255 255 255 / 0.72);
+  --rds-ink-a08: rgb(13 27 46 / 0.08);
+  --rds-ink-a16: rgb(13 27 46 / 0.16);
+  --rds-ink-a40: rgb(13 27 46 / 0.4);
+  --rds-black-a40: rgb(0 0 0 / 0.4);
+  --rds-black-a60: rgb(0 0 0 / 0.6);
+
+  /* Type families (P0-05 §1.3; display face matches the approved prototype) */
+  --rds-font-sans: 'IBM Plex Sans Thai', 'Sarabun', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --rds-font-display: 'Bai Jamjuree', 'IBM Plex Sans Thai', system-ui, sans-serif;
+  --rds-font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --rds-font-document: 'TH Sarabun New', 'TH SarabunPSK', 'Sarabun', 'IBM Plex Sans Thai', serif;
+
+  /* Signature ink on paper (0.39.0 signature tool) — the same in light and dark mode: the pad is a sheet of paper */
+  --rds-ink-blue: #1B3A8C;
+}

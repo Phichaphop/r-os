@@ -1,0 +1,57 @@
+{
+  "code": "events",
+  "version": "1.0.0",
+  "pack": "workplace",
+  "spec": "M50",
+  "name": {
+    "th": "จัดกิจกรรม",
+    "en": "Events"
+  },
+  "icon": "calendar-event",
+  "sort_order": 101,
+  "depends_on": [
+    "employees"
+  ],
+  "permissions": {
+    "events.join": "normal",
+    "events.manage": "normal",
+    "events.checkin": "normal"
+  },
+  "grants": {
+    "*": [
+      "events.join"
+    ],
+    "HRA": [
+      "events.manage",
+      "events.checkin"
+    ],
+    "WPA": [
+      "events.manage",
+      "events.checkin"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "events.nav",
+      "icon": "calendar-event",
+      "href": "/events",
+      "permission": "events.join"
+    },
+    {
+      "group": "work",
+      "label": "events.nav_manage",
+      "icon": "list-check",
+      "href": "/events/manage",
+      "permission": "events.manage"
+    }
+  ],
+  "jobs": {
+    "events.tick": {
+      "every": 60,
+      "call": "Blue\\Modules\\Events\\EventService::tickJob"
+    }
+  },
+  "demo": "Blue\\Modules\\Events\\EventsDemo::run",
+  "routes": "routes.php"
+}

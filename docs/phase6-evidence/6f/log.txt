@@ -1,0 +1,22 @@
+07-nov-needs-correction: /payroll/runs/01M5VHW5BWAK6JCMSJYN6BBCQN overflow=0 axe=[]
+correction: สร้างรอบแก้ไขแล้ว — กดคำนวณเพื่อดูส่วนต่าง || รอบแก้ไขของ เงินเดือน ต.ค. 2569 (ทดสอบ) เปิดรอบเดิม · คำนวณงวดเดิมใหม่ด้วยข้อมูลที่อนุมัติล่าสุด แล้วจ่ายเฉพาะส่วนต่างจา
+08-correction-draft: /payroll/runs/01M6ACDTCVRW42BQDYQ6GR02JK overflow=0 axe=[]
+calc corr: คำนวณแล้ว || รอบแก้ไขของ เงินเดือน ต.ค. 2569 (ทดสอบ) เปิดรอบเดิม · คำนวณงวดเดิมใหม่ด้วยข้อมูลที่อนุมัติล่าสุด แล้วจ่ายเฉพาะส่วนต่างจา
+09-correction-calculated: /payroll/runs/01M6ACDTCVRW42BQDYQ6GR02JK overflow=0 axe=[]
+10-correction-person: /payroll/runs/01M6ACDTCVRW42BQDYQ6GR02JK/e/01M57N3W7W9TQ6FQDHWPPNWTKW overflow=0 axe=[]
+submit corr: ส่งอนุมัติแล้ว || รอบแก้ไขของ เงินเดือน ต.ค. 2569 (ทดสอบ) เปิดรอบเดิม · คำนวณงวดเดิมใหม่ด้วยข้อมูลที่อนุมัติล่าสุด แล้วจ่ายเฉพาะส่วนต่างจา
+checker approved /approvals/01M6ACDWVW2X2XV0BJ19RCDJ98: อนุมัติและดำเนินการแล้ว
+approved: 1
+payment: สร้างชุดจ่ายเงินแล้ว (1 คน) · ไม่มีบัญชี 3 คน ต้องจ่ายทางอื่น || รอบแก้ไขของ เงินเดือน ต.ค. 2569 (ทดสอบ) เปิดรอบเดิม · คำนวณงวดเดิมใหม่ด้วยข้อมูลที่อนุมัติล่าสุด แล้วจ่ายเฉพาะส่วนต่างจา
+posting: ส่งบันทึกบัญชีแล้ว || รอบแก้ไขของ เงินเดือน ต.ค. 2569 (ทดสอบ) เปิดรอบเดิม · คำนวณงวดเดิมใหม่ด้วยข้อมูลที่อนุมัติล่าสุด แล้วจ่ายเฉพาะส่วนต่างจา
+11-correction-reconciled: /payroll/runs/01M6ACDTCVRW42BQDYQ6GR02JK overflow=0 axe=[]
+recon: กระทบยอดเงินเดือน ↔ การจ่ายเงิน ตรง ผลคำนวณที่เก็บไว้ ตรงค่าแฮช สุทธิที่ต้องจ่าย (รวม) 3,741.01 ไม่อยู่ในชุดจ่ายเงิน (ไม่มีบัญชี) 2,236.01 ชุดจ่ายเงิน 1,505.00 · PAY-202611-0003 · ร่าง ธนาคารจ่ายแล้ว 0.00 รายการที่ไม่ตรง 0 พนักงาน จ่ายสุทธิ ในชุดจ่ายเงิน สถานะ D1-0001 · ผู้จัดการฝ่ายบุคคล (DEMO) 896
+12-nov-after: /payroll/runs/01M5VHW5BWAK6JCMSJYN6BBCQN overflow=0 axe=[]
+13-correction-mobile: /payroll/runs/01M6ACDTCVRW42BQDYQ6GR02JK overflow=0 axe=[]
+14-correction-dark: /payroll/runs/01M6ACDTCVRW42BQDYQ6GR02JK overflow=0 axe=[]
+03-offcycle-approved: /payroll/runs/01M6AC0XEKYJ3BS5AS64XFHH2N overflow=0 axe=[]
+11-correction-reconciled: /payroll/runs/01M6ACDTCVRW42BQDYQ6GR02JK overflow=0 axe=[]
+notes: รอบแก้ไขของ เงินเดือน ต.ค. 2569 (ทดสอบ) เปิดรอบเดิม · คำนวณงวดเดิมใหม่ด้วยข้อมูลที่อนุมัติล่าสุด แล้วจ่ายเฉพาะส่วนต่างจากที่จ่ายไปแล้ว (รวมประกันสังคมและภาษี) — รอบเดิมไม่ถูกแก้ || ข้อสังเกตของทั้งรอบ รอบเดิมไม่ได้คำนวณภาษีหัก ณ ที่จ่ายด้วยระบบ รอบแก้ไขนี้จึงไม่คำนวณภาษีให้เช่นกัน — ถ้าฝ่ายภาษีกำหนด
+13-correction-mobile: /payroll/runs/01M6ACDTCVRW42BQDYQ6GR02JK overflow=0 axe=[]
+14-correction-dark: /payroll/runs/01M6ACDTCVRW42BQDYQ6GR02JK overflow=0 axe=[]
+15-employee-payslips: /payslips overflow=0 axe=[]

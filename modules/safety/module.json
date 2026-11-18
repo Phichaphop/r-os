@@ -1,0 +1,84 @@
+{
+  "code": "safety",
+  "version": "1.0.0",
+  "pack": "workplace",
+  "nav_section": "core_plus",
+  "spec": "M39",
+  "name": {
+    "th": "แจ้งอุบัติเหตุ / ความปลอดภัย",
+    "en": "Safety incidents"
+  },
+  "icon": "shield-check",
+  "sort_order": 102,
+  "depends_on": [
+    "employees"
+  ],
+  "permissions": {
+    "safety.report": "normal",
+    "safety.manage": "normal",
+    "safety.medical": "high",
+    "safety.view": "normal"
+  },
+  "grants": {
+    "*": [
+      "safety.report"
+    ],
+    "SFO": [
+      "safety.manage"
+    ],
+    "HRA": [
+      "safety.medical"
+    ],
+    "AUD": [
+      "safety.view"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "safety.nav",
+      "icon": "shield-check",
+      "href": "/safety",
+      "permission": "safety.report"
+    },
+    {
+      "group": "work",
+      "label": "safety.nav_manage",
+      "icon": "list-check",
+      "href": "/safety/manage",
+      "permission": "safety.manage"
+    },
+    {
+      "group": "settings",
+      "label": "safety.nav_settings",
+      "icon": "settings",
+      "href": "/safety/settings",
+      "permission": "safety.manage"
+    }
+  ],
+  "document_classes": {
+    "safety.evidence": [
+      "C",
+      "safety.manage",
+      "safety.manage",
+      [
+        "pdf",
+        "png",
+        "jpeg",
+        "webp"
+      ],
+      10,
+      false,
+      "general_document",
+      "finalized"
+    ]
+  },
+  "jobs": {
+    "safety.tick": {
+      "every": 60,
+      "call": "Blue\\Modules\\Safety\\SafetyService::tickJob"
+    }
+  },
+  "demo": "Blue\\Modules\\Safety\\SafetyDemo::run",
+  "routes": "routes.php"
+}

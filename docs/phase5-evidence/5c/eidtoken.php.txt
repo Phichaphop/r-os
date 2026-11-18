@@ -1,0 +1,7 @@
+<?php
+// prints the current verify URL of an employee's card (test helper for the walkthrough — same as the QR content)
+require $argv[1] . '/core/bootstrap.php';
+$app = Ros\Core\App::boot($argv[1]);
+$id = (int) $app->db()->scalar('SELECT id FROM employees WHERE employee_code = ?', [$argv[2]]);
+$card = Ros\Modules\Eid\CardService::of($app)->current($id);
+echo Ros\Modules\Eid\CardService::of($app)->qr($card, 'http://127.0.0.1:8098')['url'];

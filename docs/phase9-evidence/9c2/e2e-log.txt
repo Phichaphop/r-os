@@ -1,0 +1,21 @@
+01-campaigns: /assets/campaigns overflow=0 axe=[]
+create: สร้างรอบตรวจนับแล้ว
+02-campaign-draft: /assets/campaigns/01M6CJVA2KVWD50M5A7PCEV05M overflow=0 axe=[]
+start: เริ่มรอบแล้ว — ตรึง 5 รายการ
+03-campaign-counting: /assets/campaigns/01M6CJVA2KVWD50M5A7PCEV05M overflow=0 axe=[]
+04-count-desk: /assets/campaigns/01M6CJVA2KVWD50M5A7PCEV05M/count overflow=0 axe=[]
+scope: FN-0001,NB-0001,NB-0002,NB-0003,TL-0001
+FN-0001: บันทึกแล้ว: พบต่างสถานที่
+NB-0001: บันทึกแล้ว: ตรง
+NB-0002: บันทึกแล้ว: ตรง
+NB-0003: บันทึกแล้ว: ตรง
+05-count-unknown: /assets/campaigns/01M6CJVA2KVWD50M5A7PCEV05M/count overflow=0 axe=[]
+unknown: บันทึกแล้ว: ไม่อยู่ในรายการ
+finish: จบการนับแล้ว — เปิด 3 เคส
+06-campaign-reviewing: /assets/campaigns/01M6CJVA2KVWD50M5A7PCEV05M overflow=0 axe=[]
+open cases 3
+07-campaign-finance: /assets/campaigns/01M6CJVA2KVWD50M5A7PCEV05M overflow=0 axe=[]
+close: ปิดรอบแล้ว
+08-campaign-closed: /assets/campaigns/01M6CJVA2KVWD50M5A7PCEV05M overflow=0 axe=[]
+09-campaign-390-dark: /assets/campaigns/01M6CJVA2KVWD50M5A7PCEV05M overflow=0 axe=[]
+10-campaigns-390-dark: /assets/campaigns overflow=0 axe=[]

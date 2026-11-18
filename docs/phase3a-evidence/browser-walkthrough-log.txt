@@ -1,0 +1,20 @@
+after login: /
+03-home: overflow=0 axe=[]
+04-config: overflow=0 axe=[]
+05-config-key: overflow=0 axe=[]
+06-appearance: overflow=0 axe=[]
+07-workflows: overflow=0 axe=[]
+08-inbox: overflow=0 axe=[]
+09-notifications: overflow=0 axe=[]
+10-users: overflow=0 axe=[]
+11-config-version-draft: overflow=0 axe=[]
+save disabled with bad colour: true
+12-appearance-bad-colour: overflow=0 axe=["serious:color-contrast(7) .topbar__lang-label | .avatar"]
+13-users-teal: overflow=0 axe=[]
+14-my-requests-360: overflow=0 axe=[]
+15-inbox-sys2: overflow=0 axe=[]
+inbox items: 2
+16-detail-0: overflow=0 axe=[]
+after approve: /approvals flash=อนุมัติและดำเนินการแล้ว
+16-detail-1: overflow=0 axe=[]
+after approve: /approvals flash=อนุมัติและดำเนินการแล้ว

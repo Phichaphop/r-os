@@ -1,0 +1,28 @@
+{
+  "code": "pdf",
+  "version": "1.0.0",
+  "pack": "utilities",
+  "spec": "S01",
+  "name": { "th": "เครื่องมือ PDF", "en": "PDF toolkit" },
+  "icon": "file-type-pdf",
+  "sort_order": 50,
+  "depends_on": ["core"],
+  "permissions": { "pdf.use": "normal", "pdf.manage": "high" },
+  "grants": { "*": ["pdf.use"], "SYS": ["pdf.manage"] },
+  "menu": [
+    { "group": "tools", "label": "pdf.nav", "icon": "file-type-pdf", "href": "/pdf", "permission": "pdf.use" }
+  ],
+  "config": {
+    "pdf.disabled_features": ["pdf", "json", null, "organization", {}, "normal", "TECHNICAL", false],
+    "pdf.max_mb": ["pdf", "integer", "MB", "organization", { "min": 1, "max": 100 }, "normal", "TECHNICAL", false],
+    "pdf.max_pages": ["pdf", "integer", "page", "organization", { "min": 1, "max": 5000 }, "normal", "TECHNICAL", false],
+    "pdf.max_files": ["pdf", "integer", "file", "organization", { "min": 2, "max": 50 }, "normal", "TECHNICAL", false],
+    "pdf.temp_hours": ["pdf", "integer", "hour", "organization", { "min": 1, "max": 168 }, "normal", "TECHNICAL", false],
+    "pdf.result_minutes": ["pdf", "integer", "minute", "organization", { "min": 10, "max": 1440 }, "normal", "TECHNICAL", false]
+  },
+  "jobs": {
+    "pdf.cleanup": { "every": 60, "call": "Blue\\Modules\\Pdf\\PdfService::cleanupJob" }
+  },
+  "guest": {"paths": ["GET /pdf", "(GET|POST) /pdf/tool/[a-z_]{3,20}", "GET /pdf/job/[0-9A-HJKMNP-TV-Z]{26}", "POST /pdf/job/[0-9A-HJKMNP-TV-Z]{26}/(run|discard)", "GET /pdf/job/[0-9A-HJKMNP-TV-Z]{26}/(file/[0-9]{1,3}|zip|preview/(in|out)/[0-9]{1,3})", "GET /pdf/sign"], "permissions": ["pdf.use"]},
+  "routes": "routes.php"
+}

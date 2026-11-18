@@ -1,0 +1,26 @@
+# Phase 3U-A browser walkthrough (Chromium/Playwright, upgrade 0.3.4 -> 0.4.0 on scratch install, DEMO data)
+01-update-done: /system/update overflow=0 axe=[] flash=อัปเดตแล้ว (2 รายการ)
+02-modules: /admin/modules overflow=0 axe=[]
+03-links-manage: /links/manage overflow=0 axe=[]
+04-link-published: /links/manage/01M56780VNWABYCDBAXPQPER6G overflow=0 axe=[] flash=เผยแพร่แล้ว
+05-links-employee: /links overflow=0 axe=[]
+link opens new tab: yes
+06-crypto-hash: /crypto overflow=0 axe=[] flash=เครื่องมือช่วยทดลองและงานเทคนิคเท่านั้น ไม่ใช่ระบบจัดการรหัสผ่านจริง · ทำงานบนเซิร์ฟเวอร์ของบริษัท ไ
+07-crypto-encode: /crypto overflow=0 axe=[] flash=เครื่องมือช่วยทดลองและงานเทคนิคเท่านั้น ไม่ใช่ระบบจัดการรหัสผ่านจริง · ทำงานบนเซิร์ฟเวอร์ของบริษัท ไ
+08-crypto-random: /crypto overflow=0 axe=[] flash=เครื่องมือช่วยทดลองและงานเทคนิคเท่านั้น ไม่ใช่ระบบจัดการรหัสผ่านจริง · ทำงานบนเซิร์ฟเวอร์ของบริษัท ไ
+09-qr-empty: /qr overflow=0 axe=[]
+10-qr-preview: /qr/preview overflow=0 axe=[]
+download: download
+11-qr-saved-static: /qr/01M5678BTKGMEQZM8YEJDNVZYJ overflow=0 axe=[] flash=บันทึก QR แล้ว
+12-qr-managed: /qr/01M5678D0Z51TXTMFG22KEFV4C overflow=0 axe=[] flash=บันทึก QR แล้ว
+short link: http://127.0.0.1:8096/q/6Yal0Z3S3w
+guest scan → 302 https://forms.example.com/survey
+13-qr-revoked: /qr/01M5678D0Z51TXTMFG22KEFV4C overflow=0 axe=[] flash=บันทึกการเปลี่ยนแปลงแล้ว
+guest after revoke: R-OS QR นี้ใช้ไม่ได้ เจ้าของได้ยกเลิก QR นี้แล้ว
+15-qr-batch: /qr/batch overflow=0 axe=[]
+16-links-360: /links overflow=0 axe=[]
+17-qr-360: /qr overflow=0 axe=[]
+18-crypto-360: /crypto overflow=0 axe=[] flash=เครื่องมือช่วยทดลองและงานเทคนิคเท่านั้น ไม่ใช่ระบบจัดการรหัสผ่านจริง · ทำงานบนเซิร์ฟเวอร์ของบริษัท ไ
+19-modules-dark: /admin/modules overflow=0 axe=[]
+20-links-dark: /links overflow=0 axe=[]
+# QR decoded with ZXing from the page screenshot and the downloaded PNG: https://example.com/menu?table=12&openExternalBrowser=1 (both)

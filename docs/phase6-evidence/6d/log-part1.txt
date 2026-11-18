@@ -1,0 +1,29 @@
+# p0220 part 1 — copied from the console (the script stopped before writing its log)
+01-my-welfare: /welfare overflow=0 axe=[]
+claim errors: จำนวนเงินมากกว่า 0 ทศนิยมไม่เกิน 2 ตำแหน่ง | อธิบาย 3–500 ตัวอักษร
+02-claim-errors: /welfare/claims overflow=0 axe=[]
+saved: บันทึกแล้ว — ตรวจผลก่อนส่ง
+03-claim-checked: /welfare/claims/01M5WAM0YZPKG6HHFJC6XNF7V3 overflow=0 axe=[]
+submit: ส่งเบิกแล้ว — รอฝ่ายบุคคลตรวจ
+04-claim-sent: /welfare/claims/01M5WAM0YZPKG6HHFJC6XNF7V3 overflow=0 axe=[]
+duplicate check: ไฟล์นี้ถูกใช้ในการเบิกอื่นแล้ว
+05-duplicate-blocked: /welfare/claims/01M5WAM2P8K4ET41SKT8HW5GZA overflow=0 axe=[]
+cancel dup: ยกเลิกการเบิกแล้ว
+06-new-claim-mobile: /welfare/new overflow=0 axe=[]
+06b-claim-mobile: /welfare/claims/01M5WAM0YZPKG6HHFJC6XNF7V3 overflow=0 axe=[]
+07-admin-queue: /welfare/admin overflow=0 axe=[]
+08-review-form: /welfare/claims/01M5WAM0YZPKG6HHFJC6XNF7V3 overflow=0 axe=[]
+pass: ส่งต่อให้ผู้อนุมัติแล้ว || รอผู้อนุมัติ (คนละคนกับผู้ตรวจ)
+09-reviewer-waits: /welfare/claims/01M5WAM0YZPKG6HHFJC6XNF7V3 overflow=0 axe=[]
+reviewer sees a decision form at step 2: 0
+10-approve-form: /welfare/claims/01M5WAM0YZPKG6HHFJC6XNF7V3 overflow=0 axe=[]
+approve (15000): ข้อมูลบางช่องยังไม่ถูกต้อง … เกินจำนวนที่จ่ายได้
+over amount error: เกินจำนวนที่จ่ายได้
+approve (12000, after the password): บันทึกการอนุมัติแล้ว
+11-approved: /welfare/claims/01M5WAM0YZPKG6HHFJC6XNF7V3 overflow=0 axe=[]
+funeral check: ผ่านการตรวจทั้งหมด | จำนวนที่เบิกเกินวงเงิน — จ่ายได้ไม่เกินที่ระบบคำนวณ
+submit funeral: ส่งเบิกแล้ว — รอฝ่ายบุคคลตรวจ
+return: ส่งกลับให้พนักงานเพิ่มข้อมูลแล้ว
+12-need-info: /welfare/claims/01M5WAMD6GMDJ3V2YW4BAQSYPY overflow=0 axe=[]
+edit: เอาไฟล์ออกแล้ว   ← BUG D6D-01: the first submit button of the edit form was "remove file"
+(stopped: the receipt was gone, so the claim could not be sent — fixed, continued in part 2)

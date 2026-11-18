@@ -1,0 +1,36 @@
+01-forum: /forum overflow=0 axe=[]
+02-forum-new: /forum/new overflow=0 axe=[]
+thread: ตั้งกระทู้แล้ว
+03-thread: /forum/t/01M6D7C083X7FWWTCV9XC5V13R overflow=0 axe=[]
+reply: ตอบแล้ว
+like: ถูกใจแล้ว
+report: ส่งรายงานให้ผู้ดูแลแล้ว
+04-thread-replied: /forum/t/01M6D7C083X7FWWTCV9XC5V13R overflow=0 axe=[]
+05-moderate: /forum/moderate overflow=0 axe=[]
+dismiss: บันทึกว่าไม่ดำเนินการแล้ว
+pin: ปักหมุดแล้ว
+06-thread-moderator: /forum/t/01M6D7C083X7FWWTCV9XC5V13R overflow=0 axe=[]
+07-events-manage: /events/manage overflow=0 axe=[]
+08-event-new: /events/manage/new overflow=0 axe=[]
+event: บันทึกแล้ว
+09-event-draft: /events/m/01M6D7C8P0YC6HRASQAXBYRCHY overflow=0 axe=[]
+publish: เผยแพร่และเปิดลงทะเบียนแล้ว
+10-events-mine: /events overflow=0 axe=[]
+join: ลงทะเบียนแล้ว
+11-event-joined: /events/e/01M6D7C8P0YC6HRASQAXBYRCHY overflow=0 axe=[]
+12-desk: /events/m/01M6D7C8P0YC6HRASQAXBYRCHY/desk overflow=0 axe=[]
+desk code: เช็กอินแล้ว: พนักงานตัวอย่าง (DEMO)
+desk card: บัตรนี้ยังไม่ได้ผูกกับพนักงาน
+13-desk-unknown-card: /events/m/01M6D7C8P0YC6HRASQAXBYRCHY/desk overflow=0 axe=[]
+pair: walk-in: หัวหน้าฝ่ายขาย (DEMO) — บันทึกเป็นผู้เข้าร่วมแล้ว
+card again: หัวหน้าฝ่ายขาย (DEMO) เช็กอินไปแล้ว
+14-desk-counts: /events/m/01M6D7C8P0YC6HRASQAXBYRCHY/desk overflow=0 axe=[]
+15-event-report: /events/m/01M6D7C8P0YC6HRASQAXBYRCHY/report overflow=0 axe=[]
+16-event-manage: /events/m/01M6D7C8P0YC6HRASQAXBYRCHY overflow=0 axe=[]
+17-forum-390-dark: /forum overflow=0 axe=[]
+18-thread-390-dark: /forum/t/01M6D7C083X7FWWTCV9XC5V13R overflow=0 axe=[]
+19-events-390-dark: /events overflow=0 axe=[]
+20-event-390-dark: /events/e/01M6D7C8P0YC6HRASQAXBYRCHY overflow=0 axe=[]
+21-desk-390-dark: /events/m/01M6D7C8P0YC6HRASQAXBYRCHY/desk overflow=0 axe=[]
+22-report-390-dark: /events/m/01M6D7C8P0YC6HRASQAXBYRCHY/report overflow=0 axe=[]
+status: checked_in	0	code | checked_in	1	card

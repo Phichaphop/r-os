@@ -1,0 +1,123 @@
+{
+  "code": "requisition",
+  "version": "1.0.0",
+  "pack": "workplace",
+  "spec": "M01",
+  "name": {
+    "th": "เบิกอุปกรณ์สำนักงาน",
+    "en": "Office supplies"
+  },
+  "icon": "shopping-cart",
+  "sort_order": 90,
+  "depends_on": [
+    "core",
+    "employees"
+  ],
+  "permissions": {
+    "requisition.use": "normal",
+    "requisition.approve": "normal",
+    "requisition.special": "normal",
+    "requisition.issue": "normal",
+    "requisition.manage": "normal"
+  },
+  "grants": {
+    "*": [
+      "requisition.use"
+    ],
+    "WPA": [
+      "requisition.approve",
+      "requisition.special",
+      "requisition.issue",
+      "requisition.manage"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "requisition.nav",
+      "icon": "shopping-cart",
+      "href": "/requisition",
+      "permission": "requisition.use"
+    },
+    {
+      "group": "work",
+      "label": "requisition.nav_issue",
+      "icon": "qrcode",
+      "href": "/requisition/issue",
+      "permission": "requisition.issue"
+    },
+    {
+      "group": "settings",
+      "label": "requisition.nav_admin",
+      "icon": "settings",
+      "href": "/requisition/admin",
+      "permission": "requisition.manage"
+    }
+  ],
+  "workflows": {
+    "requisition.request": {
+      "subject": "rq_request",
+      "class": "Blue\\Modules\\Requisition\\RequestSubject",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "manager",
+            "value": "requisition.approve"
+          },
+          "scope": "subject",
+          "sla_hours": 24
+        }
+      ]
+    },
+    "requisition.special": {
+      "subject": "rq_request",
+      "class": "Blue\\Modules\\Requisition\\RequestSubject",
+      "no_fallback": true,
+      "distinct_steps": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "manager",
+            "value": "requisition.approve"
+          },
+          "scope": "subject",
+          "sla_hours": 24
+        },
+        {
+          "approver": {
+            "type": "permission",
+            "value": "requisition.special"
+          },
+          "scope": "subject",
+          "sla_hours": 24
+        }
+      ]
+    }
+  },
+  "document_classes": {
+    "requisition.photo": [
+      "I",
+      "requisition.manage",
+      "requisition.manage",
+      [
+        "png",
+        "jpeg",
+        "webp"
+      ],
+      5,
+      false,
+      "general_document",
+      "finalized"
+    ]
+  },
+  "jobs": {
+    "requisition.tick": {
+      "every": 60,
+      "call": "Blue\\Modules\\Requisition\\RequisitionService::tickJob"
+    }
+  },
+  "demo": "Blue\\Modules\\Requisition\\RequisitionDemo::run",
+  "personal_data": "Blue\\Modules\\Requisition\\RequisitionPersonalData",
+  "routes": "routes.php"
+}

@@ -1,0 +1,109 @@
+# Blue OS CI (DEC-42, P0-06 §12.1): every push / PR.
+# lint (PSR-12) → PHPStan → static checks (TC-AI-00, secrets, tokens, layering) → PHPUnit (unit + integration on MariaDB) → audits.
+name: CI
+
+on:
+  workflow_call:
+  push:
+    branches: [main, 'feature/**']
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.1', '8.3']
+    services:
+      mariadb:
+        image: mariadb:10.11
+        env:
+          MARIADB_DATABASE: blue_test
+          MARIADB_USER: blue
+          MARIADB_PASSWORD: blue_ci_pw
+          MARIADB_ROOT_PASSWORD: root_ci_pw
+        ports: ['3306:3306']
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=5s --health-timeout=5s --health-retries=20
+    env:
+      BLUE_APP_ENV: ci
+      BLUE_TEST_DB_HOST: 127.0.0.1
+      BLUE_TEST_DB_PORT: 3306
+      BLUE_TEST_DB_NAME: blue_test
+      BLUE_TEST_DB_USER: blue
+      BLUE_TEST_DB_PASS: blue_ci_pw
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: pdo_mysql, mbstring, intl, sodium
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dev tools
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: PHP syntax
+        run: find core modules public bin tests config -name '*.php' -print0 | xargs -0 -n1 php -l > /dev/null && php -l bin/blue
+
+      - name: Coding standard (PSR-12)
+        run: vendor/bin/phpcs
+
+      - name: Static analysis (PHPStan)
+        run: vendor/bin/phpstan analyse --no-progress --memory-limit=512M
+
+      - name: Blue OS static checks (TC-AI-00, secrets, tokens, architecture)
+        run: php bin/blue check:all
+
+      - name: Publish UI assets
+        run: php bin/blue assets:publish
+
+      - name: PHPUnit (unit + integration + arch)
+        run: |
+          mkdir -p build
+          vendor/bin/phpunit --log-junit build/junit-php${{ matrix.php }}.xml --testdox-text build/testdox-php${{ matrix.php }}.txt
+
+      - name: Migration runner — CLI twice (must be a no-op the second time)
+        env:
+          BLUE_DB_HOST: 127.0.0.1
+          BLUE_DB_NAME: blue_test
+          BLUE_DB_USER: blue
+          BLUE_DB_PASS: blue_ci_pw
+        run: |
+          php bin/blue migrate | tee build/migrate-1.txt
+          php bin/blue migrate | tee build/migrate-2.txt
+          grep -q "0 applied" build/migrate-2.txt
+          php bin/blue migrate:status
+
+      - name: Composer audit
+        run: composer audit --no-interaction
+
+      - name: Test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-evidence-php${{ matrix.php }}
+          path: build/
+          retention-days: 90
+
+  secrets:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

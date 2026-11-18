@@ -1,0 +1,8 @@
+﻿employee_code,employee_name,site,department,scheduled_days,worked_days,absent_days,missing_punch_days,late_count,late_minutes,early_count,early_minutes,worked_hours,leave_days_total,holiday_days,off_days,no_data_days,corrected_days
+D1-0001,"ผู้จัดการฝ่ายบุคคล (DEMO)",HQ,HR,22,0,0,0,0,0,0,0,0,0,0,8,22,0
+D1-0002,"HR Admin บริษัทตัวอย่าง (DEMO)",HQ,HR,22,0,0,0,0,0,0,0,0,0,0,8,22,0
+D1-0003,"หัวหน้าฝ่ายขาย (DEMO)",BR1,SALES,22,0,0,0,0,0,0,0,0,0,0,8,22,0
+D1-0004,"พนักงานตัวอย่าง (DEMO)",BR1,SALES,22,0,0,0,0,0,0,0,0,0,0,8,22,0
+D1-0005,"พนักงานขายสอง (DEMO)",BR1,SALES,22,0,0,0,0,0,0,0,0,0,0,8,22,0
+D1-0006,"พนักงานขายสาม (DEMO)",BR1,SALES,22,0,0,0,0,0,0,0,0,0,0,8,22,0
+D1-0007,"พนักงานรายวัน (DEMO)",BR1,SALES,22,0,0,0,0,0,0,0,0,0,0,8,22,0

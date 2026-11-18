@@ -1,0 +1,24 @@
+regen: สร้างและตรวจแล้ว || ยังไม่มีไฟล์ตามรูปแบบที่ราชการกำหนด ไฟล์ที่ส่งออกเป็นฉบับตรวจทานเท่านั้น ไม่ใช่ไฟล์ยื่นราชการ — ยอดในหน้านี้มาจากรอบเงิน
+05-wht-ready: /filing/r/01M6AFPR1NWJPFRT8ZPYTEKSZB overflow=0 axe=[]
+submit: ส่งอนุมัติแล้ว || ยังไม่มีไฟล์ตามรูปแบบที่ราชการกำหนด ไฟล์ที่ส่งออกเป็นฉบับตรวจทานเท่านั้น ไม่ใช่ไฟล์ยื่นราชการ — ยอดในหน้านี้มาจากรอบเงิน
+06-wht-pending: /filing/r/01M6AFPR1NWJPFRT8ZPYTEKSZB overflow=0 axe=[]
+07-approval: /approvals/01M6AFPS0TVJS63XPP3ZYE714P overflow=0 axe=[]
+approved: อนุมัติและดำเนินการแล้ว
+08-wht-approved: /filing/r/01M6AFPR1NWJPFRT8ZPYTEKSZB overflow=0 axe=[]
+export → /reauth
+xlsx 4210 bytes sha256=50778655a2e9564e
+09-wht-exported: /filing/r/01M6AFPR1NWJPFRT8ZPYTEKSZB overflow=0 axe=[]
+submission bad: ยังไม่มีไฟล์ตามรูปแบบที่ราชการกำหนด ไฟล์ที่ส่งออกเป็นฉบับตรวจทานเท่านั้น ไม่ใช่ไฟล์ยื่นราชการ — ยอดในหน้านี้มาจากรอบเงิน
+10-submission-error: /filing/r/01M6AFPR1NWJPFRT8ZPYTEKSZB/submission overflow=0 axe=[]
+submission: บันทึกการยื่นแล้ว || ยังไม่มีไฟล์ตามรูปแบบที่ราชการกำหนด ไฟล์ที่ส่งออกเป็นฉบับตรวจทานเท่านั้น ไม่ใช่ไฟล์ยื่นราชการ — ยอดในหน้านี้มาจากรอบเงิน
+11-wht-filed: /filing/r/01M6AFPR1NWJPFRT8ZPYTEKSZB overflow=0 axe=[]
+result: บันทึกผลแล้ว || ยังไม่มีไฟล์ตามรูปแบบที่ราชการกำหนด ไฟล์ที่ส่งออกเป็นฉบับตรวจทานเท่านั้น ไม่ใช่ไฟล์ยื่นราชการ — ยอดในหน้านี้มาจากรอบเงิน
+12-wht-accepted: /filing/r/01M6AFPR1NWJPFRT8ZPYTEKSZB overflow=0 axe=[]
+receipt 200 application/pdf
+sso nov: สร้างและตรวจแล้ว || ยังไม่มีไฟล์ตามรูปแบบที่ราชการกำหนด ไฟล์ที่ส่งออกเป็นฉบับตรวจทานเท่านั้น ไม่ใช่ไฟล์ยื่นราชการ — ยอดในหน้านี้มาจากรอบเงิน
+13-sso-nov: /filing/r/01M6AFPZKQJQ710GM18A0981BY overflow=0 axe=[]
+14-filing-home-after: /filing overflow=0 axe=[]
+15-sso-mobile: /filing/r/01M6AFPZKQJQ710GM18A0981BY overflow=0 axe=[]
+16-home-mobile: /filing overflow=0 axe=[]
+17-wht-dark: /filing/r/01M6AFPR1NWJPFRT8ZPYTEKSZB overflow=0 axe=[]
+employee /filing → 403

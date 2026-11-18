@@ -1,0 +1,21 @@
+01-esign-hr: /esign overflow=0 axe=[]
+02-esign-new: /esign/new overflow=0 axe=[]
+bad page: ไม่มีหน้านี้ในเอกสาร
+03-esign-new-error: /esign/new overflow=0 axe=[]
+draft: บันทึกร่างแล้ว → /esign/r/01M5V23676QBSWWDAZ5WKWXDWW
+04-esign-draft: /esign/r/01M5V23676QBSWWDAZ5WKWXDWW overflow=0 axe=[]
+send: ส่งให้ลงนามแล้ว
+05-esign-inbox: /esign overflow=0 axe=[]
+06-esign-sign: /esign/r/01M5V23676QBSWWDAZ5WKWXDWW overflow=0 axe=[]
+sign wrong: ชื่อที่พิมพ์ไม่ตรงกับชื่อของคุณในระบบ | รหัสผ่านไม่ถูกต้อง
+07-esign-sign-error: /esign/r/01M5V23676QBSWWDAZ5WKWXDWW/sign overflow=0 axe=[]
+signed (employee): ลงนามแล้ว
+signed (manager): ลงนามแล้ว
+08-esign-completed: /esign/r/01M5V23676QBSWWDAZ5WKWXDWW overflow=0 axe=[]
+signed pdf: 200 38203 bytes
+09-esign-verify: /esign/verify overflow=0 axe=[]
+verify:  ตรงกับฉบับลงนามแล้ว
+10-esign-verify-result: /esign/verify overflow=0 axe=[]
+11-esign-admin: /esign/admin overflow=0 axe=[]
+12-esign-mobile: /esign/r/01M5V23676QBSWWDAZ5WKWXDWW overflow=0 axe=[]
+13-esign-dark: /esign overflow=0 axe=[]

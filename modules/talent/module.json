@@ -1,0 +1,33 @@
+{
+  "code": "talent",
+  "version": "1.0.0",
+  "pack": "hr",
+  "nav_section": "recruitment",
+  "spec": "M49",
+  "name": { "th": "คลังเรซูเม่", "en": "Talent pool" },
+  "icon": "users",
+  "sort_order": 35,
+  "depends_on": ["core", "employees", "recruit"],
+  "permissions": {
+    "talent.use": "high",
+    "talent.manage": "high",
+    "talent.builder": "normal"
+  },
+  "grants": {
+    "*": ["talent.builder"],
+    "HRA": ["talent.use", "talent.manage"],
+    "HRT": ["talent.use"]
+  },
+  "menu": [
+    { "group": "work", "label": "talent.nav", "icon": "users", "href": "/talent", "permission": "talent.use" },
+    { "group": "work", "label": "talent.nav_builder", "icon": "file-text", "href": "/talent/builder", "permission": "talent.builder" }
+  ],
+  "guest": { "paths": ["(GET|POST) /talent/builder"], "permissions": ["talent.builder"], "href": "/talent/builder" },
+  "document_classes": {
+    "talent.cv": ["C", "talent.use", "talent.use", ["pdf", "docx", "jpeg", "png"], 5, true, "applicant_unsuccessful", "created"]
+  },
+  "jobs": {
+    "talent.housekeeping": { "every": 60, "call": "Blue\\Modules\\Talent\\TalentService::housekeepingTask" }
+  },
+  "routes": "routes.php"
+}

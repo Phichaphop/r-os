@@ -1,0 +1,8 @@
+q1-race-start: /draw/quick overflow=0 axe=[]
+q race took ~13s · winner: ปิติ
+q5-race-winner: /draw/quick overflow=0 axe=[]
+s1-race-start: /draw overflow=0 axe=[]
+s race took ~13s · winner: นิดา
+s5-race-winner: /draw/01M5SR3AJ8SAXQVKFHZ0QBKQMY overflow=0 axe=[]
+m1-race-390: /draw/quick overflow=0 axe=[]
+d1-race-dark: /draw/quick overflow=0 axe=[]

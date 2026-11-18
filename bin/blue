@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+if (PHP_SAPI !== 'cli') {
+    exit(1);
+}
+
+require __DIR__ . '/../core/bootstrap.php';
+
+use Blue\Core\App;
+use Blue\Core\Console\Console;
+
+exit((new Console(App::boot(BLUE_ROOT)))->run($argv));

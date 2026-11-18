@@ -1,0 +1,17 @@
+# Used ONLY when the whole repository is uploaded into a web root that cannot point
+# at public/ (e.g. InfinityFree htdocs). P0-02 §12 note: block every non-public folder
+# and forward everything else to public/. MUST be verified on the host (TC-SEC-P1-05).
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^(core|modules|config|storage|tests|ui|bin|vendor|collector|docs|\.git|\.github)(/|$) - [F,L]
+  RewriteRule ^(composer\.(json|lock)|phpunit\.xml|phpstan\.neon|phpcs\.xml|README\.md|\.env.*)$ - [F,L]
+  # Works at the domain root AND in a sub-folder (XAMPP: http://localhost/<folder>/)
+  RewriteRule ^public/ - [L]
+  RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>

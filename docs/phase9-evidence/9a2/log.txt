@@ -1,0 +1,41 @@
+CSP img-src: img-src 'self' data: blob: https://tile.openstreetmap.org
+tiles requested: 15 leaflet=1
+default site: BR1
+from own fields hidden after picking a place: true
+to point after a map click: 13.721493, 100.564728 · estimate: 3.8 กม. (เส้นตรง)
+to point from the link: 13.690000, 100.750100 · hint: อ่านพิกัดจากลิงก์แล้ว · estimate: 24.2 กม. (เส้นตรง)
+round trip estimate: 48.3 กม. (เส้นตรง)
+after submit: /vehicles/b/01M6BQWDSWMWRW32JD68H6H88W · ส่งขออนุมัติแล้ว
+CSP violations (employee pages): []
+short link hint: ลิงก์นี้ไม่มีพิกัด (เช่น ลิงก์ย่อ) — เก็บลิงก์ไว้ กรุณาปักหมุดบนแผนที่เพื่อคำนวณระยะ
+bad link hint: รับเฉพาะลิงก์ https ของ Google Maps, OpenStreetMap หรือ Apple Maps
+errors shown: 6
+04-new: /vehicles/new overflow=0 axe=[]
+05-booking-pending: /vehicles/b/01M6BQWDSWMWRW32JD68H6H88W overflow=0 axe=[]
+06-mine: /vehicles overflow=0 axe=[]
+07-new-mobile: /vehicles/new overflow=0 axe=[]
+08-booking-mobile: /vehicles/b/01M6BQWDSWMWRW32JD68H6H88W overflow=0 axe=[]
+09-new-dark: /vehicles/new overflow=0 axe=[]
+manager approved /approvals/01M6BQWDT0PQBGS3MR4A11TJ16: อนุมัติและดำเนินการแล้ว
+approvals handled: 1
+10-booking-manager: /vehicles/b/01M6BQWDSWMWRW32JD68H6H88W overflow=0 axe=[]
+11-board: /vehicles/board overflow=0 axe=[]
+12-assign-form: /vehicles/b/01M6BQWDSWMWRW32JD68H6H88W overflow=0 axe=[]
+assign: จัดรถแล้ว แจ้งผู้ขอและคนขับแล้ว
+13-booking-assigned: /vehicles/b/01M6BQWDSWMWRW32JD68H6H88W overflow=0 axe=[]
+14-admin: /vehicles/admin overflow=0 axe=[]
+15-vehicle: /vehicles/v/01M6BQFNAG3TYPKA1A66GFRDN2 overflow=0 axe=[]
+16-driver: /vehicles/d/01M6BQFNAMQNZ1C9QGVNXWR53M overflow=0 axe=[]
+17-report-before: /vehicles/report overflow=0 axe=[]
+place point from map: 13.689428, 100.750809
+place saved: บันทึกสถานที่แล้ว · CSP violations (admin): []
+18-driver-jobs: /vehicles overflow=0 axe=[]
+start: บันทึกเริ่มเดินทางแล้ว
+19-finish-form: /vehicles/b/01M6BQWDSWMWRW32JD68H6H88W overflow=0 axe=[]
+finish: บันทึกจบการเดินทางแล้ว
+20-booking-completed-driver: /vehicles/b/01M6BQWDSWMWRW32JD68H6H88W overflow=0 axe=[]
+confirm: รับรองการเดินทางแล้ว
+21-booking-confirmed: /vehicles/b/01M6BQWDSWMWRW32JD68H6H88W overflow=0 axe=[]
+22-report-after: /vehicles/report overflow=0 axe=[]
+23-settings: /vehicles/settings overflow=0 axe=[]
+24-settings-error: /vehicles/settings overflow=0 axe=[]

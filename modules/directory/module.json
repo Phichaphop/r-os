@@ -1,0 +1,46 @@
+{
+  "code": "directory",
+  "version": "1.0.0",
+  "pack": "core_plus",
+  "spec": "M47",
+  "name": {
+    "th": "สมุดรายชื่อติดต่อภายใน",
+    "en": "Company directory"
+  },
+  "icon": "users",
+  "sort_order": 34,
+  "depends_on": [
+    "employees"
+  ],
+  "permissions": {
+    "directory.use": "normal",
+    "directory.manage": "normal",
+    "directory.export": "high"
+  },
+  "grants": {
+    "*": [
+      "directory.use"
+    ],
+    "HRA": [
+      "directory.manage",
+      "directory.export"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "directory.nav",
+      "icon": "users",
+      "href": "/directory",
+      "permission": "directory.use"
+    },
+    {
+      "group": "settings",
+      "label": "directory.nav_admin",
+      "icon": "settings",
+      "href": "/directory/admin",
+      "permission": "directory.manage"
+    }
+  ],
+  "routes": "routes.php"
+}

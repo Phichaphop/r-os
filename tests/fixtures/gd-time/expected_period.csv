@@ -1,0 +1,8 @@
+employee_code,scheduled_days,worked_days,absent_days,missing_punch_days,late_count,late_minutes,early_count,early_minutes,worked_minutes,off_days
+D1-0001,5,5,0,0,0,0,0,0,2450,2
+D1-0002,5,5,0,0,3,56,2,90,2259,2
+D1-0003,5,4,1,2,0,0,0,0,963,2
+D1-0004,5,6,0,0,0,0,0,0,3108,2
+D1-0005,5,5,0,0,0,0,0,0,2408,2
+D1-0006,5,5,0,2,1,269,1,270,1530,2
+D1-0007,5,0,5,0,0,0,0,0,0,2

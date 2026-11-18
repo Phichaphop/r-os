@@ -1,0 +1,97 @@
+{
+  "code": "contractors",
+  "version": "1.0.0",
+  "pack": "workplace",
+  "spec": "M44",
+  "name": {
+    "th": "จัดการผู้รับเหมา",
+    "en": "Contractor management"
+  },
+  "icon": "id-badge-2",
+  "sort_order": 97,
+  "depends_on": [
+    "core"
+  ],
+  "permissions": {
+    "contractors.view": "normal",
+    "contractors.manage": "normal",
+    "contractors.approve": "high",
+    "contractors.gate": "normal"
+  },
+  "grants": {
+    "WPA": [
+      "contractors.view",
+      "contractors.manage",
+      "contractors.approve",
+      "contractors.gate"
+    ],
+    "AUD": [
+      "contractors.view"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "contractors.nav",
+      "icon": "id-badge-2",
+      "href": "/contractors",
+      "permission": "contractors.view"
+    },
+    {
+      "group": "work",
+      "label": "contractors.nav_gate",
+      "icon": "shield-check",
+      "href": "/contractors/gate",
+      "permission": "contractors.gate"
+    },
+    {
+      "group": "settings",
+      "label": "contractors.nav_settings",
+      "icon": "settings",
+      "href": "/contractors/settings",
+      "permission": "contractors.manage"
+    }
+  ],
+  "workflows": {
+    "contractors.permit": {
+      "subject": "ct_permit",
+      "class": "Blue\\Modules\\Contractors\\PermitSubject",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "permission",
+            "value": "contractors.approve"
+          },
+          "scope": "subject",
+          "sla_hours": 24
+        }
+      ]
+    }
+  },
+  "document_classes": {
+    "contractors.file": [
+      "C",
+      "contractors.manage",
+      "contractors.manage",
+      [
+        "pdf",
+        "png",
+        "jpeg",
+        "webp"
+      ],
+      10,
+      true,
+      "general_confidential",
+      "finalized"
+    ]
+  },
+  "jobs": {
+    "contractors.tick": {
+      "every": 60,
+      "call": "Blue\\Modules\\Contractors\\ContractorService::tickJob"
+    }
+  },
+  "demo": "Blue\\Modules\\Contractors\\ContractorsDemo::run",
+  "routes": "routes.php"
+}

@@ -1,0 +1,13 @@
+(part 1 — console output; the script stopped at the PDF download step because the PDF opens in the browser instead of downloading; parts 2–3 redo that step with a direct request. Payslips were later published again with the final PDF layout — part 3.)
+02-run-published: /payroll/runs/01M5VHW5BWAK6JCMSJYN6BBCQN overflow=0 axe=[]
+03-person-ytd: /payroll/people/01M57N3W7W9TQ6FQDHWPPNWTKW overflow=0 axe=[]
+opening errors: วันที่ต้องอยู่ในปีภาษีนั้น | บอกที่มาของยอด (อย่างน้อย 5 ตัวอักษร)
+04-opening-error: /payroll/people/01M57N3W7ZB8YEKH9B50KP472C/opening overflow=0 axe=[]
+opening: ส่งยอดยกมาให้อีกคนอนุมัติแล้ว
+05-opening-checker: /payroll/people/01M57N3W7ZB8YEKH9B50KP472C overflow=0 axe=[]
+opening approved: อนุมัติยอดยกมาแล้ว
+06-ytd-after: /payroll/people/01M57N3W7ZB8YEKH9B50KP472C overflow=0 axe=[]
+07-my-payslips: /me/payslips overflow=0 axe=[]
+open → /reauth
+08-reauth: /reauth overflow=0 axe=[]
+09-my-payslip: /me/payslips/01M5W0987VH545D9E86MVKYKY4 overflow=0 axe=[]

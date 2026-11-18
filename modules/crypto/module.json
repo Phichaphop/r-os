@@ -1,0 +1,17 @@
+{
+  "code": "crypto",
+  "version": "1.0.0",
+  "pack": "utilities",
+  "spec": "M28",
+  "name": { "th": "เครื่องมือเข้ารหัส", "en": "Crypto tools" },
+  "icon": "key",
+  "sort_order": 30,
+  "depends_on": ["core"],
+  "permissions": { "crypto.use": "normal" },
+  "grants": { "*": ["crypto.use"] },
+  "menu": [
+    { "group": "tools", "label": "crypto.nav", "icon": "key", "href": "/crypto", "permission": "crypto.use" }
+  ],
+  "guest": {"paths": ["(GET|POST) /crypto"], "permissions": ["crypto.use"]},
+  "routes": "routes.php"
+}

@@ -1,0 +1,5 @@
+.icon { width: 20px; height: 20px; flex: none; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; display: inline-block; vertical-align: middle; }
+.icon--sm { width: 16px; height: 16px; }
+.icon--lg { width: 24px; height: 24px; }
+.icon--spin { animation: rds-spin 0.9s linear infinite; }
+@keyframes rds-spin { to { transform: rotate(360deg); } }

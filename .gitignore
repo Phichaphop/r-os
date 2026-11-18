@@ -1,0 +1,30 @@
+# Secrets / per-environment config (never commit — 6.30.11, P0-06 §12.1)
+/config/env.php
+.env
+.env.*
+
+# Runtime data
+/storage/logs/*
+/storage/cache/*
+/storage/locks/*
+/storage/install.lock
+/storage/documents/
+/storage/documents.pre-restore-*/
+/storage/backups/
+/storage/pdf-temp/*
+/storage/tmp/
+/storage/fonts/
+!/storage/**/.gitkeep
+
+# Published UI assets (built by `bin/blue assets:publish`)
+/public/assets/ui/
+
+# Dependencies (dev only — runtime does not need vendor/)
+/vendor/
+/node_modules/
+
+# Tool caches / reports
+/.phpunit.cache/
+/build/
+.DS_Store
+/collector/data/

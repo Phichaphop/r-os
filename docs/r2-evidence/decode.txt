@@ -1,0 +1,7 @@
+dl-wifi.png: QR Code 'WIFI:T:WPA;S:Blue-Guest;P:guest-2026;;'
+dl-vcard.png: QR Code 'BEGIN:VCARD\r\nVERSION:3.0\r\nN:สมชาย ใจดี;;;;\r\nFN:สมชาย ใจดี\r\nORG:Blue Co'
+dl-vcard-edited.png: QR Code 'BEGIN:VCARD\r\nVERSION:3.0\r\nN:สมชาย ใจดี;;;;\r\nFN:สมชาย ใจดี\r\nORG:Blue Co'
+rq-codes-card.png: QR Code 'http://127.0.0.1:8098/requisition/issue?code=RQ2611-0002'
+rq-codes-card.png: Code 128 'RQ2611-0002'
+rq-print.png: QR Code 'http://127.0.0.1:8098/requisition/issue?code=RQ2611-0002'
+rq-print.png: Code 128 'RQ2611-0002'

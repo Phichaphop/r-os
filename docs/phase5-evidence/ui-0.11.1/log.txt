@@ -1,0 +1,28 @@
+q1-quick-empty: /draw/quick overflow=0 axe=[]
+q2-quick-wheel: /draw/quick overflow=0 axe=[]
+tally: 10 ชื่อ
+q3-quick-spinning (shot)
+q4-quick-winner: /draw/quick overflow=0 axe=[]
+winner: สมชาย
+names after take-out: 9 (winner gone: true)
+q5-quick-race-idle: /draw/quick overflow=0 axe=[]
+race winners: อนันต์,ดวงใจ,มานี
+take-out hidden when auto: true
+names after auto: 6
+q6-quick-race-winner (shot)
+history: ครั้งที่ 2: อนันต์, ดวงใจ, มานี | ครั้งที่ 1: สมชาย
+q7-quick-390: /draw/quick overflow=0 axe=[]
+q8-quick-dark: /draw/quick overflow=0 axe=[]
+f1-draw-index: /draw overflow=0 axe=[]
+created: สร้างแล้ว พร้อมรายชื่อ 5 คน — ใส่รางวัล (ถ้ามี) แล้วกดเริ่มสุ่ม
+f2-draw-edit-ready: /draw/01M5SK8BAJAAGAM1GNHJGKJ6R3 overflow=0 axe=[]
+after lock url: /draw/01M5SK8BAJAAGAM1GNHJGKJ6R3/show
+f3-draw-show-wheel: /draw/01M5SK8BAJAAGAM1GNHJGKJ6R3/show overflow=0 axe=[]
+f4-draw-show-winner: /draw/01M5SK8BAJAAGAM1GNHJGKJ6R3/show overflow=0 axe=[]
+reveal: 🎉 ผู้โชคดี · ลำดับผู้โชคดี ผู้โชคดีลำดับที่ 1 · มิว สุ่มต่อ
+finish visible: true
+f5-draw-show-race: /draw/01M5SK8BAJAAGAM1GNHJGKJ6R3/show overflow=0 axe=[]
+f6-draw-race-winner (shot)
+board: ผู้โชคดีลำดับที่ 1 มิว | ผู้โชคดีลำดับที่ 2 บอส | ผู้โชคดีลำดับที่ 3 มิว
+after confirm url: /draw/01M5SK8BAJAAGAM1GNHJGKJ6R3/results · ยืนยันผลแล้ว — เปิดเผย seed ให้ตรวจสอบได้
+f7-draw-results: /draw/01M5SK8BAJAAGAM1GNHJGKJ6R3/results overflow=0 axe=[]

@@ -1,0 +1,85 @@
+{
+  "code": "forms",
+  "version": "1.0.0",
+  "pack": "core_plus",
+  "spec": "M02",
+  "name": {
+    "th": "คลังแบบฟอร์มกลาง",
+    "en": "Central forms"
+  },
+  "icon": "file-text",
+  "sort_order": 30,
+  "depends_on": [
+    "employees"
+  ],
+  "permissions": {
+    "forms.use": "normal",
+    "forms.manage": "normal",
+    "forms.approve": "high"
+  },
+  "grants": {
+    "*": [
+      "forms.use"
+    ],
+    "HRA": [
+      "forms.manage",
+      "forms.approve"
+    ],
+    "HRT": [
+      "forms.manage"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "forms.nav",
+      "icon": "file-text",
+      "href": "/forms",
+      "permission": "forms.use"
+    },
+    {
+      "group": "settings",
+      "label": "forms.nav_admin",
+      "icon": "settings",
+      "href": "/forms/admin",
+      "permission": "forms.manage"
+    }
+  ],
+  "document_classes": {
+    "forms.file": [
+      "I",
+      "forms.manage",
+      "forms.manage",
+      [
+        "pdf",
+        "docx",
+        "xlsx",
+        "pptx",
+        "png",
+        "jpeg"
+      ],
+      20,
+      false,
+      "general_document",
+      "finalized"
+    ]
+  },
+  "workflows": {
+    "forms.publish": {
+      "subject": "form_version",
+      "class": "Blue\\Modules\\Forms\\FormSubject",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "permission",
+            "value": "forms.approve"
+          },
+          "scope": "subject",
+          "sla_hours": 72
+        }
+      ]
+    }
+  },
+  "routes": "routes.php"
+}

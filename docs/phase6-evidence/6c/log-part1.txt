@@ -1,0 +1,29 @@
+# p0210 part 1 — reconstructed from the console (the script stopped twice before writing its log)
+run 1 (stopped at the component screen: the method list did not offer "wht" → bug fixed in Views/components.php):
+  01-settings, 02-wht-errors screenshots taken; payroll.wht and payroll.wht_payer proposals saved
+  (DB check after the run: config_versions payroll.wht = in_review, payroll.wht_payer = in_review)
+run 2 (SKIP1=1, settings step skipped because the proposals were already waiting):
+component: บันทึกรายการแล้ว — รออีกคนเปิดใช้
+checker approved /approvals/01M5W2N70PAB73XG6CZKF8VEMD: อนุมัติและดำเนินการแล้ว
+checker approved /approvals/01M5W2N7EAW2VYCRM4Z0H2TD6B: อนุมัติและดำเนินการแล้ว
+approved: 2
+activate: เปิดใช้รายการแล้ว
+03-components: /payroll/components overflow=0 axe=[]
+04-settings-set: /payroll/settings overflow=0 axe=[]
+identifier: บันทึกเลขประจำตัวแล้ว
+05-my-tax: /me/tax overflow=0 axe=[]
+declare errors: จำนวนเงิน 0 ขึ้นไป ทศนิยมไม่เกิน 2 ตำแหน่ง
+declare: ส่งแบบแจ้งค่าลดหย่อนแล้ว — รอฝ่ายเงินเดือนตรวจ
+06-my-tax-pending: /me/tax overflow=0 axe=[]
+07-tax-pending: /payroll/tax overflow=0 axe=[]
+declaration: ใช้แบบแจ้งค่าลดหย่อนแล้ว — รอบที่คำนวณไว้ต้องคำนวณใหม่
+run: สร้างรอบแล้ว — ตรวจข้อมูลที่ใช้แล้วกดคำนวณ
+calculate: คำนวณแล้ว
+08-run-calculated: /payroll/runs/01M5W2QKBZG06ENERY3SYEZ30K overflow=0 axe=[]
+09-person-tax-line: /payroll/runs/01M5W2QKBZG06ENERY3SYEZ30K/e/01M57N3W7W9TQ6FQDHWPPNWTKW overflow=0 axe=[]
+D1-0004 lines: SSO_EE −648.00 (no TAX line: worked-out tax is 0 — allowances exceed the income)
+submit: ส่งอนุมัติแล้ว
+checker approved /approvals/01M5W2QNJXAT3QB1CQ5A1P8811: อนุมัติและดำเนินการแล้ว
+approved: 1
+10-tax-candidates: /payroll/tax overflow=0 axe=[]
+(stopped at a script error — reauth helper missing — after the issue button had been pressed: WHT2026-00001 for D1-0004 was issued)

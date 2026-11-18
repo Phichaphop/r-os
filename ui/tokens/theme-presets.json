@@ -1,0 +1,17 @@
+{
+  "_comment": "Theme presets for Settings > Appearance (03 §6.8, P0-05 §1.2). 'steel' is the default design system (DEC-37) and produces no override. base = values the contrast checks compare against; they mirror primitives.css (a test keeps them in sync).",
+  "base": {
+    "surface": "#FFFFFF",
+    "text": "#0D1B2E",
+    "on_primary": "#FFFFFF",
+    "on_navy": "#FFFFFF",
+    "dark_surface": "#111A28",
+    "dark_on_primary": "#0A111C"
+  },
+  "presets": {
+    "steel": { "primary": "#2F5A7E", "navy": "#0B1F44", "accent": "#9CC3E6", "bg": "#EEF1F6", "surface2": "#F6F8FB" },
+    "slate": { "primary": "#3D4C5F", "navy": "#1C2530", "accent": "#B9C6D6", "bg": "#EEF0F3", "surface2": "#F6F7F9" },
+    "teal": { "primary": "#0E6265", "navy": "#0A3537", "accent": "#8ED3CE", "bg": "#ECF3F3", "surface2": "#F5F9F9" },
+    "paper": { "primary": "#2F5A7E", "navy": "#0B1F44", "accent": "#9CC3E6", "bg": "#F5F0E6", "surface2": "#FBF8F2" }
+  }
+}

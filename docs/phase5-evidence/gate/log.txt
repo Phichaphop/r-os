@@ -1,0 +1,23 @@
+01-profile: /me overflow=0 axe=[]
+02-my-data: /me/data overflow=0 axe=[]
+export → /reauth
+03-reauth: /reauth overflow=0 axe=[]
+export sections: eid.cards=1, eid.checks=1, eid.wallet=0, employees.record=1, employees.jobs=1, employees.contacts=1, employees.emergency=1, employees.education=0, employees.prior_jobs=0, employees.identifiers=0, gps.punches=2, gps.notices=1
+short details: กรอกรายละเอียดอย่างน้อย 10 ตัวอักษร
+04-request-error: /me/privacy overflow=0 axe=[]
+request: ส่งคำขอแล้ว → /me/privacy/01M5VED33675QBJ1PSE18P63XK
+05-my-request: /me/privacy/01M5VED33675QBJ1PSE18P63XK overflow=0 axe=[]
+06-desk: /privacy/requests overflow=0 axe=[]
+07-request: /privacy/requests/01M5VED33675QBJ1PSE18P63XK overflow=0 axe=[]
+verify: บันทึกการยืนยันตัวตนแล้ว
+prepare: จำลองการลบแล้ว — รอผู้อนุมัติอีกคน || ต้องให้เจ้าหน้าที่อีกคนอนุมัติ
+08-plan-same-officer: /privacy/requests/01M5VED33675QBJ1PSE18P63XK overflow=0 axe=[]
+answer form while pending: 0
+11-plan-second-officer: /privacy/requests/01M5VED33675QBJ1PSE18P63XK overflow=0 axe=[]
+approve (dpo.demo2): ลบตามที่อนุมัติแล้ว
+12-erasure-done: /privacy/requests/01M5VED33675QBJ1PSE18P63XK overflow=0 axe=[]
+close: ปิดคำขอแล้ว
+13-request-completed: /privacy/requests/01M5VED33675QBJ1PSE18P63XK overflow=0 axe=[]
+14-my-request-done: /me/privacy/01M5VED33675QBJ1PSE18P63XK overflow=0 axe=[]
+09-my-data-mobile: /me/data overflow=0 axe=[]
+10-request-dark: /privacy/requests/01M5VED33675QBJ1PSE18P63XK overflow=0 axe=[]

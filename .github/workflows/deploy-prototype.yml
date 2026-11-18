@@ -1,0 +1,51 @@
+# Deploy to the InfinityFree prototype (DEMO DATA ONLY — DEC-34/46) via FTP.
+# Manual trigger from the Actions tab; runs the full CI first and deploys only if it passes.
+# Required repository secrets: FTP_SERVER, FTP_USERNAME, FTP_PASSWORD, FTP_SERVER_DIR (e.g. /htdocs/)
+name: Deploy prototype
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  deploy:
+    needs: ci
+    runs-on: ubuntu-24.04
+    environment: prototype
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+      - name: Build UI assets
+        run: php bin/blue assets:publish
+      - name: Upload via FTP (no tests, no dev tools, never config/env.php)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            tests/**
+            vendor/**
+            node_modules/**
+            docs/**
+            config/env.php
+            storage/logs/**
+            storage/cache/**
+            storage/locks/**
+            storage/install.lock
+            phpunit.xml
+            phpstan.neon
+            phpcs.xml
+            composer.*
+            public/router-dev.php

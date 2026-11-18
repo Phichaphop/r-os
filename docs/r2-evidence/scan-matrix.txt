@@ -1,0 +1,52 @@
+ZXing-cpp 2.x decode matrix: 2 texts × 3 module shapes × 3 eye shapes × 4 logo sizes = 72 PNG (8 px/module, colour #2F5A7E, star logo), each at 3 scales
+== scale 1.0
+l 18 / 18
+m 18 / 18
+s 18 / 18
+xl 18 / 18
+('dot', 'circle') 8 / 8
+('dot', 'rounded') 8 / 8
+('dot', 'square') 8 / 8
+('rounded', 'circle') 8 / 8
+('rounded', 'rounded') 8 / 8
+('rounded', 'square') 8 / 8
+('square', 'circle') 8 / 8
+('square', 'rounded') 8 / 8
+('square', 'square') 8 / 8
+FAILS []
+== scale 0.5
+l 18 / 18
+m 18 / 18
+s 18 / 18
+xl 18 / 18
+('dot', 'circle') 8 / 8
+('dot', 'rounded') 8 / 8
+('dot', 'square') 8 / 8
+('rounded', 'circle') 8 / 8
+('rounded', 'rounded') 8 / 8
+('rounded', 'square') 8 / 8
+('square', 'circle') 8 / 8
+('square', 'rounded') 8 / 8
+('square', 'square') 8 / 8
+FAILS []
+== scale 0.375
+l 18 / 18
+m 18 / 18
+s 18 / 18
+xl 18 / 18
+('dot', 'circle') 8 / 8
+('dot', 'rounded') 8 / 8
+('dot', 'square') 8 / 8
+('rounded', 'circle') 8 / 8
+('rounded', 'rounded') 8 / 8
+('rounded', 'square') 8 / 8
+('square', 'circle') 8 / 8
+('square', 'rounded') 8 / 8
+('square', 'square') 8 / 8
+FAILS []
+
+OpenCV QRCodeDetector (classic finder detector) — reads square eyes only:
+l 6 / 18
+m 6 / 18
+s 6 / 18
+xl 6 / 18

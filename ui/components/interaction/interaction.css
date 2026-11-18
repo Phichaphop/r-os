@@ -1,0 +1,38 @@
+/*
+ * Hover / press feedback for buttons, filters, tabs and choices (0.6.1 — user request "highlight on hover").
+ * Loaded after button/field/tabs (alphabetical), so it refines them. Motion is dropped for people who ask for less.
+ */
+.btn { transition: background var(--motion-fast) var(--motion-ease), border-color var(--motion-fast) var(--motion-ease),
+  color var(--motion-fast) var(--motion-ease), box-shadow var(--motion-fast) var(--motion-ease), transform var(--motion-fast) var(--motion-ease); }
+.btn:not(:disabled):not([aria-disabled="true"]):hover { transform: translateY(-1px); }
+.btn:not(:disabled):not([aria-disabled="true"]):active { transform: translateY(0); box-shadow: none; }
+.btn--primary:not(:disabled):hover, .btn--danger:not(:disabled):hover { box-shadow: var(--shadow-1); }
+.btn--secondary:not(:disabled):hover { border-color: var(--color-action-primary); color: var(--color-action-primary); background: var(--color-primary-soft); }
+.btn--ghost:not(:disabled):hover { color: var(--color-action-primary-hover); }
+.btn--on-navy:not(:disabled):hover { transform: none; }
+
+/* filters and form controls: the edge lights up in the main colour */
+.input, .select, .textarea { transition: border-color var(--motion-fast) var(--motion-ease), box-shadow var(--motion-fast) var(--motion-ease), background var(--motion-fast) var(--motion-ease); }
+.input:not(:disabled):not([readonly]):hover, .select:not(:disabled):hover, .textarea:not(:disabled):not([readonly]):hover {
+  border-color: var(--color-action-primary); box-shadow: 0 0 0 3px var(--color-primary-soft);
+}
+.filter-bar .select:not(:disabled):hover, .filter-bar .input:not(:disabled):hover { background: var(--color-primary-soft); }
+.context-switch:hover { border-color: var(--color-action-primary); box-shadow: 0 0 0 3px var(--color-primary-soft); }
+
+/* tabs, choices, segmented controls, menus */
+.tabs__tab { transition: color var(--motion-fast) var(--motion-ease), background var(--motion-fast) var(--motion-ease), border-color var(--motion-fast) var(--motion-ease); border-radius: var(--radius-control) var(--radius-control) 0 0; }
+.tabs__tab:hover { color: var(--color-action-primary); background: var(--color-primary-soft); border-bottom-color: var(--color-action-primary); }
+.check, .choice { border-radius: var(--radius-control); padding-inline: var(--space-1); transition: background var(--motion-fast) var(--motion-ease); }
+.check:hover, .choice:hover { background: var(--color-primary-soft); }
+.segmented label { transition: background var(--motion-fast) var(--motion-ease), color var(--motion-fast) var(--motion-ease); }
+.segmented label:hover { background: var(--color-primary-soft); color: var(--color-action-primary); }
+.menu__item { transition: background var(--motion-fast) var(--motion-ease); }
+.menu__item:hover { background: var(--color-primary-soft); color: var(--color-action-primary); }
+details > summary { cursor: pointer; border-radius: var(--radius-control); transition: color var(--motion-fast) var(--motion-ease); }
+details > summary:hover { color: var(--color-action-primary); }
+.table tbody tr { transition: background var(--motion-fast) var(--motion-ease); }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn, .input, .select, .textarea, .tabs__tab, .check, .choice, .segmented label, .menu__item { transition: none; }
+  .btn:not(:disabled):hover { transform: none; }
+}

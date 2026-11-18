@@ -1,0 +1,28 @@
+{
+  "code": "certs",
+  "version": "1.0.0",
+  "pack": "hr",
+  "nav_section": "hr_people",
+  "spec": "M12",
+  "name": { "th": "ขอหนังสือรับรอง", "en": "Certificate requests" },
+  "icon": "file-text",
+  "sort_order": 37,
+  "depends_on": ["core", "employees"],
+  "permissions": {
+    "certs.request": "normal",
+    "certs.manage": "normal"
+  },
+  "grants": {
+    "*": ["certs.request"],
+    "HRA": ["certs.manage"],
+    "HRT": ["certs.manage"]
+  },
+  "menu": [
+    { "group": "work", "label": "certs.nav", "icon": "file-text", "href": "/certs", "permission": "certs.request" },
+    { "group": "work", "label": "certs.nav_admin", "icon": "inbox", "href": "/certs/admin", "permission": "certs.manage" }
+  ],
+  "document_classes": {
+    "certs.certificate": ["C", "certs.manage", "certs.manage", ["html", "pdf"], 5, true, "issued_letter", "finalized"]
+  },
+  "routes": "routes.php"
+}

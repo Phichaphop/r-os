@@ -1,0 +1,44 @@
+{
+  "code": "training",
+  "version": "1.0.0",
+  "pack": "hr",
+  "nav_section": "hr_people",
+  "spec": "M10",
+  "name": { "th": "ฝึกอบรม", "en": "Training" },
+  "icon": "clipboard-check",
+  "sort_order": 40,
+  "depends_on": ["core", "employees"],
+  "permissions": {
+    "training.enroll": "normal",
+    "training.manage": "normal",
+    "training.approve": "normal"
+  },
+  "grants": {
+    "*": ["training.enroll"],
+    "MGR": ["training.approve"],
+    "HRA": ["training.manage", "training.approve"],
+    "HRT": ["training.manage"]
+  },
+  "menu": [
+    { "group": "work", "label": "training.nav", "icon": "clipboard-check", "href": "/training", "permission": "training.enroll" },
+    { "group": "work", "label": "training.nav_admin", "icon": "calendar-event", "href": "/training/admin", "permission": "training.manage" }
+  ],
+  "document_classes": {
+    "training.certificate": ["I", "training.manage", "training.manage", ["html", "pdf"], 5, true, "general_document", "finalized"]
+  },
+  "workflows": {
+    "training.enroll": {
+      "subject": "trn_enrollment",
+      "class": "Blue\\Modules\\Training\\EnrollmentSubject",
+      "no_fallback": true,
+      "steps": [
+        { "approver": { "type": "manager", "value": "training.approve" }, "scope": "subject", "sla_hours": 48 }
+      ]
+    }
+  },
+  "jobs": {
+    "training.reminders": { "every": 360, "call": "Blue\\Modules\\Training\\TrainingService::remindersJob" }
+  },
+  "measures": "Blue\\Modules\\Training\\TrainingMeasures",
+  "routes": "routes.php"
+}

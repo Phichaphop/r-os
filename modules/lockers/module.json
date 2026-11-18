@@ -1,0 +1,46 @@
+{
+  "code": "lockers",
+  "version": "1.0.0",
+  "pack": "workplace",
+  "spec": "M07",
+  "name": {
+    "th": "ตู้ล็อกเกอร์",
+    "en": "Lockers"
+  },
+  "icon": "key",
+  "sort_order": 91,
+  "depends_on": [
+    "core",
+    "employees"
+  ],
+  "permissions": {
+    "lockers.use": "normal",
+    "lockers.manage": "normal"
+  },
+  "grants": {
+    "*": [
+      "lockers.use"
+    ],
+    "WPA": [
+      "lockers.manage"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "lockers.nav",
+      "icon": "key",
+      "href": "/lockers",
+      "permission": "lockers.use"
+    }
+  ],
+  "jobs": {
+    "lockers.tick": {
+      "every": 60,
+      "call": "Blue\\Modules\\Lockers\\LockerService::tickJob"
+    }
+  },
+  "demo": "Blue\\Modules\\Lockers\\LockersDemo::run",
+  "personal_data": "Blue\\Modules\\Lockers\\LockersPersonalData",
+  "routes": "routes.php"
+}

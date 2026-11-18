@@ -1,0 +1,16 @@
+parameters:
+  level: 6
+  paths:
+    - core
+    - bin
+    - modules
+    - collector/src
+  excludePaths:
+    - core/migrations
+    - modules/*/migrations/*
+    - modules/*/Views/*
+    - modules/*/lang/*
+  bootstrapFiles:
+    - core/bootstrap.php
+    - collector/bootstrap.php
+  treatPhpDocTypesAsCertain: false

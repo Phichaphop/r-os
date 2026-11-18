@@ -1,0 +1,22 @@
+qr-generator: /qr overflow=0 axe=[]
+wifi fields visible: true · url box hidden: true
+qr-preview-wifi: /qr/preview overflow=0 axe=[]
+downloaded PNG + SVG
+managed: types hidden true · note visible true
+saved → /qr/01M6XFXNNEH3EX4M0YBG17HYFV บันทึก QR แล้ว
+qr-show-vcard: /qr/01M6XFXNNEH3EX4M0YBG17HYFV overflow=0 axe=[]
+qr-edit: /qr/01M6XFXNNEH3EX4M0YBG17HYFV/edit overflow=0 axe=[]
+edit: บันทึกการเปลี่ยนแปลงแล้ว
+delete: ลบ QR แล้ว → /qr
+qr-generator-390-dark: /qr overflow=0 axe=[]
+qr-preview-email-390-dark: /qr/preview overflow=0 axe=[]
+policy 1234567 00:00-23:59: บันทึกกติกาแล้ว
+request: ส่งคำขอแล้ว — จองของไว้ให้ รอหัวหน้าอนุมัติ
+rq-request-codes: /requisition/r/01M6XFXXTV7ABAF9W2HR802ZST overflow=0 axe=[]
+ref RQ2611-0002
+rq-desk-scanned: /requisition/issue overflow=0 axe=[]
+desk found: คำขอเบิก RQ2611-0002 
+รออนุมัติ
+
+rq-request-390-dark: /requisition/r/01M6XFXXTV7ABAF9W2HR802ZST overflow=0 axe=[]
+policy 12345 08:00-17:00: บันทึกกติกาแล้ว

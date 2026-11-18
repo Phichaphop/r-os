@@ -1,0 +1,61 @@
+01-rooms-day-empty: /rooms overflow=0 axe=[]
+02-room-form: /rooms/r/01M6BFA5GZEMW41P0T9NRZCWY1 overflow=0 axe=[]
+book capacity: ข้อมูลบางช่องยังไม่ถูกต้อง — ตรวจข้อความใต้ช่องที่มีกรอบสีแดง
+03-book-capacity-error: /rooms/r/01M6BFA5GZEMW41P0T9NRZCWY1/book overflow=0 axe=[]
+book unknown: ข้อมูลบางช่องยังไม่ถูกต้อง — ตรวจข้อความใต้ช่องที่มีกรอบสีแดง
+04-book-unknown-person: /rooms/r/01M6BFA5GZEMW41P0T9NRZCWY1/book overflow=0 axe=[]
+booked: จองแล้ว 1 ครั้ง
+05-booking: /rooms/b/01M6BFBDP639W025SJ303KNASQ overflow=0 axe=[]
+taken: ข้อมูลบางช่องยังไม่ถูกต้อง — ตรวจข้อความใต้ช่องที่มีกรอบสีแดง
+06-book-taken: /rooms/r/01M6BFA5GZEMW41P0T9NRZCWY1/book overflow=0 axe=[]
+booked 11:15: จองแล้ว 1 ครั้ง
+series: จองแล้ว 4 ครั้ง
+07-series-booking: /rooms/b/01M6BFBHAA1FJD8T9CSGABX1A3 overflow=0 axe=[]
+series clash: ข้อมูลบางช่องยังไม่ถูกต้อง — ตรวจข้อความใต้ช่องที่มีกรอบสีแดง
+08-series-clash: /rooms/r/01M6BFA5GZEMW41P0T9NRZCWY2/book overflow=0 axe=[]
+09-rooms-day-employee: /rooms overflow=0 axe=[]
+10-rooms-day-invited: /rooms overflow=0 axe=[]
+11-mine-invited: /rooms/mine overflow=0 axe=[]
+12-rooms-day-admin: /rooms overflow=0 axe=[]
+room bad: ข้อมูลบางช่องยังไม่ถูกต้อง — ตรวจข้อความใต้ช่องที่มีกรอบสีแดง
+13-room-errors: /rooms/admin/rooms overflow=0 axe=[]
+room saved: บันทึกห้องแล้ว
+closure: เพิ่มช่วงปิดห้องแล้ว
+14-room-admin-page: /rooms/r/01M6BFBT6BC17YKFJ6RAMFC3Y9 overflow=0 axe=[]
+15-rooms-admin: /rooms/admin overflow=0 axe=[]
+16-rooms-report: /rooms/report overflow=0 axe=[]
+17-rooms-admin-forbidden: /rooms/admin overflow=0 axe=[]
+18-lockers-home: /lockers overflow=0 axe=[]
+19-lockers-zone: /lockers/z/01M6BFA5H50F379ARTCJJE01B1 overflow=0 axe=[]
+reserve: จองตู้แล้ว — ไปรับกุญแจภายในกำหนด
+20-locker-reserved: /lockers/l/01M6BFA5H6NQQT29N4795WKZE4 overflow=0 axe=[]
+second:  · true
+21-lockers-admin-todo: /lockers/admin overflow=0 axe=[]
+issue empty: ข้อมูลบางช่องยังไม่ถูกต้อง — ตรวจข้อความใต้ช่องที่มีกรอบสีแดง
+22-issue-error: /lockers/l/01M6BFA5H6NQQT29N4795WKZE4/issue overflow=0 axe=[]
+issued: บันทึกการมอบกุญแจแล้ว
+ack: ยืนยันรับกุญแจแล้ว
+23-locker-mine: /lockers/l/01M6BFA5H6NQQT29N4795WKZE4 overflow=0 axe=[]
+24-zone-admin: /lockers/z/01M6BFA5H50F379ARTCJJE01B1 overflow=0 axe=[]
+ask return: แจ้งขอคืนตู้แล้ว — นำกุญแจไปคืนผู้ดูแล
+return no note: ข้อมูลบางช่องยังไม่ถูกต้อง — ตรวจข้อความใต้ช่องที่มีกรอบสีแดง
+25-return-error: /lockers/l/01M6BFA5H6NQQT29N4795WKZE4/return overflow=0 axe=[]
+returned: บันทึกการคืนตู้แล้ว
+26-locker-returned: /lockers/l/01M6BFA5H6NQQT29N4795WKZE4 overflow=0 axe=[]
+27-rooms-day-mobile: /rooms overflow=0 axe=[]
+28-zone-mobile: /lockers/z/01M6BFA5H50F379ARTCJJE01B1 overflow=0 axe=[]
+29-booking-mobile: /rooms/b/01M6BFBDP639W025SJ303KNASQ overflow=0 axe=[]
+30-rooms-day-dark: /rooms overflow=0 axe=[]
+31-zone-dark: /lockers/z/01M6BFA5H50F379ARTCJJE01B1 overflow=0 axe=[]
+09-rooms-day-employee: /rooms overflow=0 axe=[]
+09b-rooms-day-series: /rooms overflow=0 axe=[]
+27-rooms-day-mobile: /rooms overflow=0 axe=[]
+30-rooms-day-dark: /rooms overflow=0 axe=[]
+09-rooms-day-employee: /rooms overflow=0 axe=[]
+09b-rooms-day-series: /rooms overflow=0 axe=[]
+27-rooms-day-mobile: /rooms overflow=0 axe=[]
+30-rooms-day-dark: /rooms overflow=0 axe=[]
+09-rooms-day-employee: /rooms overflow=0 axe=[]
+09b-rooms-day-series: /rooms overflow=0 axe=[]
+27-rooms-day-mobile: /rooms overflow=0 axe=[]
+30-rooms-day-dark: /rooms overflow=0 axe=[]

@@ -1,0 +1,30 @@
+01-apr-forms: /appraisal/admin/forms overflow=0 axe=[]
+form (weights 90): น้ำหนักรวมต้องเท่ากับ 100
+02-apr-form-error: /appraisal/admin/forms overflow=0 axe=[]
+form: บันทึกแบบฟอร์มแล้ว
+03-apr-admin: /appraisal/admin overflow=0 axe=[]
+cycle: บันทึกรอบแล้ว
+04-apr-cycle-draft: /appraisal/admin/c/01M5TVV4QQKRFH56800RRKBBM4 overflow=0 axe=[]
+open: เปิดรอบแล้ว — สร้างแบบประเมิน 5 คน
+05-apr-mine: /appraisal overflow=0 axe=[]
+06-apr-self: /appraisal/a/01M5TVV5EPA733DCD5AK1MA2PG overflow=0 axe=[]
+self missing: กรุณาตรวจรายการที่แจ้งไว้
+07-apr-self-error: /appraisal/a/01M5TVV5EPA733DCD5AK1MA2PG/self overflow=0 axe=[]
+self: ส่งให้หัวหน้าแล้ว || ส่งการประเมินตนเองแล้ว — อยู่ระหว่างหัวหน้าประเมิน
+08-apr-mgr-inbox: /appraisal overflow=0 axe=[]
+09-apr-mgr: /appraisal/a/01M5TVV5EPA733DCD5AK1MA2PG overflow=0 axe=[]
+manager: ส่งผลประเมินแล้ว
+10-apr-final: /appraisal/a/01M5TVV5EPA733DCD5AK1MA2PG overflow=0 axe=[]
+final: สรุปผลแล้ว
+11-apr-result: /appraisal/a/01M5TVV5EPA733DCD5AK1MA2PG overflow=0 axe=[]
+result shows 3.4: true · proposal hidden: true
+appeal: ส่งคำอุทธรณ์ให้ HR แล้ว
+12-apr-hr-appeal: /appraisal/a/01M5TVV5EPA733DCD5AK1MA2PG overflow=0 axe=[]
+appeal closed: บันทึกผลการพิจารณาอุทธรณ์แล้ว
+13-apr-cycle-report: /appraisal/admin/c/01M5TVV4QQKRFH56800RRKBBM4 overflow=0 axe=[]
+export xlsx: 200 application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+export csv: 200 D1-0004=true
+14-apr-result-mobile: /appraisal/a/01M5TVV5EPA733DCD5AK1MA2PG overflow=0 axe=[]
+15-apr-inbox-dark: /appraisal overflow=0 axe=[]
+16-apr-cycle-mobile: /appraisal/admin/c/01M5TVV4QQKRFH56800RRKBBM4 overflow=0 axe=[]
+17-apr-forms-mobile: /appraisal/admin/forms overflow=0 axe=[]

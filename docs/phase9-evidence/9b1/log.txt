@@ -1,0 +1,42 @@
+01-hd-mine-empty: /helpdesk overflow=0 axe=[]
+02-hd-new-filled: /helpdesk/new overflow=0 axe=[]
+open: ส่งใบแจ้งแล้ว หัวหน้างานจะมอบหมายช่าง
+03-hd-ticket-requester: /helpdesk/t/01M6BZTTVEW73XS2E98ZRB765J overflow=0 axe=[]
+04-hd-queue-lead: /helpdesk/queue overflow=0 axe=[]
+05-hd-ticket-lead: /helpdesk/t/01M6BZTTVEW73XS2E98ZRB765J overflow=0 axe=[]
+assign: มอบหมายแล้ว
+06-hd-queue-tech: /helpdesk/queue overflow=0 axe=[]
+message: ส่งข้อความแล้ว
+status: อัปเดตสถานะแล้ว
+07-hd-ticket-tech: /helpdesk/t/01M6BZTTVEW73XS2E98ZRB765J overflow=0 axe=[]
+08-hd-ticket-tech-mobile: /helpdesk/t/01M6BZTTVEW73XS2E98ZRB765J overflow=0 axe=[]
+resolve: ส่งให้ผู้แจ้งยืนยันแล้ว
+requester sees team note: false
+09-hd-confirm-form: /helpdesk/t/01M6BZTTVEW73XS2E98ZRB765J overflow=0 axe=[]
+confirm: ปิดใบแจ้งแล้ว ขอบคุณสำหรับคะแนน
+10-hd-closed: /helpdesk/t/01M6BZTTVEW73XS2E98ZRB765J overflow=0 axe=[]
+11-hd-mine: /helpdesk overflow=0 axe=[]
+12-hd-closed-dark: /helpdesk/t/01M6BZTTVEW73XS2E98ZRB765J overflow=0 axe=[]
+13-hd-admin: /helpdesk/admin overflow=0 axe=[]
+14-hd-report: /helpdesk/report overflow=0 axe=[]
+15-in-mine: /inspection overflow=0 axe=[]
+qr → /inspection/r/01M6BZV9EMQBM5YVD6FQAVEYSM
+16-in-round-form: /inspection/r/01M6BZV9EMQBM5YVD6FQAVEYSM overflow=0 axe=[]
+17-in-round-form-mobile: /inspection/r/01M6BZV9EMQBM5YVD6FQAVEYSM overflow=0 axe=[]
+submit empty: 3 errors
+submit: ส่งผลตรวจแล้ว → /inspection
+ticket from inspection: HD2611-0002 high inspection
+18-in-board: /inspection/board overflow=0 axe=[]
+19-in-round-review: /inspection/r/01M6BZV9EMQBM5YVD6FQAVEYSM overflow=0 axe=[]
+return: บันทึกการตรวจทานแล้ว
+resubmit: ส่งผลตรวจแล้ว
+accept: บันทึกการตรวจทานแล้ว
+20-in-round-reviewed: /inspection/r/01M6BZV9EMQBM5YVD6FQAVEYSM overflow=0 axe=[]
+close: ปิดรอบตรวจแล้ว
+21-in-round-closed: /inspection/r/01M6BZV9EMQBM5YVD6FQAVEYSM overflow=0 axe=[]
+22-in-admin: /inspection/admin overflow=0 axe=[]
+23-in-point-qr: /inspection/p/01M6BV1AFPD84M4X39K9C13E33 overflow=0 axe=[]
+24-in-label: /inspection/p/01M6BV1AFPD84M4X39K9C13E33/label overflow=0 axe=[]
+25-in-checklist: /inspection/c/01M6BV1A5AA64Z59YA9MG17E78 overflow=0 axe=[]
+26-in-report: /inspection/report overflow=0 axe=[]
+27-in-board-dark: /inspection/board overflow=0 axe=[]

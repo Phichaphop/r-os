@@ -1,0 +1,9 @@
+opening: ส่งยอดยกมาให้อีกคนอนุมัติแล้ว
+opening approved: อนุมัติยอดยกมาแล้ว
+16-tax-outdated: /payroll/tax overflow=0 axe=[]
+reissue short reason → /payroll/tax ใส่เหตุผลที่ออกใหม่ (อย่างน้อย 5 ตัวอักษร) | รูปแบบหนังสือรับรองนี้ระบบจัดเองจากรายการตามมาตรา 50 ทวิ — ฝ่ายภาษีต้องตรวจกับแบบของกรมสรรพากรก่อนแจ
+reissue: ยกเลิกฉบับเดิมและออกฉบับใหม่แล้ว || รูปแบบหนังสือรับรองนี้ระบบจัดเองจากรายการตามมาตรา 50 ทวิ — ฝ่ายภาษีต้องตรวจกับแบบของกรมสรรพากรก่อนแจกจริง
+17-tax-reissued: /payroll/tax overflow=0 axe=[]
+table: D1-0004 · พนักงานตัวอย่าง (DEMO) 203,500.00 1,200.00 6,546.00 WHT2026-00003
+cert link now: /me/tax/certificates/01M5W2V58XV18SANZ6JS26J23G/pdf (1 link)
+pdf 200 application/pdf 37251 bytes, starts %PDF-

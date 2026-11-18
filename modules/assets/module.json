@@ -1,0 +1,113 @@
+{
+  "code": "assets",
+  "version": "1.0.0",
+  "pack": "workplace",
+  "spec": "M42",
+  "name": {
+    "th": "ทะเบียนทรัพย์สิน",
+    "en": "Asset register"
+  },
+  "icon": "briefcase",
+  "sort_order": 89,
+  "depends_on": [
+    "core",
+    "employees"
+  ],
+  "permissions": {
+    "assets.use": "normal",
+    "assets.view": "normal",
+    "assets.manage": "normal",
+    "assets.dispose": "high",
+    "assets.count": "normal"
+  },
+  "grants": {
+    "*": [
+      "assets.use"
+    ],
+    "WPA": [
+      "assets.view",
+      "assets.manage",
+      "assets.count"
+    ],
+    "FNC": [
+      "assets.view",
+      "assets.dispose"
+    ],
+    "AUD": [
+      "assets.view"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "assets.nav",
+      "icon": "database",
+      "href": "/assets",
+      "permission": "assets.view"
+    },
+    {
+      "group": "work",
+      "label": "assets.nav_mine",
+      "icon": "briefcase",
+      "href": "/assets/mine",
+      "permission": "assets.use"
+    },
+    {
+      "group": "work",
+      "label": "assets.nav_campaigns",
+      "icon": "clipboard-check",
+      "href": "/assets/campaigns",
+      "permission": "assets.count"
+    },
+    {
+      "group": "settings",
+      "label": "assets.nav_types",
+      "icon": "settings",
+      "href": "/assets/types",
+      "permission": "assets.manage"
+    }
+  ],
+  "workflows": {
+    "assets.disposal": {
+      "subject": "as_disposal",
+      "class": "Blue\\Modules\\Assets\\DisposalSubject",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "permission",
+            "value": "assets.dispose"
+          },
+          "scope": "subject",
+          "sla_hours": 72
+        }
+      ]
+    }
+  },
+  "document_classes": {
+    "assets.file": [
+      "C",
+      "assets.manage",
+      "assets.manage",
+      [
+        "pdf",
+        "png",
+        "jpeg",
+        "webp"
+      ],
+      10,
+      true,
+      "general_confidential",
+      "finalized"
+    ]
+  },
+  "jobs": {
+    "assets.tick": {
+      "every": 1440,
+      "call": "Blue\\Modules\\Assets\\AssetService::tickJob"
+    }
+  },
+  "demo": "Blue\\Modules\\Assets\\AssetsDemo::run",
+  "personal_data": "Blue\\Modules\\Assets\\AssetsPersonalData",
+  "routes": "routes.php"
+}

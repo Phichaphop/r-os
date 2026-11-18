@@ -1,0 +1,39 @@
+{
+  "code": "jd",
+  "version": "1.0.0",
+  "pack": "hr",
+  "nav_section": "hr_people",
+  "spec": "M56",
+  "name": { "th": "คำบรรยายลักษณะงาน (JD)", "en": "Job descriptions" },
+  "icon": "briefcase",
+  "sort_order": 36,
+  "depends_on": ["core", "employees"],
+  "permissions": {
+    "jd.read": "normal",
+    "jd.manage": "normal",
+    "jd.approve": "high"
+  },
+  "grants": {
+    "*": ["jd.read"],
+    "HRA": ["jd.manage", "jd.approve"],
+    "HRT": ["jd.manage"]
+  },
+  "menu": [
+    { "group": "work", "label": "jd.nav", "icon": "briefcase", "href": "/jd", "permission": "jd.read" },
+    { "group": "settings", "label": "jd.nav_admin", "icon": "settings", "href": "/jd/admin", "permission": "jd.manage" }
+  ],
+  "workflows": {
+    "jd.approve": {
+      "subject": "jd_version",
+      "class": "Blue\\Modules\\Jd\\JdVersionSubject",
+      "no_fallback": true,
+      "steps": [
+        { "approver": { "type": "permission", "value": "jd.approve" }, "scope": "subject", "sla_hours": 72 }
+      ]
+    }
+  },
+  "jobs": {
+    "jd.sync": { "every": 60, "call": "Blue\\Modules\\Jd\\JdService::syncJob" }
+  },
+  "routes": "routes.php"
+}

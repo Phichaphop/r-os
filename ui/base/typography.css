@@ -1,0 +1,24 @@
+/* Typography — Thai needs taller line-height than Latin (P0-05 §1.3) */
+html { font-size: 100%; }
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-ui);
+  line-height: var(--line-height-normal);
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: var(--font-weight-semibold); line-height: var(--line-height-tight); }
+h1 { font-size: var(--font-size-xl); }
+h2 { font-size: var(--font-size-lg); }
+h3 { font-size: var(--font-size-md); }
+a { color: var(--color-action-primary); text-underline-offset: 2px; }
+a:hover { color: var(--color-action-primary-hover); }
+code, kbd, .mono { font-family: var(--font-mono); font-size: 0.92em; }
+small, .text-xs { font-size: var(--font-size-xs); }
+.text-sm { font-size: var(--font-size-sm); }
+.text-muted { color: var(--color-text-muted); }
+.num { font-variant-numeric: tabular-nums; }
+.display-num { font-family: var(--font-display); font-size: var(--font-size-2xl); font-weight: var(--font-weight-semibold); font-variant-numeric: tabular-nums; line-height: 1.2; }
+@media (max-width: 599px) { body { font-size: var(--font-size-base); } }

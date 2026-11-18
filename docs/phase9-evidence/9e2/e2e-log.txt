@@ -1,0 +1,38 @@
+01-projects: /projects overflow=0 axe=[]
+02-new: /projects/new overflow=0 axe=[]
+create: สร้างโครงการแล้ว — เชิญลูกทีมได้เลย
+03-team: /projects/p/01M6EJQB4VCQ5ESKRV90GEBPDA overflow=0 axe=[]
+invite: ส่งคำเชิญแล้ว
+04-invitation: /projects overflow=0 axe=[]
+accept: เข้าร่วมทีมแล้ว
+start: ดำเนินการแล้ว status=pending_approval
+05-approval: /approvals/01M6EJQE14K8X2GV8T2RKY4GAZ overflow=0 axe=[]
+approve: อนุมัติและดำเนินการแล้ว status=active
+06-approver-view: /projects/p/01M6EJQB4VCQ5ESKRV90GEBPDA overflow=0 axe=[]
+task A: เพิ่มงานแล้ว
+task B: เพิ่มงานแล้ว || งานก่อนหน้า "ทำสไลด์และแบบฝึกหัด (E2E)" ยังไม่ตรวจรับ || งานนี้เริ่มก่อนหรือวันเดียวกับกำหนดเสร็จของ "ทำสไลด์และแบบฝึกหัด (E2E)" (2026-11-06) || ผู้รับผิดชอบมีงานอื่นในช่วงเดียวกัน 3 งาน
+07-task-warnings: /projects/t/01M6EJQHGWWXA2XZSBF3MMCDEQ overflow=0 axe=[]
+warnings: เพิ่มงานแล้ว | งานก่อนหน้า "ทำสไลด์และแบบฝึกหัด (E2E)" ยังไม่ตรวจรับ | งานนี้เริ่มก่อนหรือวันเดียวกับกำหนดเสร็จของ "ทำสไลด์และแบบฝึกหัด (E2E)" (2026-11-06) | ผู้รับผิดชอบมีงานอื่นในช่วงเดียวกัน 3 งาน
+mine: บันทึกความคืบหน้าแล้ว
+submit: ส่งงานแล้ว — รอหัวหน้าตรวจ
+08-submitted: /projects/t/01M6EJQGXR4K5JPJKBDB6GH87M overflow=0 axe=[]
+return: ตีกลับแล้ว
+resubmit: ส่งงานแล้ว — รอหัวหน้าตรวจ
+accept task: ตรวจรับแล้ว
+09-task-accepted: /projects/t/01M6EJQGXR4K5JPJKBDB6GH87M overflow=0 axe=[]
+comment: ส่งความเห็นแล้ว
+10-view-board: /projects/p/01M6EJQB4VCQ5ESKRV90GEBPDA overflow=0 axe=[]
+11-view-table: /projects/p/01M6EJQB4VCQ5ESKRV90GEBPDA overflow=0 axe=[]
+12-view-timeline: /projects/p/01M6EJQB4VCQ5ESKRV90GEBPDA overflow=0 axe=[]
+13-view-team: /projects/p/01M6EJQB4VCQ5ESKRV90GEBPDA overflow=0 axe=[]
+14-view-updates: /projects/p/01M6EJQB4VCQ5ESKRV90GEBPDA overflow=0 axe=[]
+update: บันทึกอัปเดตแล้ว
+privacy (ga.demo1): 404
+state: active / accepted,todo
+15-projects-390-dark: /projects overflow=0 axe=[]
+16-board-390-dark: /projects/p/01M6EJQB4VCQ5ESKRV90GEBPDA overflow=0 axe=[]
+17-timeline-390-dark: /projects/p/01M6EJQB4VCQ5ESKRV90GEBPDA overflow=0 axe=[]
+18-task-390-dark: /projects/t/01M6EJQGXR4K5JPJKBDB6GH87M overflow=0 axe=[]
+19-team-390-dark: /projects/p/01M6EJQB4VCQ5ESKRV90GEBPDA overflow=0 axe=[]
+20-updates-390-dark: /projects/p/01M6EJQB4VCQ5ESKRV90GEBPDA overflow=0 axe=[]
+21-new-390-dark: /projects/new overflow=0 axe=[]

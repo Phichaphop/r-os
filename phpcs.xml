@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<ruleset name="Blue OS">
+  <description>PSR-12 for Blue OS (P0-06 §6.2)</description>
+  <file>core</file>
+  <file>modules</file>
+  <file>tests</file>
+  <file>collector/src</file>
+  <file>collector/public/index.php</file>
+  <file>public/index.php</file>
+  <exclude-pattern>core/I18n/seed/*</exclude-pattern>
+  <exclude-pattern>modules/*/lang/*</exclude-pattern>
+  <exclude-pattern>modules/*/Views/*</exclude-pattern>
+  <arg name="extensions" value="php"/>
+  <arg value="sp"/>
+  <rule ref="PSR12">
+    <exclude name="Generic.Files.LineLength"/>
+    <exclude name="PSR12.Files.FileHeader.IncorrectOrder"/>
+  </rule>
+  <rule ref="PSR1.Files.SideEffects.FoundWithSymbols"><exclude-pattern>core/bootstrap.php</exclude-pattern></rule>
+  <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace"><exclude-pattern>core/migrations/*</exclude-pattern><exclude-pattern>modules/*/migrations/*</exclude-pattern><exclude-pattern>modules/*/routes.php</exclude-pattern></rule>
+  <!-- an applied migration must never change (checksum) — 0.7.0 shipped this one with a header-spacing nit -->
+  <rule ref="PSR12.Files.FileHeader.SpacingAfterBlock"><exclude-pattern>modules/attendance/migrations/202702010002_attendance_periods.php</exclude-pattern></rule>
+</ruleset>

@@ -1,0 +1,21 @@
+01-req-form: /recruit/requisitions overflow=0 axe=[]
+req: ส่งใบขอคนให้อนุมัติแล้ว
+after req: /recruit/r/01M5T4DBFBEWNWSZRM4GTKQB0B
+approvers: hr.demo1, hr.demo1
+02-settings: /recruit/settings overflow=0 axe=[]
+03-requisition: /recruit/r/01M5T4DBFBEWNWSZRM4GTKQB0B overflow=0 axe=[]
+posting: สร้างประกาศแล้ว (ร่าง) — ตรวจแล้วกด "เผยแพร่" at /recruit/p/01M5T4DEJD9EG9YSMMB680EFAE
+publish: เผยแพร่แล้ว — แสดงในหน้าตำแหน่งงานว่าง
+04-jobs-mobile: /recruit/jobs overflow=0 axe=[]
+05-apply-start-mobile: /recruit/jobs/01M5T4DEJD9EG9YSMMB680EFAE/apply overflow=0 axe=[]
+06-talent-empty: /talent overflow=0 axe=[]
+07-talent-new: /talent/new overflow=0 axe=[]
+talent: เพิ่มรายชื่อเข้าคลังแล้ว
+08-talent-profile: /talent/p/01M5T4DKRNXSE12N90TJMWVTCJ overflow=0 axe=[]
+put forward: ส่งเข้าตำแหน่งแล้ว — เปิดใบสมัครให้ → /recruit/c/01M5T4DMXAEJPHQ597CJ7GND8M
+09-candidate-from-talent: /recruit/c/01M5T4DMXAEJPHQ597CJ7GND8M overflow=0 axe=[]
+10-talent-list: /talent overflow=0 axe=[]
+11-talent-list-mobile-dark: /talent overflow=0 axe=[]
+12-builder-mobile: /talent/builder overflow=0 axe=[]
+13-builder-result-mobile: /talent/builder overflow=0 axe=[]
+print view: .sidebar=none .topbar=none .page-header=none .resume-form=none

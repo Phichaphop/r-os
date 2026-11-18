@@ -1,0 +1,50 @@
+leftover: nothing to approve
+f1-forms-admin: /forms/admin overflow=0 axe=[]
+form created: สร้างแบบฟอร์มแล้ว — อัปโหลดไฟล์ต่อได้เลย
+uploaded: อัปโหลดแล้ว — กดส่งอนุมัติเพื่อเผยแพร่
+submitted: ส่งให้อนุมัติแล้ว
+f2-form-manage: /forms/admin/f/01M5SEQPR3RDVPX91XY77NA2V1 overflow=0 axe=[]
+form approve: อนุมัติและดำเนินการแล้ว
+f3-forms-list-390: /forms overflow=0 axe=[]
+f4-form-show-390: /forms/f/01M5SEQPR3RDVPX91XY77NA2V1 overflow=0 axe=[]
+download: 200 application/pdf %PDF-
+a1-ann-admin: /announcements/admin overflow=0 axe=[]
+ann created: บันทึกร่างแล้ว
+ann publish: ดำเนินการแล้ว — ดูสถานะด้านบน || ประกาศนี้เผยแพร่/ตั้งเวลาแล้ว — บันทึกการแก้ไขจะสร้างฉบับใหม่ ผู้ที่รับทราบฉบับเดิมต้องรับทราบใหม่
+popup open: none
+a2-home-popup: / overflow=0 axe=[]
+popup after 5s: none
+a3-ann-board: /announcements overflow=0 axe=[]
+a4-ann-read: /announcements/p/01M5SEQWTPBHYEHMBP0EWBD42Y overflow=0 axe=[]
+ack: บันทึกการรับทราบแล้ว
+a5-ann-engagement: /announcements/admin/p/01M5SEQWTPBHYEHMBP0EWBD42Y overflow=0 axe=[]
+important: ดำเนินการแล้ว — ดูสถานะด้านบน
+important approve: อนุมัติและดำเนินการแล้ว
+d1-dc-admin: /policies/admin overflow=0 axe=[]
+doc created: สร้างเอกสารแล้ว — อัปโหลดฉบับแรกได้เลย
+version uploaded: อัปโหลดแล้ว — ส่งอนุมัติต่อ
+doc approve: อนุมัติและดำเนินการแล้ว
+d2-dc-mine-390: /policies overflow=0 axe=[]
+d3-dc-read-390: /policies/d/01M5SET6HYZEGPHMKXN282VH6C overflow=0 axe=[]
+opened file: 200 application/pdf
+doc ack: บันทึกการรับทราบแล้ว
+d4-dc-acked-390: /policies/d/01M5SET6HYZEGPHMKXN282VH6C overflow=0 axe=[]
+d5-dc-report: /policies/admin/d/01M5SET6HYZEGPHMKXN282VH6C overflow=0 axe=[]
+type-ahead cards: 7
+r1-directory-search: /directory overflow=0 axe=[]
+r2-directory-team: /directory overflow=0 axe=[]
+r3-directory-dark: /directory overflow=0 axe=[]
+r4-directory-admin: /directory/admin overflow=0 axe=[]
+h1-home-sections: / overflow=0 axe=[]
+
+--- pop-up recheck ---
+published: ดำเนินการแล้ว — ดูสถานะด้านบน || ประกาศนี้เผยแพร่/ตั้งเวลาแล้ว — บันทึกการแก้ไขจะสร้างฉบับใหม่ ผู้ที่รับทราบฉบับเดิมต้องรับทราบใหม่
+popup open after login: true
+a2-home-popup: / overflow=0 axe=[]
+popup open after 5 s: false
+popup on next visit: 1
+
+--- module list recheck (D5D-03) ---
+m1-admin-modules: /admin/modules overflow=0 axe=[]
+pack labels: ["announcements · v1.0.0 · Core+ (สื่อสารและเอกสาร) ","forms · v1.0.0 · Core+ (สื่อสารและเอกสาร) ","doccontrol · v1.0.0 · Core+ (สื่อสารและเอกสาร) ","directory · v1.0.0 · Core+ (สื่อสารและเอกสาร) "]
+raw module keys: []

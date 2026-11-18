@@ -1,0 +1,21 @@
+.table-wrap { position: relative; overflow-x: auto; border: var(--border-width) solid var(--color-border); border-radius: var(--radius-surface); background: var(--color-surface); }
+.table { width: 100%; font-size: var(--text-ui); }
+.table th, .table td { padding: 0 var(--space-4); height: var(--row-height); text-align: left; border-bottom: var(--border-width) solid var(--color-border); white-space: nowrap; }
+.table thead th { position: sticky; top: 0; background: var(--color-surface-2); font-weight: var(--font-weight-semibold); color: var(--color-text-muted); font-size: var(--font-size-sm); z-index: 1; }
+.table tbody tr:hover { background: var(--color-surface-2); }
+.table tbody tr[aria-selected="true"] { background: var(--color-primary-soft); }
+.table .col-num { text-align: right; font-variant-numeric: tabular-nums; }
+.table tfoot td { font-weight: var(--font-weight-semibold); border-top: var(--border-width-strong) solid var(--color-text); border-bottom: 0; }
+.table__sort { background: none; border: 0; padding: 0; display: inline-flex; align-items: center; gap: var(--space-1); color: inherit; font-weight: inherit; }
+.bulk-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); padding: var(--space-2) var(--space-4); background: var(--color-primary-soft); border-radius: var(--radius-surface); }
+.filter-bar { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: flex-end; }
+.filter-bar .field { min-width: 160px; }
+.chip { display: inline-flex; align-items: center; gap: var(--space-1); padding: 2px var(--space-1) 2px var(--space-3); border-radius: var(--radius-pill); background: var(--color-primary-soft); color: var(--color-action-primary); font-size: var(--font-size-xs); }
+.chip button { background: none; border: 0; color: inherit; display: inline-flex; padding: 2px; border-radius: 50%; }
+@media (max-width: 599px) {
+  .table--stack thead { display: none; }
+  .table--stack tr { display: block; padding: var(--space-3) var(--space-4); border-bottom: var(--border-width) solid var(--color-border); }
+  .table--stack td { display: flex; justify-content: space-between; gap: var(--space-3); height: auto; padding: 2px 0; border: 0; white-space: normal; }
+  .table--stack td::before { content: attr(data-label); color: var(--color-text-muted); font-size: var(--font-size-xs); }
+  .table--stack tfoot { display: block; }
+}

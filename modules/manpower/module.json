@@ -1,0 +1,39 @@
+{
+  "code": "manpower",
+  "version": "1.0.0",
+  "pack": "hr",
+  "nav_section": "hr_people",
+  "spec": "M11",
+  "name": { "th": "งบประมาณอัตรากำลัง", "en": "Manpower budget" },
+  "icon": "report-money",
+  "sort_order": 39,
+  "depends_on": ["core", "employees"],
+  "permissions": {
+    "manpower.view": "normal",
+    "manpower.manage": "normal",
+    "manpower.approve": "high"
+  },
+  "grants": {
+    "HRA": ["manpower.view", "manpower.manage", "manpower.approve"],
+    "HRT": ["manpower.view"],
+    "FNM": ["manpower.view", "manpower.manage"],
+    "FNC": ["manpower.view", "manpower.approve"]
+  },
+  "menu": [
+    { "group": "work", "label": "manpower.nav", "icon": "report-money", "href": "/manpower", "permission": "manpower.view" }
+  ],
+  "workflows": {
+    "manpower.approve": {
+      "subject": "mp_plan",
+      "class": "Blue\\Modules\\Manpower\\PlanSubject",
+      "no_fallback": true,
+      "steps": [
+        { "approver": { "type": "permission", "value": "manpower.approve" }, "scope": "subject", "sla_hours": 120 }
+      ]
+    }
+  },
+  "jobs": {
+    "manpower.snapshot": { "every": 1440, "call": "Blue\\Modules\\Manpower\\ManpowerService::snapshotJob" }
+  },
+  "routes": "routes.php"
+}

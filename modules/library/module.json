@@ -1,0 +1,77 @@
+{
+  "code": "library",
+  "version": "1.0.0",
+  "pack": "workplace",
+  "nav_section": "core_plus",
+  "spec": "M03",
+  "name": {
+    "th": "ห้องสมุดออนไลน์",
+    "en": "Online library"
+  },
+  "icon": "book",
+  "sort_order": 101,
+  "depends_on": [
+    "employees"
+  ],
+  "permissions": {
+    "library.read": "normal",
+    "library.manage": "normal"
+  },
+  "grants": {
+    "*": [
+      "library.read"
+    ],
+    "HRA": [
+      "library.manage"
+    ],
+    "HRT": [
+      "library.manage"
+    ],
+    "WPA": [
+      "library.manage"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "library.nav",
+      "icon": "book",
+      "href": "/library",
+      "permission": "library.read"
+    },
+    {
+      "group": "work",
+      "label": "library.nav_manage",
+      "icon": "list-check",
+      "href": "/library/manage",
+      "permission": "library.manage"
+    }
+  ],
+  "document_classes": {
+    "library.file": [
+      "I",
+      "library.manage",
+      "library.manage",
+      [
+        "pdf",
+        "docx",
+        "xlsx",
+        "pptx",
+        "png",
+        "jpeg"
+      ],
+      20,
+      false,
+      "general_document",
+      "finalized"
+    ]
+  },
+  "jobs": {
+    "library.tick": {
+      "every": 60,
+      "call": "Blue\\Modules\\Library\\LibraryService::tickJob"
+    }
+  },
+  "demo": "Blue\\Modules\\Library\\LibraryDemo::run",
+  "routes": "routes.php"
+}

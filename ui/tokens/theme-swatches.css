@@ -1,0 +1,15 @@
+/* Preset swatches for Settings → Appearance (values mirror theme-presets.json): a primary, b menu, d menu highlight, c background. */
+.swatch--steel { --sw-d: #9CC3E6; --sw-a: #2F5A7E; --sw-b: #0B1F44; --sw-c: #EEF1F6; }
+.swatch--slate { --sw-d: #B9C6D6; --sw-a: #3D4C5F; --sw-b: #1C2530; --sw-c: #EEF0F3; }
+.swatch--teal { --sw-d: #8ED3CE; --sw-a: #0E6265; --sw-b: #0A3537; --sw-c: #ECF3F3; }
+.swatch--paper { --sw-d: #9CC3E6; --sw-a: #2F5A7E; --sw-b: #0B1F44; --sw-c: #F5F0E6; }
+
+/* "My display settings" highlight colours (0.6.1) — values mirror Blue\Core\Ui\UserLook::ACCENTS (all ≥ 4.5:1 with white). */
+.accent-swatch--blue { --sw: #1D4ED8; }
+.accent-swatch--teal { --sw: #0F766E; }
+.accent-swatch--green { --sw: #166534; }
+.accent-swatch--purple { --sw: #6D28D9; }
+.accent-swatch--pink { --sw: #BE185D; }
+.accent-swatch--red { --sw: #B91C1C; }
+.accent-swatch--orange { --sw: #9A3412; }
+.accent-swatch--graphite { --sw: #374151; }

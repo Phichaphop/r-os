@@ -1,0 +1,30 @@
+01-payroll-home: /payroll overflow=0 axe=[]
+02-settings: /payroll/settings overflow=0 axe=[]
+04-people: /payroll/people overflow=0 axe=[]
+profile 4: ส่งการเปลี่ยนแปลงไปให้อีกคนอนุมัติแล้ว
+05-person-pending: /payroll/people/01M57N3W7W9TQ6FQDHWPPNWTKW overflow=0 axe=[]
+profile 7: ส่งการเปลี่ยนแปลงไปให้อีกคนอนุมัติแล้ว
+06-checker-inbox: /approvals overflow=0 axe=[]
+checker approved /approvals/01M5VHVYD75RDQ01P22B7KSNE3: อนุมัติและดำเนินการแล้ว
+checker approved /approvals/01M5VHVYRKC3PJYZ5YY0RJC833: อนุมัติและดำเนินการแล้ว
+checker approved /approvals/01M5VHX11R4NGV47ZMSJTB4G6V: อนุมัติและดำเนินการแล้ว
+checker approved /approvals/01M5VHX21C9DPBPK7Z8T19CGVP: อนุมัติและดำเนินการแล้ว
+approved: 4
+07-settings-set: /payroll/settings overflow=0 axe=[]
+08-components: /payroll/components overflow=0 axe=[]
+manual: เพิ่มรายการแล้ว — คำนวณใหม่
+calculate: คำนวณแล้ว
+09-run-calculated: /payroll/runs/01M5VHW5BWAK6JCMSJYN6BBCQN overflow=0 axe=[]
+10-person-lines: /payroll/runs/01M5VHW5BWAK6JCMSJYN6BBCQN/e/01M57N3W7W9TQ6FQDHWPPNWTKW overflow=0 axe=[]
+submit: ส่งอนุมัติแล้ว
+11-approval-run: /approvals/01M5VHX9XJE5SKA0Q52PKCESHX overflow=0 axe=[]
+run approved: อนุมัติและดำเนินการแล้ว
+payment: สร้างชุดจ่ายเงินแล้ว (1 คน) · ไม่มีบัญชี 6 คน ต้องจ่ายทางอื่น
+posting: ส่งบันทึกบัญชีแล้ว
+12-run-approved: /payroll/runs/01M5VHW5BWAK6JCMSJYN6BBCQN overflow=0 axe=[]
+register → /reauth
+13-reauth: /reauth overflow=0 axe=[]
+register saved 4374 bytes
+14-run-mobile: /payroll/runs/01M5VHW5BWAK6JCMSJYN6BBCQN overflow=0 axe=[]
+15-run-dark: /payroll/runs/01M5VHW5BWAK6JCMSJYN6BBCQN overflow=0 axe=[]
+employee /payroll → คุณไม่มีสิทธิ์เข้าถึงหน้านี้ · R-OS

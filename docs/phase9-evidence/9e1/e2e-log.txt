@@ -1,0 +1,33 @@
+settings: บันทึกการตั้งค่าแล้ว
+01-settings: /safety/settings overflow=0 axe=[]
+02-safety-home: /safety overflow=0 axe=[]
+03-report-form: /safety/report overflow=0 axe=[]
+report: ส่งรายงานแล้ว เลขที่ SF2611-0002
+04-incident-reporter: /safety/i/01M6E61GD3HTDBJQS4XVBCQFNY overflow=0 axe=[]
+urgent notes to manager.demo1: 2
+anonymous code shown: true
+05-anonymous-sent: /safety/report overflow=0 axe=[]
+track: SF2611-0003 · จุดเสี่ยง / สภาพไม่ปลอดภัย รับแจ้ง
+06-track: /safety/track overflow=0 axe=[]
+07-manage: /safety/manage overflow=0 axe=[]
+triage: บันทึกการคัดกรองแล้ว
+assign: มอบหมายผู้สอบสวนแล้ว
+08-incident-team: /safety/i/01M6E61GD3HTDBJQS4XVBCQFNY overflow=0 axe=[]
+investigate: บันทึกการสอบสวนแล้ว
+witness: บันทึกคำให้การแล้ว
+action: เพิ่มมาตรการและแจ้งผู้รับผิดชอบแล้ว
+09-investigation: /safety/i/01M6E61GD3HTDBJQS4XVBCQFNY overflow=0 axe=[]
+done: บันทึกว่าเสร็จแล้ว
+10-action-done: /safety/i/01M6E61GD3HTDBJQS4XVBCQFNY overflow=0 axe=[]
+verify: ยืนยันผลและปิดเหตุแล้ว || ผลการดำเนินการ ตรวจหน้างานแล้ว ไม่มีคนเดินตัดเส้นทางรถ (E2E)
+11-closed: /safety/i/01M6E61GD3HTDBJQS4XVBCQFNY overflow=0 axe=[]
+12-stats: /safety/stats overflow=0 axe=[]
+status: closed/done
+13-home-390-dark: /safety overflow=0 axe=[]
+14-report-390-dark: /safety/report overflow=0 axe=[]
+15-incident-390-dark: /safety/i/01M6E61GD3HTDBJQS4XVBCQFNY overflow=0 axe=[]
+16-track-390-dark: /safety/track overflow=0 axe=[]
+17-incident-team-390-dark: /safety/i/01M6E61GD3HTDBJQS4XVBCQFNY overflow=0 axe=[]
+18-manage-390-dark: /safety/manage overflow=0 axe=[]
+19-stats-390-dark: /safety/stats overflow=0 axe=[]
+20-settings-390-dark: /safety/settings overflow=0 axe=[]

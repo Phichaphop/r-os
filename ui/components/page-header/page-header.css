@@ -1,0 +1,26 @@
+.page-header { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--space-4); }
+.page-header__text { flex: 1 1 220px; min-width: 0; }
+.page-header__title { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; overflow-wrap: anywhere; min-width: 0; }
+.page-header__subtitle { color: var(--color-text-muted); margin-top: var(--space-1); }
+.page-header__actions { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.breadcrumb ol { display: flex; flex-wrap: wrap; gap: var(--space-1); list-style: none; padding: 0; margin: 0 0 var(--space-2); font-size: var(--font-size-sm); color: var(--color-text-muted); }
+.breadcrumb li + li::before { content: "/"; margin-right: var(--space-1); }
+.breadcrumb a { color: var(--color-text-muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--color-action-primary); text-decoration: underline; }
+.breadcrumb [aria-current="page"] { color: var(--color-text); }
+
+/* 0.8.2 hero-centric pages (DEC-69): every page opens with a navy banner — purpose on the left, actions on the right */
+.page-hero { align-items: center; gap: var(--space-4) var(--space-6); padding: var(--space-6); min-height: 112px; }
+.page-hero h1 { color: var(--color-on-navy); }
+.page-hero .page-header__subtitle { color: var(--color-on-navy-muted); max-width: 72ch; }
+.page-hero__aside { margin-inline-start: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--space-2); }
+.page-hero .breadcrumb ol, .page-hero .breadcrumb a { color: var(--color-on-navy-muted); }
+.page-hero .breadcrumb a:hover, .page-hero .breadcrumb [aria-current="page"] { color: var(--color-on-navy); }
+.page-hero .page-header__actions > a:not(.btn), .page-hero .page-header__actions .text-muted { color: var(--color-on-navy); }
+.page-hero .btn--ghost { color: var(--color-on-navy); }
+.page-hero .btn--ghost:hover { background: var(--color-navy-hover); color: var(--color-on-navy); }
+.page-hero--home { min-height: 168px; padding: var(--space-8) var(--space-6); }
+.page-hero--home h1 { font-size: var(--font-size-2xl); }
+.page-hero__lead { margin: var(--space-1) 0 0; color: var(--color-on-navy-muted); }
+@media (max-width: 599px) { .page-hero { padding: var(--space-5) var(--space-4); } .page-hero__aside { margin-inline-start: 0; justify-content: flex-start; width: 100%; } }
+@media (min-width: 900px) { .page-hero__aside { flex-wrap: nowrap; } .page-hero__aside .hub-search { flex: 0 1 340px; } }

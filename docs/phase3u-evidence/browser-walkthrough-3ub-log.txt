@@ -1,0 +1,138 @@
+# Phase 3U-B browser walkthrough (Chromium headless + axe-core 4.x, WCAG 2.2 AA rules)
+## Upgrade test machine 0.4.0 -> 0.4.1 (calc + fonts migrations)
+### M26
+calc status 200
+01-basic: /calc overflow=0 axe=[]
+basic result 14
+basic2 0
+age 36 ปี 4 เดือน 28 วันรวม 13,300 วันอีก 214 วันถึงวันเกิดครั้งถัดไป
+02-age: /calc?tab=age overflow=0 axe=[]
+unit 1 ไร่ = 400 ตารางวา
+03-unit: /calc?tab=unit overflow=0 axe=[]
+bmi BMI = 22.9ปกติ (18.5–24.9)
+04-bmi: /calc?tab=bmi overflow=0 axe=[] flash=คำนวณในเครื่องของคุณเท่านั้น ไม่ส่งหรือบันทึกที่เซิร์ฟเวอร์
+05-sso-missing: /calc?tab=sso overflow=0 axe=[]
+rates status 200
+06-rates: /calc/rates overflow=0 axe=[] flash=ระบบไม่มีอัตราให้ — ต้องกรอกเองจากแหล่งทางการ อัตราเปลี่ยนตามกฎหมาย AI และระบบจึงไม่ใส่ค่าให้ ผู้รับผิดชอบ (Payroll/บัญช
+08-approvals: /approvals overflow=0 axe=[]
+10-sso-result: /calc/sso overflow=0 axe=[] flash=เป็นประมาณการจากตารางอัตราที่บริษัทอนุมัติ ไม่ใช่คำวินิจฉัยทางกฎหมาย/ภาษี — ตรวจกับผู้เชี่ยวชาญก่อนใช้จริง
+sso outputs ลูกจ้างจ่าย 225.00 นายจ้างจ่าย 225.00 รวม 450.00 ค่าจ้างที่ใช้คำนวณ 9,000.00
+11-shared: /calc/s/hoXzdqqMHfHM overflow=0 axe=[] flash=สร้างลิงก์แชร์แล้ว — ใช้ได้เฉพาะคนในระบบ และหมดอายุตามกำหนด
+share url http://127.0.0.1:8096/calc/s/hoXzdqqMHfHM
+rates as employee 403
+12-shared-other: /calc/s/hoXzdqqMHfHM overflow=0 axe=[] flash=เป็นประมาณการจากตารางอัตราที่บริษัทอนุมัติ ไม่ใช่คำวินิจฉัยทางกฎหมาย/ภาษี — ตรวจกับผู้เชี่ยวชาญก่อนใช้จริง
+12b-severance-missing: /calc?tab=severance overflow=0 axe=[] flash=ยังไม่มีตารางอัตราที่อนุมัติ ระบบไม่ใส่อัตราตามกฎหมายให้เอง — รอผู้ดูแลกรอกจากแหล่งทางการและให้อีกคนอนุมัติ
+12c-pit-missing: /calc?tab=pit overflow=0 axe=[] flash=ยังไม่มีตารางอัตราที่อนุมัติ ระบบไม่ใส่อัตราตามกฎหมายให้เอง — รอผู้ดูแลกรอกจากแหล่งทางการและให้อีกคนอนุมัติ
+13-basic-360: /calc overflow=0 axe=[]
+14-sso-360: /calc?tab=sso overflow=0 axe=[]
+15-basic-dark: /calc overflow=0 axe=[]
+16-rates-dark: /calc/rates overflow=0 axe=[] flash=ระบบไม่มีอัตราให้ — ต้องกรอกเองจากแหล่งทางการ อัตราเปลี่ยนตามกฎหมาย AI และระบบจึงไม่ใส่ค่าให้ ผู้รับผิดชอบ (Payroll/บัญช
+DONE
+### M30
+01-library-empty: /fonts overflow=0 axe=[]
+02-manage-empty: /fonts/manage overflow=0 axe=[] flash=กติกาของคลังฟอนต์ เผยแพร่ได้เมื่อมีชื่อสัญญาอนุญาต แหล่งที่มา และไฟล์อย่างน้อย 1 ไฟล์ · คนเผยแพร่ต้องไม่ใช่คนสร้างหรือคน
+03-created: /fonts/manage/01M569JRRXB8HRY8WNGNTSRBXF overflow=0 axe=[] flash=สร้างฟอนต์เป็นร่างแล้ว — อัปโหลดไฟล์ต่อได้เลย
+family http://127.0.0.1:8096/fonts/manage/01M569JRRXB8HRY8WNGNTSRBXF
+upload IBMPlexMono-Regular.ttf: อัปโหลดไฟล์แล้ว
+upload IBMPlexMono-Regular.ttf: ข้อมูลบางช่องยังไม่ถูกต้อง — ตรวจข้อความใต้ช่องที่มีกรอบสีแดง | มีไฟล์นี้ในคลังแล้ว (ไฟล์เหมือนกันทุกไบต์)
+upload Fake.ttf: ข้อมูลบางช่องยังไม่ถูกต้อง — ตรวจข้อความใต้ช่องที่มีกรอบสีแดง | ไม่รับไฟล์ชนิดนี้ (ระบบตรวจจากเนื้อไฟล์ ไม่ใช่นามสกุล)
+upload junk.bin: ข้อมูลบางช่องยังไม่ถูกต้อง — ตรวจข้อความใต้ช่องที่มีกรอบสีแดง | ไม่รับไฟล์ชนิดนี้ (ระบบตรวจจากเนื้อไฟล์ ไม่ใช่นามสกุล)
+upload IBMPlexMono-Bold.ttf: อัปโหลดไฟล์แล้ว
+04-files: /fonts/manage/01M569JRRXB8HRY8WNGNTSRBXF overflow=0 axe=[] flash=อัปโหลดไฟล์แล้ว
+publish disabled for creator: true
+license: แนบหลักฐานลิขสิทธิ์แล้ว
+s2 publish disabled (no licence): true
+s2 save: บันทึกแล้ว
+s2 publish: เผยแพร่แล้ว — ผู้ใช้เห็นฟอนต์นี้ในคลัง
+05-published: /fonts/manage/01M569JRRXB8HRY8WNGNTSRBXF overflow=0 axe=[] flash=เผยแพร่แล้ว — ผู้ใช้เห็นฟอนต์นี้ในคลัง
+06-library: /fonts overflow=0 axe=[]
+fonts loaded: "ros-font-1", var(--font-body, sans-serif)
+sample: ทดสอบฟอนต์ 123 48px
+07-family: /fonts/01M569JRRXB8HRY8WNGNTSRBXF overflow=0 axe=[] flash=ใช้เพื่องานของบริษัทตามสิทธิ์ที่ได้รับเท่านั้น — ห้ามส่งต่อไฟล์ฟอนต์ให้บุคคลภายนอก เว้นแต่สัญญาอนุญาตระบุว่าทำได้
+single: IBMPlexMono-Regular.ttf 133796
+zip: IBM_Plex_Mono.zip 271241
+manage as employee: 403
+upload IBMPlexMono-Regular-v2.ttf: อัปโหลดไฟล์แล้ว
+08-replaced: /fonts/manage/01M569JRRXB8HRY8WNGNTSRBXF overflow=0 axe=[] flash=อัปโหลดไฟล์แล้ว
+deprecate: เปลี่ยนสถานะแล้ว
+09-library-deprecated: /fonts overflow=0 axe=[]
+10-family-deprecated: /fonts/01M569JRRXB8HRY8WNGNTSRBXF overflow=0 axe=[] flash=ฟอนต์นี้เลิกใช้แล้ว ยังดาวน์โหลดได้เพื่อเปิด/แก้ไขเอกสารเดิม — งานใหม่ไม่ควรใช้ — ทดสอบการเลิกใช้
+11-library-360: /fonts overflow=0 axe=[]
+12-family-360: /fonts/01M569JRRXB8HRY8WNGNTSRBXF overflow=0 axe=[] flash=ฟอนต์นี้เลิกใช้แล้ว ยังดาวน์โหลดได้เพื่อเปิด/แก้ไขเอกสารเดิม — งานใหม่ไม่ควรใช้ — ทดสอบการเลิกใช้
+13-edit-360: /fonts/manage/01M569JRRXB8HRY8WNGNTSRBXF overflow=0 axe=[]
+14-edit-dark: /fonts/manage/01M569JRRXB8HRY8WNGNTSRBXF overflow=0 axe=[]
+15-library-dark: /fonts overflow=0 axe=[]
+16-calc-dark: /calc overflow=0 axe=[]
+DONE
+### M30 edit page after layout fix
+edit-1366 overflow 0 table-scroll 0 axe []
+edit-360 overflow 0 table-scroll 0 axe []
+
+## Fresh install from git archive (empty DB, 12 migrations)
+### M26
+calc status 200
+01-basic: /calc overflow=0 axe=[]
+basic result 14
+basic2 0
+age 36 ปี 4 เดือน 28 วันรวม 13,300 วันอีก 214 วันถึงวันเกิดครั้งถัดไป
+02-age: /calc?tab=age overflow=0 axe=[]
+unit 1 ไร่ = 400 ตารางวา
+03-unit: /calc?tab=unit overflow=0 axe=[]
+bmi BMI = 22.9ปกติ (18.5–24.9)
+04-bmi: /calc?tab=bmi overflow=0 axe=[] flash=คำนวณในเครื่องของคุณเท่านั้น ไม่ส่งหรือบันทึกที่เซิร์ฟเวอร์
+05-sso-missing: /calc?tab=sso overflow=0 axe=[] flash=ยังไม่มีตารางอัตราที่อนุมัติ ระบบไม่ใส่อัตราตามกฎหมายให้เอง — กรอกจากแหล่งทางการที่หน้า "ตั้งค่าตารางอัตรา" แล้วให้อีกคน
+rates status 200
+06-rates: /calc/rates overflow=0 axe=[] flash=ระบบไม่มีอัตราให้ — ต้องกรอกเองจากแหล่งทางการ อัตราเปลี่ยนตามกฎหมาย AI และระบบจึงไม่ใส่ค่าให้ ผู้รับผิดชอบ (Payroll/บัญช
+07-rates-submitted: /calc/rates overflow=0 axe=[] flash=ส่งตารางให้ผู้อนุมัติแล้ว — มีผลเมื่ออีกคนอนุมัติ
+08-approvals: /approvals overflow=0 axe=[] RAWKEYS=calc.sso.rule
+09a-after-reauth: /approvals/01M56ARVF9MMQ5EJ9MNSP7D623 overflow=0 axe=[] flash=ยืนยันตัวตนแล้ว — ทำรายการต่อได้ภายในไม่กี่นาที RAWKEYS=calc.sso.rule,calc.sso.rule
+09-approved: /approvals overflow=0 axe=[] flash=อนุมัติและดำเนินการแล้ว
+10-sso-result: /calc/sso overflow=0 axe=[] flash=เป็นประมาณการจากตารางอัตราที่บริษัทอนุมัติ ไม่ใช่คำวินิจฉัยทางกฎหมาย/ภาษี — ตรวจกับผู้เชี่ยวชาญก่อนใช้จริง
+sso outputs ลูกจ้างจ่าย 225.00 นายจ้างจ่าย 225.00 รวม 450.00 ค่าจ้างที่ใช้คำนวณ 9,000.00
+11-shared: /calc/s/2PH0YqXt2k3f overflow=0 axe=[] flash=สร้างลิงก์แชร์แล้ว — ใช้ได้เฉพาะคนในระบบ และหมดอายุตามกำหนด
+share url http://127.0.0.1:8097/calc/s/2PH0YqXt2k3f
+rates as employee 403
+12-shared-other: /calc/s/2PH0YqXt2k3f overflow=0 axe=[] flash=เป็นประมาณการจากตารางอัตราที่บริษัทอนุมัติ ไม่ใช่คำวินิจฉัยทางกฎหมาย/ภาษี — ตรวจกับผู้เชี่ยวชาญก่อนใช้จริง
+12b-severance-missing: /calc?tab=severance overflow=0 axe=[] flash=ยังไม่มีตารางอัตราที่อนุมัติ ระบบไม่ใส่อัตราตามกฎหมายให้เอง — รอผู้ดูแลกรอกจากแหล่งทางการและให้อีกคนอนุมัติ
+12c-pit-missing: /calc?tab=pit overflow=0 axe=[] flash=ยังไม่มีตารางอัตราที่อนุมัติ ระบบไม่ใส่อัตราตามกฎหมายให้เอง — รอผู้ดูแลกรอกจากแหล่งทางการและให้อีกคนอนุมัติ
+13-basic-360: /calc overflow=0 axe=[]
+14-sso-360: /calc?tab=sso overflow=0 axe=[]
+15-basic-dark: /calc overflow=0 axe=[]
+16-rates-dark: /calc/rates overflow=0 axe=[] flash=ระบบไม่มีอัตราให้ — ต้องกรอกเองจากแหล่งทางการ อัตราเปลี่ยนตามกฎหมาย AI และระบบจึงไม่ใส่ค่าให้ ผู้รับผิดชอบ (Payroll/บัญช
+DONE
+### M30
+01-library-empty: /fonts overflow=0 axe=[]
+02-manage-empty: /fonts/manage overflow=0 axe=[] flash=กติกาของคลังฟอนต์ เผยแพร่ได้เมื่อมีชื่อสัญญาอนุญาต แหล่งที่มา และไฟล์อย่างน้อย 1 ไฟล์ · คนเผยแพร่ต้องไม่ใช่คนสร้างหรือคน
+03-created: /fonts/manage/01M56ASF0YDG1JSSY1GXZGZ0DK overflow=0 axe=[] flash=สร้างฟอนต์เป็นร่างแล้ว — อัปโหลดไฟล์ต่อได้เลย
+family http://127.0.0.1:8097/fonts/manage/01M56ASF0YDG1JSSY1GXZGZ0DK
+upload IBMPlexMono-Regular.ttf: อัปโหลดไฟล์แล้ว
+upload IBMPlexMono-Regular.ttf: ข้อมูลบางช่องยังไม่ถูกต้อง — ตรวจข้อความใต้ช่องที่มีกรอบสีแดง | มีไฟล์นี้ในคลังแล้ว (ไฟล์เหมือนกันทุกไบต์)
+upload Fake.ttf: ข้อมูลบางช่องยังไม่ถูกต้อง — ตรวจข้อความใต้ช่องที่มีกรอบสีแดง | ไม่รับไฟล์ชนิดนี้ (ระบบตรวจจากเนื้อไฟล์ ไม่ใช่นามสกุล)
+upload junk.bin: ข้อมูลบางช่องยังไม่ถูกต้อง — ตรวจข้อความใต้ช่องที่มีกรอบสีแดง | ไม่รับไฟล์ชนิดนี้ (ระบบตรวจจากเนื้อไฟล์ ไม่ใช่นามสกุล)
+upload IBMPlexMono-Bold.ttf: อัปโหลดไฟล์แล้ว
+04-files: /fonts/manage/01M56ASF0YDG1JSSY1GXZGZ0DK overflow=0 axe=[] flash=อัปโหลดไฟล์แล้ว
+publish disabled for creator: true
+license: แนบหลักฐานลิขสิทธิ์แล้ว
+s2 publish disabled (no licence): true
+s2 save: บันทึกแล้ว
+s2 publish: เผยแพร่แล้ว — ผู้ใช้เห็นฟอนต์นี้ในคลัง
+05-published: /fonts/manage/01M56ASF0YDG1JSSY1GXZGZ0DK overflow=0 axe=[] flash=เผยแพร่แล้ว — ผู้ใช้เห็นฟอนต์นี้ในคลัง
+06-library: /fonts overflow=0 axe=[]
+fonts loaded: "ros-font-1", var(--font-body, sans-serif)
+sample: ทดสอบฟอนต์ 123 48px
+07-family: /fonts/01M56ASF0YDG1JSSY1GXZGZ0DK overflow=0 axe=[] flash=ใช้เพื่องานของบริษัทตามสิทธิ์ที่ได้รับเท่านั้น — ห้ามส่งต่อไฟล์ฟอนต์ให้บุคคลภายนอก เว้นแต่สัญญาอนุญาตระบุว่าทำได้
+single: IBMPlexMono-Regular.ttf 133796
+zip: IBM_Plex_Mono.zip 271241
+manage as employee: 403
+upload IBMPlexMono-Regular-v2.ttf: อัปโหลดไฟล์แล้ว
+08-replaced: /fonts/manage/01M56ASF0YDG1JSSY1GXZGZ0DK overflow=0 axe=[] flash=อัปโหลดไฟล์แล้ว
+deprecate: เปลี่ยนสถานะแล้ว
+09-library-deprecated: /fonts overflow=0 axe=[]
+10-family-deprecated: /fonts/01M56ASF0YDG1JSSY1GXZGZ0DK overflow=0 axe=[] flash=ฟอนต์นี้เลิกใช้แล้ว ยังดาวน์โหลดได้เพื่อเปิด/แก้ไขเอกสารเดิม — งานใหม่ไม่ควรใช้ — ทดสอบการเลิกใช้
+11-library-360: /fonts overflow=0 axe=[]
+12-family-360: /fonts/01M56ASF0YDG1JSSY1GXZGZ0DK overflow=0 axe=[] flash=ฟอนต์นี้เลิกใช้แล้ว ยังดาวน์โหลดได้เพื่อเปิด/แก้ไขเอกสารเดิม — งานใหม่ไม่ควรใช้ — ทดสอบการเลิกใช้
+13-edit-360: /fonts/manage/01M56ASF0YDG1JSSY1GXZGZ0DK overflow=0 axe=[]
+14-edit-dark: /fonts/manage/01M56ASF0YDG1JSSY1GXZGZ0DK overflow=0 axe=[]
+15-library-dark: /fonts overflow=0 axe=[]
+16-calc-dark: /calc overflow=0 axe=[]
+DONE

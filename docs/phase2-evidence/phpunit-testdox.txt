@@ -1,0 +1,157 @@
+PHPUnit 9.6.17 by Sebastian Bergmann and contributors.
+
+Ai Gateway (Ros\Tests\Unit\AiGateway)
+ ✔ Rollout 1 always answers disabled
+ ✔ Even when enabled only the disabled provider exists
+ ✔ Registering a real provider is refused
+
+App Config (Ros\Tests\Unit\AppConfig)
+ ✔ Locked ai keys cannot be overridden by environment or overrides
+ ✔ Ai is disabled by default
+ ✔ Debug is never on outside dev and ci
+ ✔ Production disables showcase and demo data
+ ✔ Unknown environment is rejected
+ ✔ Secret key detection
+
+Kernel (Ros\Tests\Unit\Kernel)
+ ✔ Not installed redirects everything to installer
+ ✔ Installer is locked after installation
+ ✔ Guest json requests get 401
+ ✔ Security headers and correlation id
+ ✔ Csrf is required for state changing requests
+ ✔ Thai is default and english selectable
+
+Logger (Ros\Tests\Unit\Logger)
+ ✔ Writes json line with correlation id and redacts secrets
+
+Request Base (Ros\Tests\Unit\RequestBase)
+ ✔ Resolves base and path with data set "web root = public/"
+ ✔ Resolves base and path with data set "root .htaccess → public/"
+ ✔ Resolves base and path with data set "XAMPP sub-folder via root .htaccess"
+ ✔ Resolves base and path with data set "XAMPP sub-folder deep path"
+ ✔ Resolves base and path with data set "XAMPP sub-folder opened at public/"
+ ✔ Resolves base and path with data set "nested folders"
+ ✔ Resolves base and path with data set "Thai folder name (percent-encoded URI)"
+ ✔ Resolves base and path with data set "folder with space"
+ ✔ Resolves base and path with data set "prefix that only looks similar"
+ ✔ Resolves base and path with data set "Windows backslashes"
+
+Router (Ros\Tests\Unit\Router)
+ ✔ Matches and extracts params
+ ✔ Unknown path is 404
+ ✔ Wrong method is 405
+ ✔ Head is served by get
+ ✔ Url generation
+
+Totp (Ros\Tests\Unit\Totp)
+ ✔ Rfc 6238 vectors with data set "t=59"
+ ✔ Rfc 6238 vectors with data set "t=1111111109"
+ ✔ Rfc 6238 vectors with data set "t=1111111111"
+ ✔ Rfc 6238 vectors with data set "t=1234567890"
+ ✔ Rfc 6238 vectors with data set "t=2000000000"
+ ✔ Base 32 round trip and window
+ ✔ Replay of a used step is refused
+ ✔ Password policy
+ ✔ Field encryption and keyed hash
+
+Translator (Ros\Tests\Unit\Translator)
+ ✔ Thai and fallback to english
+ ✔ Core seeds have the same keys in thai and english
+ ✔ Every key used in views exists
+ ✔ Date display uses buddhist era for thai
+
+Ulid (Ros\Tests\Unit\Ulid)
+ ✔ Format is crockford base 32 with 26 chars
+ ✔ Encodes the clock time
+ ✔ Monotonic within the same millisecond
+
+Auth (Ros\Tests\Integration\Auth)
+ ✔ Login success and generic failures
+ ✔ Five failures lock the account for fifteen minutes
+ ✔ Inactive accounts cannot sign in
+ ✔ Idle and absolute session timeouts
+ ✔ Activation link is single use and expires
+ ✔ Activation link expires after 72 hours
+ ✔ Reset otp limits attempts and revokes sessions
+ ✔ Otp expires
+ ✔ No secrets reach the audit trail
+
+Authz (Ros\Tests\Integration\Authz)
+ ✔ Scope is limited to assigned company
+ ✔ Deny by default without scope rows
+ ✔ Expired future and pending assignments grant nothing
+ ✔ Mfa is required for admins approvers and cross company
+ ✔ Cannot grant to self
+ ✔ Scope is required and validated
+ ✔ High risk grant needs a second admin
+ ✔ Non admin cannot manage users or grant
+ ✔ Sod report finds conflicting roles
+ ✔ Revoking rights signs the user out
+ ✔ Audit trail is append only
+
+Idor Matrix (Ros\Tests\Integration\IdorMatrix)
+ ✔ Detail and update channels with data set "HR of DEMO1 cannot open DEMO2 company"
+ ✔ Detail and update channels with data set "HR of DEMO1 cannot open DEMO2 site"
+ ✔ Detail and update channels with data set "HR of DEMO1 cannot edit own company (view-only role)"
+ ✔ Detail and update channels with data set "HR of DEMO2 cannot open DEMO1 department"
+ ✔ Detail and update channels with data set "Cashier (site scope) cannot open company"
+ ✔ Detail and update channels with data set "Employee cannot open other company"
+ ✔ Detail and update channels with data set "Auditor (read-only) cannot edit"
+ ✔ Detail and update channels with data set "System admin can edit any company"
+ ✔ List channel shows only own company
+ ✔ Site scoped user sees only their site
+ ✔ Cross company ids are not enumerable and attempts are audited
+ ✔ Administration pages require the permission
+ ✔ Guests are sent to login
+ ✔ Mfa gate blocks everything until verified
+ ✔ Reauth is required for audit export
+
+Installer (Ros\Tests\Integration\Installer)
+ ✔ Install writes config and locks
+ ✔ Rejects suspicious database name
+
+Migration Runner (Ros\Tests\Integration\MigrationRunner)
+ ✔ Fresh install then rerun is a no op
+ ✔ Up is safe to re run after a partial failure
+ ✔ Module migrations run after core in version order
+ ✔ Edited applied migration is detected and refused
+ ✔ Failed pre check stops and leaves evidence
+ ✔ Destructive migration needs explicit approval
+ ✔ Bad file name is rejected
+ ✔ Concurrent run is blocked by lock
+ ✔ Thai text round trips through utf 8mb 4
+
+Repository (Ros\Tests\Integration\Repository)
+ ✔ Insert and find by public id
+ ✔ Stale update is rejected
+ ✔ Transaction rolls back on error
+
+Scheduler (Ros\Tests\Integration\Scheduler)
+ ✔ Runs due jobs and reschedules
+ ✔ Failing job is recorded and does not stop others
+ ✔ Only one runner at a time
+
+Web Pages (Ros\Tests\Integration\WebPages)
+ ✔ Technical error page has reference but no stack trace or secrets
+ ✔ Developer detail only on ci
+ ✔ Production hides showcase status and mailbox
+ ✔ Every admin page renders for the system admin
+ ✔ Create company site department through forms
+ ✔ Stale edit is rejected as concurrency conflict
+ ✔ Invite activate and sign in end to end
+
+Static Checks (Ros\Tests\Arch\StaticChecks)
+ ✔ Repository passes all checks
+ ✔ Ai check catches provider calls and extra providers
+ ✔ Secret scan catches committed secrets
+ ✔ Token lint catches raw colours and inline styles
+ ✔ Architecture check catches layer violations
+ ✔ Architecture check catches case only path clashes
+
+Token Contrast (Ros\Tests\Arch\TokenContrast)
+ ✔ Contrast pairs with data set "light"
+ ✔ Contrast pairs with data set "dark"
+
+Time: 00:45.193, Memory: 14.00 MB
+
+OK (114 tests, 649 assertions)

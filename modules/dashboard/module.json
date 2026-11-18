@@ -1,0 +1,28 @@
+{
+  "code": "dashboard",
+  "version": "1.0.0",
+  "pack": "core_plus",
+  "spec": "M46",
+  "name": { "th": "แดชบอร์ดผู้บริหาร", "en": "Executive dashboard" },
+  "icon": "layout-dashboard",
+  "sort_order": 5,
+  "depends_on": ["core"],
+  "permissions": {
+    "dashboard.view": "normal",
+    "dashboard.manage": "high"
+  },
+  "grants": {
+    "EXE": ["dashboard.view"],
+    "HRA": ["dashboard.view", "dashboard.manage"]
+  },
+  "menu": [
+    { "group": "work", "label": "dashboard.nav", "icon": "layout-dashboard", "href": "/dashboard", "permission": "dashboard.view" },
+    { "group": "work", "label": "dashboard.nav_kpis", "icon": "list-check", "href": "/dashboard/kpis", "permission": "dashboard.manage" }
+  ],
+  "jobs": {
+    "dashboard.refresh": { "every": 60, "call": "Blue\\Modules\\Dashboard\\DashboardService::refreshJob" }
+  },
+  "measures": "Blue\\Modules\\Dashboard\\DashboardMeasures",
+  "demo": "Blue\\Modules\\Dashboard\\DashboardDemo::run",
+  "routes": "routes.php"
+}

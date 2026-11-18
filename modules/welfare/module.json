@@ -1,0 +1,138 @@
+{
+  "code": "welfare",
+  "version": "1.0.0",
+  "pack": "hr",
+  "nav_section": "hr_pay",
+  "spec": "M37",
+  "name": {
+    "th": "เบิกสวัสดิการ",
+    "en": "Welfare claims"
+  },
+  "icon": "gift",
+  "sort_order": 82,
+  "depends_on": [
+    "core",
+    "employees",
+    "payroll"
+  ],
+  "permissions": {
+    "welfare.use": "normal",
+    "welfare.review": "high",
+    "welfare.approve": "high",
+    "welfare.manage": "high",
+    "welfare.pay": "high",
+    "welfare.report": "high"
+  },
+  "grants": {
+    "*": [
+      "welfare.use"
+    ],
+    "HRA": [
+      "welfare.review",
+      "welfare.approve",
+      "welfare.manage",
+      "welfare.report"
+    ],
+    "HRT": [
+      "welfare.review",
+      "welfare.report"
+    ],
+    "PYO": [
+      "welfare.pay",
+      "welfare.report"
+    ],
+    "PYA": [
+      "welfare.report"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "welfare.nav",
+      "icon": "gift",
+      "href": "/welfare",
+      "permission": "welfare.use"
+    },
+    {
+      "group": "work",
+      "label": "welfare.nav_admin",
+      "icon": "clipboard-check",
+      "href": "/welfare/admin",
+      "permission": "welfare.review"
+    },
+    {
+      "group": "work",
+      "label": "welfare.nav_payout",
+      "icon": "cash",
+      "href": "/welfare/payout",
+      "permission": "welfare.pay"
+    }
+  ],
+  "document_classes": {
+    "welfare.receipt": [
+      "C",
+      "welfare.review",
+      "welfare.manage",
+      [
+        "pdf",
+        "png",
+        "jpeg",
+        "webp"
+      ],
+      10,
+      true,
+      "accounting_tax",
+      "finalized"
+    ],
+    "welfare.receipt_health": [
+      "R",
+      "welfare.review",
+      "welfare.manage",
+      [
+        "pdf",
+        "png",
+        "jpeg",
+        "webp"
+      ],
+      10,
+      true,
+      "medical_claims",
+      "finalized"
+    ]
+  },
+  "workflows": {
+    "welfare.claim": {
+      "subject": "wf_claim",
+      "class": "Blue\\Modules\\Welfare\\ClaimSubject",
+      "no_fallback": true,
+      "distinct_steps": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "permission",
+            "value": "welfare.review"
+          },
+          "scope": "subject",
+          "sla_hours": 48
+        },
+        {
+          "approver": {
+            "type": "permission",
+            "value": "welfare.approve"
+          },
+          "scope": "subject",
+          "sla_hours": 48
+        }
+      ]
+    }
+  },
+  "jobs": {
+    "welfare.sync": {
+      "every": 60,
+      "call": "Blue\\Modules\\Welfare\\PayoutService::syncJob"
+    }
+  },
+  "demo": "Blue\\Modules\\Welfare\\WelfareDemo::run",
+  "personal_data": "Blue\\Modules\\Welfare\\WelfarePersonalData",
+  "routes": "routes.php"
+}

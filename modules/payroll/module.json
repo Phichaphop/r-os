@@ -1,0 +1,226 @@
+{
+  "code": "payroll",
+  "version": "1.0.0",
+  "pack": "hr",
+  "nav_section": "hr_pay",
+  "spec": "PAY-ENG",
+  "name": {
+    "th": "เงินเดือน (Payroll)",
+    "en": "Payroll"
+  },
+  "icon": "report-money",
+  "sort_order": 80,
+  "depends_on": [
+    "core",
+    "employees",
+    "attendance",
+    "overtime"
+  ],
+  "permissions": {
+    "payroll.self": "normal",
+    "payroll.view": "high",
+    "payroll.prepare": "high",
+    "payroll.approve": "high",
+    "payroll.export": "high"
+  },
+  "grants": {
+    "*": [
+      "payroll.self"
+    ],
+    "PYO": [
+      "payroll.view",
+      "payroll.prepare",
+      "payroll.export"
+    ],
+    "PYA": [
+      "payroll.view",
+      "payroll.approve",
+      "payroll.export"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "payroll.nav_mine",
+      "icon": "receipt",
+      "href": "/me/payslips",
+      "permission": "payroll.self"
+    },
+    {
+      "group": "work",
+      "label": "payroll.nav",
+      "icon": "report-money",
+      "href": "/payroll",
+      "permission": "payroll.view"
+    }
+  ],
+  "document_classes": {
+    "payroll.payslip": [
+      "R",
+      "payroll.view",
+      "payroll.prepare",
+      [
+        "pdf"
+      ],
+      5,
+      true,
+      "wage_time_records",
+      "payroll_period_closed"
+    ],
+    "payroll.tax_certificate": [
+      "R",
+      "payroll.view",
+      "payroll.approve",
+      [
+        "pdf"
+      ],
+      5,
+      true,
+      "payroll_tax_sso",
+      "tax_year_end"
+    ]
+  },
+  "config": {
+    "payroll.policy": [
+      "payroll",
+      "json",
+      null,
+      "organization,legal_entity",
+      {},
+      "high",
+      "COMPANY_POLICY",
+      false
+    ],
+    "payroll.sso": [
+      "payroll",
+      "json",
+      null,
+      "organization,legal_entity",
+      {},
+      "high",
+      "LAW",
+      false
+    ],
+    "payroll.wht": [
+      "payroll",
+      "json",
+      null,
+      "organization,legal_entity",
+      {},
+      "high",
+      "LAW",
+      false
+    ],
+    "payroll.wht_payer": [
+      "payroll",
+      "json",
+      null,
+      "legal_entity",
+      {},
+      "high",
+      "COMPANY_POLICY",
+      false
+    ],
+    "payroll.sso_employer": [
+      "payroll",
+      "json",
+      null,
+      "legal_entity",
+      {},
+      "high",
+      "COMPANY_POLICY",
+      false
+    ],
+    "payroll.filing_due": [
+      "payroll",
+      "json",
+      null,
+      "organization,legal_entity",
+      {},
+      "high",
+      "LAW",
+      false
+    ]
+  },
+  "config_owners": {
+    "payroll.policy": {
+      "propose": "payroll.prepare",
+      "workflow": "payroll.config",
+      "describe": "Blue\\Modules\\Payroll\\PayrollRules::describePolicy"
+    },
+    "payroll.sso": {
+      "propose": "payroll.prepare",
+      "workflow": "payroll.config",
+      "describe": "Blue\\Modules\\Payroll\\PayrollRules::describeSso"
+    },
+    "payroll.wht": {
+      "propose": "payroll.prepare",
+      "workflow": "payroll.config",
+      "describe": "Blue\\Modules\\Payroll\\TaxRules::describeWht"
+    },
+    "payroll.wht_payer": {
+      "propose": "payroll.prepare",
+      "workflow": "payroll.config",
+      "describe": "Blue\\Modules\\Payroll\\TaxRules::describePayer"
+    },
+    "payroll.sso_employer": {
+      "propose": "payroll.prepare",
+      "workflow": "payroll.config",
+      "describe": "Blue\\Modules\\Payroll\\TaxRules::describeSsoEmployer"
+    },
+    "payroll.filing_due": {
+      "propose": "payroll.prepare",
+      "workflow": "payroll.config",
+      "describe": "Blue\\Modules\\Payroll\\TaxRules::describeFilingDue"
+    }
+  },
+  "workflows": {
+    "payroll.run": {
+      "subject": "pay_run",
+      "class": "Blue\\Modules\\Payroll\\RunSubject",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "permission",
+            "value": "payroll.approve"
+          },
+          "scope": "subject",
+          "sla_hours": 48
+        }
+      ]
+    },
+    "payroll.profile": {
+      "subject": "pay_profile",
+      "class": "Blue\\Modules\\Payroll\\ProfileSubject",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "permission",
+            "value": "payroll.approve"
+          },
+          "scope": "subject",
+          "sla_hours": 72
+        }
+      ]
+    },
+    "payroll.config": {
+      "subject": "config_version",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "permission",
+            "value": "payroll.approve"
+          },
+          "scope": "subject",
+          "sla_hours": 72
+        }
+      ]
+    }
+  },
+  "demo": "Blue\\Modules\\Payroll\\PayrollDemo::run",
+  "personal_data": "Blue\\Modules\\Payroll\\PayrollPersonalData",
+  "routes": "routes.php"
+}

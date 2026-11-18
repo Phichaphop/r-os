@@ -1,0 +1,18 @@
+{
+  "code": "qr",
+  "version": "1.0.0",
+  "pack": "utilities",
+  "spec": "M27",
+  "name": { "th": "สร้าง QR Code", "en": "QR codes" },
+  "icon": "qrcode",
+  "sort_order": 20,
+  "depends_on": ["core"],
+  "permissions": { "qr.use": "normal", "qr.manage": "high" },
+  "grants": { "*": ["qr.use"], "SYS": ["qr.manage"] },
+  "menu": [
+    { "group": "tools", "label": "qr.nav", "icon": "qrcode", "href": "/qr", "permission": "qr.use" }
+  ],
+  "public_paths": ["/q/"],
+  "guest": {"paths": ["GET /qr", "POST /qr/(preview|download)"], "permissions": ["qr.use"]},
+  "routes": "routes.php"
+}

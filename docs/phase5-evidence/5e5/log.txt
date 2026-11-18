@@ -1,0 +1,30 @@
+01-dash-exec: /dashboard overflow=0 axe=[]
+headcount card: จำนวนพนักงาน ล่าสุด 7 1 ต.ค. 2569 – 26 ต.ค. 2569 เดือนก่อน 7 (0) อัปเดต 26 ต.ค. 2569 09:04 · เจ้าของ HR Admin บริษัทตัวอย่าง (DEMO) · v1 นิยาม
+02-dash-prev-month: /dashboard overflow=0 axe=[]
+approvals prev month: คำขอที่รออนุมัติ ดูได้เฉพาะเดือนปัจจุบัน — ณ ปัจจุบัน เป็นตัวเลข ณ ปัจจุบัน ไม่มีค่าย้อนหลังรายเดือน เจ้าของ HR Admin บริษัทตัวอย่าง (DEMO) · v1 นิยาม
+03-dash-hr-sales: /dashboard overflow=0 axe=[]
+hr sales headcount: จำนวนพนักงาน ล่าสุด 5 1 ต.ค. 2569 – 26 ต.ค. 2569 เดือนก่อน 5 (0) อัปเดต 26 ต.ค. 2569 09:03 · เจ้าของ HR Admin บริษัทตัวอย่าง (DEMO) · v1 นิยาม · ดูข้อมูลต้นทาง
+hr sales approvals: คำขอที่รออนุมัติ ไม่ครบตามตัวกรอง 3 ณ ปัจจุบัน ตัววัดนี้แยกตามสาขา/หน่วยงานไม่ได้ — แสดงยอดทั้งบริษัท อัปเดต 26 ต.ค. 2569 09:03 · เจ้าของ HR Admin บริษัทตัวอย่า
+04-kpis: /dashboard/kpis overflow=0 axe=[]
+kpi bad thresholds:  · เกณฑ์แจ้งเตือนต้องเลยเกณฑ์เฝ้าระวังไปในทิศทางที่แย่กว่า
+05-kpi-error: /dashboard/kpis overflow=0 axe=[]
+kpi saved: บันทึก KPI แล้ว || KPI นี้ใช้งานแล้ว — การแก้ไขจะสร้างเวอร์ชันใหม่ ต้องระบุเหตุผล ค่าที่บันทึกไว้เดิมยังอ้างเวอร์ชันเดิม → /dashboard/kpis/01M5V069N4MSYZ90QX86XW70PZ
+06-kpi-edit: /dashboard/kpis/01M5V069N4MSYZ90QX86XW70PZ overflow=0 axe=[]
+edit live without reason: กรอกเหตุผลอย่างน้อย 5 ตัวอักษร
+edit with reason: บันทึก KPI แล้ว || KPI นี้ใช้งานแล้ว — การแก้ไขจะสร้างเวอร์ชันใหม่ ต้องระบุเหตุผล ค่าที่บันทึกไว้เดิมยังอ้างเวอร์ชันเดิม · แก้ไข TRNRA88 (v2)
+07-dash-hr-new-kpi: /dashboard overflow=0 axe=[]
+new kpi card: ชั่วโมงอบรม RA88 ล่าสุด 6 ชม. ถึงเกณฑ์เฝ้าระวัง 1 ต.ค. 2569 – 26 ต.ค. 2569 เดือนก่อน 0 ชม. (+6) ครั้ง 1 · คน 1 อัปเดต 26 ต.ค. 2569 09:21 · เจ้าของ ผู้จัดการฝ่าย
+08-kpi-definition: /dashboard/k/01M5V069N4MSYZ90QX86XW70PZ overflow=0 axe=[] RAWKEYS=training.hours
+09-dash-site-exec: /dashboard overflow=0 axe=[]
+br1 headcount: จำนวนพนักงาน ล่าสุด 5 1 ต.ค. 2569 – 26 ต.ค. 2569 เดือนก่อน 5 (0) อัปเดต 26 ต.ค. 2569 09:03 · เจ้าของ HR Admin บริษัทตัวอย่าง (DEMO) · v1 นิยาม
+br1 approvals: คำขอที่รออนุมัติ ไม่มีสิทธิ์ดูภาพรวม — ณ ปัจจุบัน ตัววัดนี้แยกตามสาขา/หน่วยงานไม่ได้ จึงไม่แสดงแก่ผู้ที่เห็นเฉพาะบางส่วนของบริษัท เจ้าของ HR Admin บริษัทตัวอย่า
+refresh: อัปเดตข้อมูลแล้ว
+snapshot: บันทึกภาพรวมแล้ว
+10-snapshot: /dashboard/snapshots/01M5V06E0ZV7VN1QS9A54W6DM8 overflow=0 axe=[]
+11-snapshots: /dashboard/snapshots overflow=0 axe=[]
+export xlsx: 200 application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+export csv: 200 HEADCOUNT=true
+12-dash-mobile: /dashboard overflow=0 axe=[]
+13-dash-dark: /dashboard overflow=0 axe=[]
+14-kpi-mobile: /dashboard/kpis/01M5V069N4MSYZ90QX86XW70PZ overflow=0 axe=[]
+employee /dashboard: 403

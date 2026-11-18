@@ -1,0 +1,45 @@
+{
+  "code": "rooms",
+  "version": "1.0.0",
+  "pack": "workplace",
+  "spec": "M04",
+  "name": {
+    "th": "จองห้องประชุม",
+    "en": "Meeting rooms"
+  },
+  "icon": "calendar-event",
+  "sort_order": 90,
+  "depends_on": [
+    "core"
+  ],
+  "permissions": {
+    "rooms.use": "normal",
+    "rooms.manage": "normal"
+  },
+  "grants": {
+    "*": [
+      "rooms.use"
+    ],
+    "WPA": [
+      "rooms.manage"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "rooms.nav",
+      "icon": "calendar-event",
+      "href": "/rooms",
+      "permission": "rooms.use"
+    }
+  ],
+  "jobs": {
+    "rooms.tick": {
+      "every": 5,
+      "call": "Blue\\Modules\\Rooms\\RoomService::tickJob"
+    }
+  },
+  "demo": "Blue\\Modules\\Rooms\\RoomsDemo::run",
+  "personal_data": "Blue\\Modules\\Rooms\\RoomsPersonalData",
+  "routes": "routes.php"
+}

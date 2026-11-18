@@ -1,0 +1,37 @@
+01-jd-admin: /jd/admin overflow=0 axe=[]
+jd create: เพิ่มตำแหน่งแล้ว — เขียนฉบับแรกได้เลย → /jd/admin/p/01M5TA6K7JHN6BB9F0SX44MM1W
+jd draft: บันทึกร่างแล้ว
+02-jd-manage-draft: /jd/admin/p/01M5TA6K7JHN6BB9F0SX44MM1W overflow=0 axe=[]
+jd submit: ส่งอนุมัติแล้ว || มีฉบับที่รออนุมัติหรือรอวันมีผลอยู่ — แก้ไขฉบับใหม่ได้เมื่อฉบับนั้นจบ (ถอนได้)
+jd approvers: hr.head1
+03-jd-report-pending: /jd/admin/p/01M5TA6K7JHN6BB9F0SX44MM1W overflow=0 axe=[]
+04-jd-mine-mobile: /jd overflow=0 axe=[]
+05-jd-read-mobile: /jd/v/01M5TA6KRNQT9QD13W0E4JMSTX overflow=0 axe=[]
+jd ack: รับทราบ JD แล้ว
+06-jd-acked-mobile: /jd overflow=0 axe=[]
+08-jd-report-done: /jd/admin/p/01M5TA6K7JHN6BB9F0SX44MM1W overflow=0 axe=[]
+09-certs-types: /certs/admin/types overflow=0 axe=[]
+cert type: บันทึกประเภทแล้ว
+10-certs-ask-mobile: /certs overflow=0 axe=[]
+cert ask: ส่งคำขอแล้ว → /certs/r/01M5TA6XDEMRBD43KQ3YYECJER
+11-certs-submitted-mobile: /certs/r/01M5TA6XDEMRBD43KQ3YYECJER overflow=0 axe=[]
+12-certs-queue: /certs/admin overflow=0 axe=[]
+13-certs-work: /certs/admin/r/01M5TA6XDEMRBD43KQ3YYECJER overflow=0 axe=[]
+14-certs-issue-form: /certs/admin/r/01M5TA6XDEMRBD43KQ3YYECJER overflow=0 axe=[]
+cert issue: ออกเอกสารแล้ว
+cert ready: แจ้งผู้ขอแล้ว
+15-certs-ready-code-mobile: /certs/r/01M5TA6XDEMRBD43KQ3YYECJER overflow=0 axe=[]
+cert handover: บันทึกการส่งมอบแล้ว
+16-certs-received: /certs/admin/r/01M5TA6XDEMRBD43KQ3YYECJER overflow=0 axe=[]
+cert rate: ขอบคุณสำหรับคะแนน
+17-certs-after-rating-mobile: /certs overflow=0 axe=[]
+cert doc: 200 true
+births: ok
+18-cel-off: /celebrate overflow=0 axe=[]
+19-cel-admin: /celebrate/admin overflow=0 axe=[]
+cel settings: บันทึกการตั้งค่าแล้ว
+20-cel-admin-on: /celebrate/admin overflow=0 axe=[]
+21-cel-board: /celebrate overflow=0 axe=[]
+cel wish: ส่งคำอวยพรแล้ว
+22-cel-board-mobile-dark: /celebrate overflow=0 axe=[]
+23-cel-me-mobile-dark: /celebrate/me overflow=0 axe=[]

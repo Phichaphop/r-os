@@ -1,0 +1,23 @@
+suggest 2026-09-01 2026-09-30
+created http://127.0.0.1:8098/attendance/periods/01M58ZS54VZRMYY9A19PYEYNQE สร้างงวดแล้ว — ตรวจรายการแล้วส่งปิดงวด
+submitted ส่งปิดงวดแล้ว — วันที่ในงวดถูกล็อก รอ HR อีกคนอนุมัติ || ส่งปิดงวดแล้ว — รอ HR อีกคนอนุมัติ วันที่ในงวดถูกล็อกแล้ว: ขอแก้เวลา นำเข้าไฟล์เวลา และการลาในช่วงนี้ทำไม่ได้ · ถ้าผู้อน
+instance 01M58ZS6ANYP0VM79KFREV9565
+hr can decide own? 0
+head can decide 1
+approved อนุมัติและดำเนินการแล้ว
+status after approve ปิดงวดแล้ว
+download ROS_PAYROLL_TIME_INPUT_v1_DEMO1_2026-09-01_2026-09-30_r1.xlsx 4632
+download ROS_PAYROLL_TIME_INPUT_v1_DEMO1_2026-09-01_2026-09-30_r1.csv 942
+console employee.demo1: Failed to load resource: the server responded with a status of 403 (Forbidden)
+employee /attendance/periods 403
+console employee.demo1: Failed to load resource: the server responded with a status of 404 (Not Found)
+employee period 404
+hr_l_attendance_periods: 200 overflow=0 axe=[]
+hr_l_attendance_periods_01M58ZS54V: 200 overflow=0 axe=[]
+hr_l_attendance: 200 overflow=0 axe=[]
+hr_d_attendance_periods: 200 overflow=0 axe=[]
+hr_d_attendance_periods_01M58ZS54V: 200 overflow=0 axe=[]
+hr_d_attendance: 200 overflow=0 axe=[]
+hr_m_attendance_periods: 200 overflow=0 axe=[]
+hr_m_attendance_periods_01M58ZS54V: 200 overflow=0 axe=[]
+hr_m_attendance: 200 overflow=0 axe=[]

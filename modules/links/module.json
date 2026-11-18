@@ -1,0 +1,17 @@
+{
+  "code": "links",
+  "version": "1.0.0",
+  "pack": "utilities",
+  "spec": "M31",
+  "name": { "th": "ลิงก์เว็บภายนอก", "en": "External links" },
+  "icon": "external-link",
+  "sort_order": 40,
+  "depends_on": ["core"],
+  "permissions": { "links.use": "normal", "links.manage": "high" },
+  "grants": { "*": ["links.use"], "SYS": ["links.manage"] },
+  "menu": [
+    { "group": "settings", "label": "links.nav_manage", "icon": "external-link", "href": "/admin/links", "permission": "links.manage" }
+  ],
+  "home": "Blue\\Modules\\Links\\LinksHome::section",
+  "routes": "routes.php"
+}

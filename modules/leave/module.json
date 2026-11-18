@@ -1,0 +1,150 @@
+{
+  "code": "leave",
+  "version": "1.0.0",
+  "pack": "hr",
+  "nav_section": "hr_time",
+  "spec": "M32",
+  "name": {
+    "th": "ระบบลางาน",
+    "en": "Leave"
+  },
+  "icon": "calendar-event",
+  "sort_order": 71,
+  "depends_on": [
+    "employees"
+  ],
+  "permissions": {
+    "leave.use": "normal",
+    "leave.approve": "normal",
+    "leave.manage": "high",
+    "leave.policy": "high",
+    "leave.policy_approve": "high",
+    "leave.medical": "high"
+  },
+  "grants": {
+    "*": [
+      "leave.use"
+    ],
+    "HRA": [
+      "leave.approve",
+      "leave.manage",
+      "leave.policy",
+      "leave.policy_approve",
+      "leave.medical"
+    ],
+    "HRT": [
+      "leave.approve",
+      "leave.manage"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "leave.nav",
+      "icon": "calendar-event",
+      "href": "/leave",
+      "permission": "leave.use"
+    },
+    {
+      "group": "settings",
+      "label": "leave.nav_admin",
+      "icon": "settings",
+      "href": "/leave/admin",
+      "permission": "leave.manage"
+    }
+  ],
+  "config": {
+    "leave.policy": [
+      "leave",
+      "json",
+      null,
+      "organization,legal_entity",
+      {},
+      "high",
+      "LAW",
+      false
+    ]
+  },
+  "config_owners": {
+    "leave.policy": {
+      "propose": "leave.policy",
+      "workflow": "leave.policy",
+      "describe": "Blue\\Modules\\Leave\\LeavePolicy::describe"
+    }
+  },
+  "workflows": {
+    "leave.request": {
+      "subject": "leave_request",
+      "class": "Blue\\Modules\\Leave\\LeaveRequestSubject",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "manager",
+            "value": "leave.approve"
+          },
+          "scope": "subject",
+          "sla_hours": 48
+        }
+      ]
+    },
+    "leave.cancel": {
+      "subject": "leave_cancel",
+      "class": "Blue\\Modules\\Leave\\LeaveCancelSubject",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "manager",
+            "value": "leave.approve"
+          },
+          "scope": "subject",
+          "sla_hours": 48
+        }
+      ]
+    },
+    "leave.policy": {
+      "subject": "config_version",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "permission",
+            "value": "leave.policy_approve"
+          },
+          "scope": "subject",
+          "sla_hours": 72
+        }
+      ]
+    }
+  },
+  "document_classes": {
+    "leave.medical": [
+      "R",
+      "leave.medical",
+      "leave.manage",
+      [
+        "pdf",
+        "png",
+        "jpeg",
+        "webp"
+      ],
+      10,
+      true,
+      "medical_claims",
+      "finalized"
+    ]
+  },
+  "imports": [
+    "Blue\\Modules\\Leave\\OpeningBalanceImport"
+  ],
+  "jobs": {
+    "leave.complete": {
+      "every": 60,
+      "call": "Blue\\Modules\\Leave\\LeaveService::completeJob"
+    }
+  },
+  "demo": "Blue\\Modules\\Leave\\LeaveDemo::run",
+  "measures": "Blue\\Modules\\Leave\\LeaveMeasures",
+  "routes": "routes.php"
+}

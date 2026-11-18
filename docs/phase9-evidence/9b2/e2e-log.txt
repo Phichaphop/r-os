@@ -1,0 +1,35 @@
+01-admin: /requisition/admin overflow=0 axe=[]
+policy: บันทึกกติกาแล้ว
+photo: บันทึกอุปกรณ์แล้ว
+02-stock: /requisition/stock overflow=0 axe=[]
+03-catalog: /requisition overflow=0 axe=[]
+add: ใส่ตะกร้าแล้ว
+04-cart: /requisition/cart overflow=0 axe=[]
+send: ส่งคำขอแล้ว — จองของไว้ให้ รอหัวหน้าอนุมัติ
+request /requisition/r/01M6CB8BWJMQ7P31KNZZ97BEYS
+05-request-pending: /requisition/r/01M6CB8BWJMQ7P31KNZZ97BEYS overflow=0 axe=[]
+manager approved /approvals/01M6CB8D21SHR5YVC5T2M9QET7: อนุมัติและดำเนินการแล้ว
+manager approvals: 1
+06-request-qr: /requisition/r/01M6CB8BWJMQ7P31KNZZ97BEYS overflow=0 axe=[]
+code D0223B487B083528
+07-desk: /requisition/issue overflow=0 axe=[]
+08-desk-found: /requisition/issue overflow=0 axe=[]
+issue without note: ข้อมูลบางช่องยังไม่ถูกต้อง — ตรวจข้อความใต้ช่องที่มีกรอบสีแดง status จ่ายน้อยกว่าที่อนุมัติ — ใส่หมายเหตุ
+issue: จ่ายบางส่วนแล้ว ส่วนที่เหลือคืนยอดจอง
+rescan used code: ไม่พบคำขอ ตรวจรหัสอีกครั้ง — QR ที่จ่ายของแล้วหรือหมดอายุใช้ไม่ได้
+receive: ยืนยันรับของแล้ว ปิดคำขอ
+09-request-closed: /requisition/r/01M6CB8BWJMQ7P31KNZZ97BEYS overflow=0 axe=[]
+over: ส่งคำขอแล้ว — เกินโควตาแผนก ต้องผ่านผู้อนุมัติพิเศษด้วย
+manager approved /approvals/01M6CB8JXADKN40GH5PJAMTPY5: อนุมัติแล้ว — ส่งต่อขั้นถัดไป
+manager: 1
+ga approved /approvals/01M6CB8JXADKN40GH5PJAMTPY5: อนุมัติและดำเนินการแล้ว
+special (ga): 1
+status after special: อนุมัติแล้ว รอรับของ
+10-mine: /requisition/mine overflow=0 axe=[]
+11-report: /requisition/report overflow=0 axe=[]
+12-stock-after: /requisition/stock overflow=0 axe=[]
+13-catalog-390-dark: /requisition overflow=0 axe=[]
+14-cart-390-dark: /requisition/cart overflow=0 axe=[]
+15-request-390-dark: /requisition/r/01M6CB8BWJMQ7P31KNZZ97BEYS overflow=0 axe=[]
+16-desk-390-dark: /requisition/issue overflow=0 axe=[]
+17-admin-390-dark: /requisition/admin overflow=0 axe=[]

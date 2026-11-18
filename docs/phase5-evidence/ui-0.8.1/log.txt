@@ -1,0 +1,41 @@
+g1-home-default: 200 at / overflow=0
+   axe=[]
+guest /calc closed → /login?next=%2Fcalc
+sys after login at /
+s1-guest-settings: 200 at /admin/settings/guest overflow=0
+   axe=[]
+saved: บันทึกการเข้าใช้แล้ว — มีผลทันที || ทุกคนที่เปิดเว็บนี้ได้จะใช้เครื่องมือที่เปิดไว้ได้ ผู้ที่ไม่ได้เข้าสู่ระบบใช้ได้เฉพาะการคำนวณ/สร้าง/แปลงชั่วคร
+appearance: บันทึกรูปลักษณ์แล้ว
+s2-home-dots: 200 at / overflow=0
+   axe=[]
+g2-home-open: 200 at / overflow=0
+   axe=[]
+g3-calc: 200 at /calc overflow=0
+   axe=[]
+g4-qr: 200 at /qr overflow=0
+   axe=[]
+g5-draw: 200 at /draw/quick overflow=0
+   axe=[]
+quick draw winners: ["มานี","ปิติ"]
+   axe=[]
+g7-pdf: 200 at /pdf overflow=0
+   axe=[]
+g8-home-375: 200 at / overflow=0
+   axe=[]
+g9-draw-375: 200 at /draw/quick overflow=0
+   axe=[]
+g10-home-dark: 200 at / overflow=0
+   axe=[]
+locked tile → /login?next=%2Fleave
+after sign-in at /leave
+s3-org-chart: 200 at /admin/org overflow=0
+   axe=[]
+s4-org-list: 200 at /admin/org?view=list overflow=0
+   axe=[]
+e1-hub: 200 at / overflow=0
+   axe=[]
+tile heights [148]
+request button height 28
+e2-hub-375: 200 at / overflow=0
+   axe=[]
+tile heights 375 [132]

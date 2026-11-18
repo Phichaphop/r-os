@@ -1,0 +1,102 @@
+{
+  "code": "gps",
+  "version": "1.0.0",
+  "pack": "hr",
+  "nav_section": "hr_time",
+  "spec": "M57",
+  "name": {
+    "th": "ลงเวลาด้วย GPS",
+    "en": "GPS check-in"
+  },
+  "icon": "map-pin",
+  "sort_order": 75,
+  "depends_on": [
+    "employees",
+    "attendance"
+  ],
+  "permissions": {
+    "gps.use": "normal",
+    "gps.review": "normal",
+    "gps.manage": "high",
+    "gps.policy": "high",
+    "gps.policy_approve": "high",
+    "gps.report": "normal"
+  },
+  "grants": {
+    "*": [
+      "gps.use"
+    ],
+    "HRA": [
+      "gps.review",
+      "gps.manage",
+      "gps.policy",
+      "gps.policy_approve",
+      "gps.report"
+    ],
+    "HRT": [
+      "gps.review",
+      "gps.manage",
+      "gps.report"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "gps.nav",
+      "icon": "map-pin",
+      "href": "/gps",
+      "permission": "gps.use"
+    },
+    {
+      "group": "settings",
+      "label": "gps.nav_admin",
+      "icon": "settings",
+      "href": "/gps/admin",
+      "permission": "gps.manage"
+    }
+  ],
+  "config": {
+    "gps.policy": [
+      "gps",
+      "json",
+      null,
+      "organization,legal_entity",
+      {},
+      "high",
+      "COMPANY_POLICY",
+      false
+    ]
+  },
+  "config_owners": {
+    "gps.policy": {
+      "propose": "gps.policy",
+      "workflow": "gps.policy",
+      "describe": "Blue\\Modules\\Gps\\GpsPolicy::describe"
+    }
+  },
+  "workflows": {
+    "gps.policy": {
+      "subject": "config_version",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "permission",
+            "value": "gps.policy_approve"
+          },
+          "scope": "subject",
+          "sla_hours": 72
+        }
+      ]
+    }
+  },
+  "jobs": {
+    "gps.anonymize": {
+      "every": 1440,
+      "call": "Blue\\Modules\\Gps\\GpsService::anonymizeJob"
+    }
+  },
+  "demo": "Blue\\Modules\\Gps\\GpsDemo::run",
+  "personal_data": "Blue\\Modules\\Gps\\GpsPersonalData",
+  "routes": "routes.php"
+}

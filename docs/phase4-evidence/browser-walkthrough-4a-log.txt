@@ -1,0 +1,67 @@
+--- upgrade 0.4.3 -> 0.5.0 (migration 2: employees, leave) ---
+00-update-page: /system/update overflow=0 axe=[]
+00-update-done: /system/update overflow=0 axe=[] flash=อัปเดตแล้ว (2 รายการ)
+employees 200
+01-employees: /employees overflow=0 axe=[]
+02-employee: /employees/01M57GDMHGZY3PW086YX6JHXBM overflow=0 axe=[]
+03-employee-new: /employees/new overflow=0 axe=[]
+04-leave-admin: /leave/admin overflow=0 axe=[] flash=ระบบไม่ใส่ค่าสิทธิ์ตามกฎหมายให้ กรอกจากกฎหมายหรือระเบียบบริษัทที่ใช้จริง พร้อมแหล่งอ้างอิง แล้ว HR อีกคนตรวจและอนุมัติ · สิทธิ์ของบริษัทต้อง
+05-policy-sent: /leave/admin?le=1 overflow=0 axe=[] flash=ส่งนโยบายการลาให้ผู้อนุมัติอีกคนตรวจแล้ว — มีผลเมื่ออนุมัติ
+06-hrhead-inbox: /approvals overflow=0 axe=[] RAWKEYS=leave.policy
+policy task 1
+07-policy-approval: /approvals/01M57GDWRYG8318S6GXCMFAZYV overflow=0 axe=[] RAWKEYS=leave.policy,leave.policy
+08-policy-approved: /approvals overflow=0 axe=[] flash=อนุมัติและดำเนินการแล้ว
+09-my-leave: /leave overflow=0 axe=[]
+preview: ผลการตรวจก่อนส่ง 3 วัน 21 ต.ค. 2569, 22 ต.ค. 2569, 23 ต.ค. 2569 คงเหลือที่ใช้ได้ 10 วัน → หลังลา 7 วัน
+10-new-preview: /leave/new overflow=0 axe=[]
+11-request-sent: /leave/r/01M57GE8SHWJCDSJN0TXXK2M27 overflow=0 axe=[] flash=ส่งคำขอลาแล้ว — รอหัวหน้าพิจารณา
+console employee.demo1: Failed to load resource: the server responded with a status of 422 (Unknown Status Code)
+12-sick-needs-doc: /leave overflow=0 axe=[]
+13-sick-sent: /leave/r/01M57GECG08NANQNYKW9E39V7P overflow=0 axe=[] flash=ส่งคำขอลาแล้ว — รอหัวหน้าพิจารณา
+14-manager-inbox: /approvals overflow=0 axe=[]
+15-leave-approval: /approvals/01M57GE8SKJ78E09S8V82B25EJ overflow=0 axe=[]
+16-team-calendar: /leave/team?month=2026-10 overflow=0 axe=[]
+17-my-leave-after: /leave overflow=0 axe=[]
+cards 3 วันคงเหลือ | ยังไม่มีนโยบาย | 7 วันคงเหลือ | ยังไม่มีนโยบาย | ยังไม่มีนโยบาย
+18-request-approved: /leave/r/01M57GE8SHWJCDSJN0TXXK2M27 overflow=0 axe=[]
+19-hr-balances: /leave/admin/employee/01M57GDMHGZY3PW086YX6JHXBM overflow=0 axe=[]
+20-leave-360: /leave overflow=0 axe=[]
+21-new-360: /leave/new overflow=0 axe=[]
+22-team-360-dark: /leave/team?month=2026-10 overflow=0 axe=[]
+23-admin-dark: /leave/admin overflow=0 axe=[] flash=ระบบไม่ใส่ค่าสิทธิ์ตามกฎหมายให้ กรอกจากกฎหมายหรือระเบียบบริษัทที่ใช้จริง พร้อมแหล่งอ้างอิง แล้ว HR อีกคนตรวจและอนุมัติ · สิทธิ์ของบริษัทต้อง
+24-employee-dark: /employees/01M57GDMHGZY3PW086YX6JHXBM overflow=0 axe=[]
+25-home-hub: / overflow=0 axe=[]
+--- fresh install 0.5.0 (migration 17), final code ---
+employees 200
+01-employees: /employees overflow=0 axe=[]
+02-employee: /employees/01M57H8BJNHB6EWJDNAV0KAY30 overflow=0 axe=[]
+03-employee-new: /employees/new overflow=0 axe=[]
+04-leave-admin: /leave/admin overflow=0 axe=[] flash=ระบบไม่ใส่ค่าสิทธิ์ตามกฎหมายให้ กรอกจากกฎหมายหรือระเบียบบริษัทที่ใช้จริง พร้อมแหล่งอ้างอิง แล้ว HR อีกคนตรวจและอนุมัติ · สิทธิ์ของบริษัทต้อง
+05-policy-sent: /leave/admin?le=1 overflow=0 axe=[] flash=ส่งนโยบายการลาให้ผู้อนุมัติอีกคนตรวจแล้ว — มีผลเมื่ออนุมัติ
+06-hrhead-inbox: /approvals overflow=0 axe=[]
+policy task 1
+07-policy-approval: /approvals/01M57H8P8Z3GFCV3W3B4VXHV7T overflow=0 axe=[] RAWKEYS=leave.policy
+08-policy-approved: /approvals overflow=0 axe=[] flash=อนุมัติและดำเนินการแล้ว
+09-my-leave: /leave overflow=0 axe=[]
+preview: ผลการตรวจก่อนส่ง 3 วัน 21 ต.ค. 2569, 22 ต.ค. 2569, 23 ต.ค. 2569 คงเหลือที่ใช้ได้ 10 วัน → หลังลา 7 วัน
+10-new-preview: /leave/new overflow=0 axe=[]
+11-request-sent: /leave/r/01M57H8ZJEHWX3RED9WAPXM80R overflow=0 axe=[] flash=ส่งคำขอลาแล้ว — รอหัวหน้าพิจารณา
+console employee.demo1: Failed to load resource: the server responded with a status of 422 (Unknown Status Code)
+12-sick-needs-doc: /leave overflow=0 axe=[]
+13-sick-sent: /leave/r/01M57H92BMV8EDHFSBHM1FT3F3 overflow=0 axe=[] flash=ส่งคำขอลาแล้ว — รอหัวหน้าพิจารณา
+14-manager-inbox: /approvals overflow=0 axe=[]
+15-leave-approval: /approvals/01M57H8ZJFSRQS3AJ6EBQQE7AG overflow=0 axe=[]
+16-team-calendar: /leave/team?month=2026-10 overflow=0 axe=[]
+17-my-leave-after: /leave overflow=0 axe=[]
+cards 3 วันคงเหลือ | ยังไม่มีนโยบาย | 7 วันคงเหลือ | ยังไม่มีนโยบาย | ยังไม่มีนโยบาย
+18-request-approved: /leave/r/01M57H8ZJEHWX3RED9WAPXM80R overflow=0 axe=[]
+19-hr-balances: /leave/admin/employee/01M57H8BJNHB6EWJDNAV0KAY30 overflow=0 axe=[]
+20-leave-360: /leave overflow=0 axe=[]
+21-new-360: /leave/new overflow=0 axe=[]
+22-team-360-dark: /leave/team?month=2026-10 overflow=0 axe=[]
+23-admin-dark: /leave/admin overflow=0 axe=[] flash=ระบบไม่ใส่ค่าสิทธิ์ตามกฎหมายให้ กรอกจากกฎหมายหรือระเบียบบริษัทที่ใช้จริง พร้อมแหล่งอ้างอิง แล้ว HR อีกคนตรวจและอนุมัติ · สิทธิ์ของบริษัทต้อง
+24-employee-dark: /employees/01M57H8BJNHB6EWJDNAV0KAY30 overflow=0 axe=[]
+25-home-hub: / overflow=0 axe=[]16-team-calendar overflow=0 axe=[]
+22-team-360-dark overflow=0 axe=[]
+16-team-calendar overflow=0 axe=[]
+22-team-360-dark overflow=0 axe=[]

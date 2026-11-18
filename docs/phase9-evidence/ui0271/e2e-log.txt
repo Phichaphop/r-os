@@ -1,0 +1,21 @@
+hr home visible links=9 total=73
+groups=["work+","sec_core_plus-","sec_hr_people-","sec_hr_time-","sec_hr_pay-","sec_workplace-","tools-","admin-","settings-","module_settings-"]
+01-hr-home-folded: / overflow=0 axe=[]
+after click hr_time expanded=true
+after reload hr_time expanded=true
+keyboard Enter -> expanded=false
+filter "ลา" visible=["หน้าหลัก","แบบฟอร์มกลาง","การลา","เวลาทำงาน","ปิดงวดเวลาทำงาน","ลงเวลาด้วย GPS","จองรถส่วนกลาง","ตั้งค่าการลา","ตั้งค่าเวลาทำงาน","ตัวรับเวลา (Time Collector)","ตั้งค่าลงเวลา GPS","ย่อเมนู"]
+03b-filter-axe: / overflow=0 axe=[]
+filter none empty msg visible=true
+after Esc value="" visible=9 empty hidden=true
+/leave/admin module_settings expanded=true current=ตั้งค่าการลา
+rail visible links=73
+05b-rail-axe: / overflow=0 axe=[]
+mobile filter visible=true toggles=10
+06b-mobile-dark: / overflow=0 axe=[]
+sysadmin groups=["work+","sec_core_plus-","sec_hr_people-","sec_hr_time-","sec_hr_pay-","sec_workplace-","tools-","admin-","settings-","module_settings-","system-"] visible=9
+07-sysadmin-home: / overflow=0 axe=[]
+employee visible=7 total=38
+08-employee-home: / overflow=0 axe=[]
+employee /calc tools expanded=true
+09-dark-desktop: / overflow=0 axe=[]

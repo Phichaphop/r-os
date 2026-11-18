@@ -1,0 +1,20 @@
+{
+  "code": "fonts",
+  "version": "1.0.0",
+  "pack": "utilities",
+  "spec": "M30",
+  "name": { "th": "คลังฟอนต์บริษัท", "en": "Company fonts" },
+  "icon": "typography",
+  "sort_order": 40,
+  "depends_on": ["core"],
+  "permissions": { "fonts.use": "normal", "fonts.restricted": "normal", "fonts.manage": "high" },
+  "grants": { "*": ["fonts.use"], "SYS": ["fonts.manage", "fonts.restricted"] },
+  "menu": [
+    { "group": "tools", "label": "fonts.nav", "icon": "typography", "href": "/fonts", "permission": "fonts.use" }
+  ],
+  "document_classes": {
+    "fonts.file": ["I", "fonts.use", "fonts.manage", ["ttf", "otf", "woff", "woff2"], 20, false, "general_document", "finalized"],
+    "fonts.license": ["I", "fonts.manage", "fonts.manage", ["pdf", "png", "jpeg", "webp"], 10, false, "general_document", "finalized"]
+  },
+  "routes": "routes.php"
+}

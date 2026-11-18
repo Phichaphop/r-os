@@ -1,0 +1,26 @@
+s1-admin-empty: /shifts/admin overflow=0 axe=[]
+pattern E: บันทึกรูปแบบกะแล้ว || ยังไม่มีกติกา — ระบบตรวจเฉพาะกะซ้อนกันและวันซ้ำ ไม่เตือนเรื่องชั่วโมงพัก/วันทำงานติดกัน
+pattern G: บันทึกรูปแบบกะแล้ว || ยังไม่มีกติกา — ระบบตรวจเฉพาะกะซ้อนกันและวันซ้ำ ไม่เตือนเรื่องชั่วโมงพัก/วันทำงานติดกัน
+roster: /shifts/roster/01M5RQBY5BFSF6JB0PKMPR8XCK สร้างตารางกะแล้ว — จัดกะได้เลย || ยังเผยแพร่ไม่ได้ ยังไม่ได้จัดกะเลย
+s2-grid-empty: /shifts/roster/01M5RQBY5BFSF6JB0PKMPR8XCK overflow=0 axe=[]
+fill: บันทึกแล้ว
+copy: คัดลอกสัปดาห์แล้ว
+s3-grid-filled: /shifts/roster/01M5RQBY5BFSF6JB0PKMPR8XCK overflow=0 axe=[]
+publish: เผยแพร่แล้ว — แจ้งพนักงาน 4 คน
+s4-roster-published: /shifts/roster/01M5RQBY5BFSF6JB0PKMPR8XCK overflow=0 axe=[]
+e1-my-shifts: /shifts overflow=0 axe=[]
+e2-attendance-month: /attendance overflow=0 axe=[]
+o1-ot-index: /overtime overflow=0 axe=[]
+ot submit: /overtime/r/01M5RQC8CPQM892WCJMGQPSKQC ส่งคำขอ OT แล้ว
+o2-ot-request: /overtime/r/01M5RQC8CPQM892WCJMGQPSKQC overflow=0 axe=[]
+ot in shift error: ["ทับกับคำขอ OT อื่นของพนักงาน"]
+m1-approvals: /approvals overflow=0 axe=[]
+m2-ot-team: /overtime overflow=0 axe=[]
+h1-ot-admin: /overtime/admin overflow=0 axe=[]
+h2-ot-report: /overtime/report overflow=0 axe=[]
+h3-ot-verify: /overtime/verify overflow=0 axe=[]
+x1-shifts-375: /shifts overflow=0 axe=[]
+x2-ot-375: /overtime overflow=0 axe=[]
+x3-grid-375: /shifts/roster/01M5RQBY5BFSF6JB0PKMPR8XCK overflow=0 axe=[]
+x4-grid-dark: /shifts/roster/01M5RQBY5BFSF6JB0PKMPR8XCK overflow=0 axe=[]
+ot in shift error (after D5B-02 fix): ["ช่วงเวลาทับเวลากะ/เวลาทำงานของวันนั้น"]

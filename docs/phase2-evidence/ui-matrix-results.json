@@ -1,0 +1,536 @@
+[
+ {
+  "user": "phichaphop",
+  "path": "/",
+  "w": 360,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/users",
+  "w": 360,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/admin/users",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/roles",
+  "w": 360,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/admin/roles",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/org",
+  "w": 360,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/admin/org",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/audit",
+  "w": 360,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/admin/audit",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/me",
+  "w": 360,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/me",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/users/new",
+  "w": 360,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/admin/users/new",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/org/legal-entity/new",
+  "w": 360,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/admin/org/legal-entity/new",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/users/01M4PZHDHW2T2B3AJPYYTMCD49",
+  "w": 360,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/admin/users/01M4PZHDHW2T2B3AJPYYTMCD49",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/",
+  "w": 1366,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/users",
+  "w": 1366,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/admin/users",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/roles",
+  "w": 1366,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/admin/roles",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/org",
+  "w": 1366,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/admin/org",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/audit",
+  "w": 1366,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/admin/audit",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/me",
+  "w": 1366,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/me",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/users/new",
+  "w": 1366,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/admin/users/new",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/org/legal-entity/new",
+  "w": 1366,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/admin/org/legal-entity/new",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/users/01M4PZHDHW2T2B3AJPYYTMCD49",
+  "w": 1366,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/admin/users/01M4PZHDHW2T2B3AJPYYTMCD49",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "hr.demo1",
+  "path": "/",
+  "w": 360,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "hr.demo1",
+  "path": "/admin/org",
+  "w": 360,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/admin/org",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "hr.demo1",
+  "path": "/me",
+  "w": 360,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/me",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "hr.demo1",
+  "path": "/",
+  "w": 1366,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "hr.demo1",
+  "path": "/admin/org",
+  "w": 1366,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/admin/org",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "hr.demo1",
+  "path": "/me",
+  "w": 1366,
+  "theme": "light",
+  "status": "http://127.0.0.1:8080/me",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/",
+  "w": 360,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/users",
+  "w": 360,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/admin/users",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/roles",
+  "w": 360,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/admin/roles",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/org",
+  "w": 360,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/admin/org",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/audit",
+  "w": 360,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/admin/audit",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/me",
+  "w": 360,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/me",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/users/new",
+  "w": 360,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/admin/users/new",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/org/legal-entity/new",
+  "w": 360,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/admin/org/legal-entity/new",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/users/01M4PZHDHW2T2B3AJPYYTMCD49",
+  "w": 360,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/admin/users/01M4PZHDHW2T2B3AJPYYTMCD49",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/",
+  "w": 1366,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/users",
+  "w": 1366,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/admin/users",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/roles",
+  "w": 1366,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/admin/roles",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/org",
+  "w": 1366,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/admin/org",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/audit",
+  "w": 1366,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/admin/audit",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/me",
+  "w": 1366,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/me",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/users/new",
+  "w": 1366,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/admin/users/new",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/org/legal-entity/new",
+  "w": 1366,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/admin/org/legal-entity/new",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "phichaphop",
+  "path": "/admin/users/01M4PZHDHW2T2B3AJPYYTMCD49",
+  "w": 1366,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/admin/users/01M4PZHDHW2T2B3AJPYYTMCD49",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "hr.demo1",
+  "path": "/",
+  "w": 360,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "hr.demo1",
+  "path": "/admin/org",
+  "w": 360,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/admin/org",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "hr.demo1",
+  "path": "/me",
+  "w": 360,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/me",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "hr.demo1",
+  "path": "/",
+  "w": 1366,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "hr.demo1",
+  "path": "/admin/org",
+  "w": 1366,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/admin/org",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "hr.demo1",
+  "path": "/me",
+  "w": 1366,
+  "theme": "dark",
+  "status": "http://127.0.0.1:8080/me",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "guest",
+  "path": "/login",
+  "w": 360,
+  "theme": "light",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "guest",
+  "path": "/password/forgot",
+  "w": 360,
+  "theme": "light",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "guest",
+  "path": "/password/reset",
+  "w": 360,
+  "theme": "light",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "guest",
+  "path": "/login",
+  "w": 1366,
+  "theme": "light",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "guest",
+  "path": "/password/forgot",
+  "w": 1366,
+  "theme": "light",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ },
+ {
+  "user": "guest",
+  "path": "/password/reset",
+  "w": 1366,
+  "theme": "light",
+  "overflow": 0,
+  "axe": [],
+  "errs": []
+ }
+]

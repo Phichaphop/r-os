@@ -1,0 +1,28 @@
+{
+  "code": "celebrate",
+  "version": "1.0.0",
+  "pack": "hr",
+  "nav_section": "hr_pay",
+  "spec": "M45",
+  "name": { "th": "วันเกิดและครบรอบงาน", "en": "Birthdays & work anniversaries" },
+  "icon": "gift",
+  "sort_order": 38,
+  "depends_on": ["core", "employees"],
+  "permissions": {
+    "celebrate.view": "normal",
+    "celebrate.manage": "normal"
+  },
+  "grants": {
+    "*": ["celebrate.view"],
+    "HRA": ["celebrate.manage"],
+    "HRT": ["celebrate.manage"]
+  },
+  "menu": [
+    { "group": "work", "label": "celebrate.nav", "icon": "gift", "href": "/celebrate", "permission": "celebrate.view" },
+    { "group": "settings", "label": "celebrate.nav_admin", "icon": "settings", "href": "/celebrate/admin", "permission": "celebrate.manage" }
+  ],
+  "jobs": {
+    "celebrate.events": { "every": 60, "call": "Blue\\Modules\\Celebrate\\CelebrateService::job" }
+  },
+  "routes": "routes.php"
+}

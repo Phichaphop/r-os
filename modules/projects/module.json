@@ -1,0 +1,91 @@
+{
+  "code": "projects",
+  "version": "1.0.0",
+  "pack": "workplace",
+  "nav_section": "core_plus",
+  "spec": "M24",
+  "name": {
+    "th": "จัดการโครงการ",
+    "en": "Projects"
+  },
+  "icon": "list-check",
+  "sort_order": 103,
+  "depends_on": [
+    "employees"
+  ],
+  "permissions": {
+    "projects.use": "normal",
+    "projects.approve": "normal",
+    "projects.oversee": "high"
+  },
+  "grants": {
+    "*": [
+      "projects.use"
+    ],
+    "EXE": [
+      "projects.approve"
+    ],
+    "AUD": [
+      "projects.oversee"
+    ],
+    "SYS": [
+      "projects.oversee"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "projects.nav",
+      "icon": "list-check",
+      "href": "/projects",
+      "permission": "projects.use"
+    }
+  ],
+  "document_classes": {
+    "projects.file": [
+      "C",
+      "projects.approve",
+      "projects.approve",
+      [
+        "pdf",
+        "docx",
+        "xlsx",
+        "pptx",
+        "png",
+        "jpeg",
+        "webp",
+        "csv",
+        "txt"
+      ],
+      20,
+      false,
+      "general_document",
+      "finalized"
+    ]
+  },
+  "workflows": {
+    "projects.start": {
+      "subject": "pj_project",
+      "class": "Blue\\Modules\\Projects\\ProjectSubject",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "manager",
+            "value": "projects.approve"
+          },
+          "scope": "subject",
+          "sla_hours": 72
+        }
+      ]
+    }
+  },
+  "jobs": {
+    "projects.tick": {
+      "every": 60,
+      "call": "Blue\\Modules\\Projects\\TaskService::tickJob"
+    }
+  },
+  "demo": "Blue\\Modules\\Projects\\ProjectsDemo::run",
+  "routes": "routes.php"
+}

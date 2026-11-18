@@ -1,0 +1,2834 @@
+{
+ "version": "GD-PAY v1",
+ "status": "AI-prepared — unverified",
+ "cases": [
+  {
+   "id": "GD-PAY-01",
+   "kind": "normal",
+   "title": "Monthly, full month, fixed allowance, social security at the cap",
+   "mode": "regular",
+   "period_days": 31,
+   "employee": {
+    "days_employed": 31,
+    "time": null,
+    "ot": [],
+    "manual": [],
+    "welfare": [],
+    "tax": {
+     "ytd_taxable": "0",
+     "ytd_wht": "0",
+     "ytd_sso": "0",
+     "month": 10,
+     "declared": [],
+     "declared_ok": true
+    },
+    "profile": {
+     "basis": "monthly",
+     "base": "30000",
+     "items": [
+      [
+       "POS",
+       "2000"
+      ]
+     ]
+    }
+   },
+   "components": [
+    {
+     "id": 1,
+     "code": "SALARY",
+     "kind": "earning",
+     "method": "base",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 2,
+     "code": "POS",
+     "kind": "earning",
+     "method": "fixed",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 3,
+     "code": "OT",
+     "kind": "earning",
+     "method": "ot",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 4,
+     "code": "BONUS",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 1,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 5,
+     "code": "WELFARE",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 6,
+     "code": "ABSENT",
+     "kind": "deduction",
+     "method": "absence",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 7,
+     "code": "SSO_EE",
+     "kind": "deduction",
+     "method": "sso_employee",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employee"
+    },
+    {
+     "id": 8,
+     "code": "WHT_M",
+     "kind": "deduction",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "wht"
+    },
+    {
+     "id": 10,
+     "code": "SSO_ER",
+     "kind": "employer",
+     "method": "sso_employer",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employer"
+    }
+   ],
+   "config": {
+    "payroll.policy": {
+     "monthly_divisor": "30",
+     "hours_per_day": "8",
+     "proration": "calendar_days",
+     "daily_paid": [
+      "worked_days",
+      "holiday_days"
+     ]
+    },
+    "payroll.sso": {
+     "rate_employee": "3.5",
+     "rate_employer": "4",
+     "wage_floor": "1000",
+     "wage_cap": "20000",
+     "rounding": "half_up_baht"
+    },
+    "payroll.wht": null
+   },
+   "original": {},
+   "work_out_tax": true,
+   "expected": {
+    "lines": [
+     {
+      "code": "SALARY",
+      "amount": "30000.00",
+      "source_type": "profile"
+     },
+     {
+      "code": "POS",
+      "amount": "2000.00",
+      "source_type": "profile"
+     },
+     {
+      "code": "SSO_EE",
+      "amount": "700.00",
+      "source_type": "sso"
+     },
+     {
+      "code": "SSO_ER",
+      "amount": "800.00",
+      "source_type": "sso"
+     }
+    ],
+    "totals": {
+     "gross": "32000.00",
+     "deductions": "700.00",
+     "net": "31300.00",
+     "employer": "800.00"
+    },
+    "warnings": []
+   }
+  },
+  {
+   "id": "GD-PAY-02",
+   "kind": "edge",
+   "title": "Social security floor: wage below the floor",
+   "mode": "regular",
+   "period_days": 31,
+   "employee": {
+    "days_employed": 31,
+    "time": null,
+    "ot": [],
+    "manual": [],
+    "welfare": [],
+    "tax": {
+     "ytd_taxable": "0",
+     "ytd_wht": "0",
+     "ytd_sso": "0",
+     "month": 10,
+     "declared": [],
+     "declared_ok": true
+    },
+    "profile": {
+     "basis": "monthly",
+     "base": "800",
+     "items": []
+    }
+   },
+   "components": [
+    {
+     "id": 1,
+     "code": "SALARY",
+     "kind": "earning",
+     "method": "base",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 2,
+     "code": "POS",
+     "kind": "earning",
+     "method": "fixed",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 3,
+     "code": "OT",
+     "kind": "earning",
+     "method": "ot",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 4,
+     "code": "BONUS",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 1,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 5,
+     "code": "WELFARE",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 6,
+     "code": "ABSENT",
+     "kind": "deduction",
+     "method": "absence",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 7,
+     "code": "SSO_EE",
+     "kind": "deduction",
+     "method": "sso_employee",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employee"
+    },
+    {
+     "id": 8,
+     "code": "WHT_M",
+     "kind": "deduction",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "wht"
+    },
+    {
+     "id": 10,
+     "code": "SSO_ER",
+     "kind": "employer",
+     "method": "sso_employer",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employer"
+    }
+   ],
+   "config": {
+    "payroll.policy": {
+     "monthly_divisor": "30",
+     "hours_per_day": "8",
+     "proration": "calendar_days",
+     "daily_paid": [
+      "worked_days",
+      "holiday_days"
+     ]
+    },
+    "payroll.sso": {
+     "rate_employee": "3.5",
+     "rate_employer": "4",
+     "wage_floor": "1000",
+     "wage_cap": "20000",
+     "rounding": "half_up_baht"
+    },
+    "payroll.wht": null
+   },
+   "original": {},
+   "work_out_tax": true,
+   "expected": {
+    "lines": [
+     {
+      "code": "SALARY",
+      "amount": "800.00",
+      "source_type": "profile"
+     },
+     {
+      "code": "SSO_EE",
+      "amount": "35.00",
+      "source_type": "sso"
+     },
+     {
+      "code": "SSO_ER",
+      "amount": "40.00",
+      "source_type": "sso"
+     }
+    ],
+    "totals": {
+     "gross": "800.00",
+     "deductions": "35.00",
+     "net": "765.00",
+     "employer": "40.00"
+    },
+    "warnings": []
+   }
+  },
+  {
+   "id": "GD-PAY-03",
+   "kind": "edge",
+   "title": "Joined mid-month, calendar-day proration (15 of 31 days)",
+   "mode": "regular",
+   "period_days": 31,
+   "employee": {
+    "days_employed": 15,
+    "time": null,
+    "ot": [],
+    "manual": [],
+    "welfare": [],
+    "tax": {
+     "ytd_taxable": "0",
+     "ytd_wht": "0",
+     "ytd_sso": "0",
+     "month": 10,
+     "declared": [],
+     "declared_ok": true
+    },
+    "profile": {
+     "basis": "monthly",
+     "base": "31000",
+     "items": []
+    }
+   },
+   "components": [
+    {
+     "id": 1,
+     "code": "SALARY",
+     "kind": "earning",
+     "method": "base",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 2,
+     "code": "POS",
+     "kind": "earning",
+     "method": "fixed",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 3,
+     "code": "OT",
+     "kind": "earning",
+     "method": "ot",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 4,
+     "code": "BONUS",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 1,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 5,
+     "code": "WELFARE",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 6,
+     "code": "ABSENT",
+     "kind": "deduction",
+     "method": "absence",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 7,
+     "code": "SSO_EE",
+     "kind": "deduction",
+     "method": "sso_employee",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employee"
+    },
+    {
+     "id": 8,
+     "code": "WHT_M",
+     "kind": "deduction",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "wht"
+    },
+    {
+     "id": 10,
+     "code": "SSO_ER",
+     "kind": "employer",
+     "method": "sso_employer",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employer"
+    }
+   ],
+   "config": {
+    "payroll.policy": {
+     "monthly_divisor": "30",
+     "hours_per_day": "8",
+     "proration": "calendar_days",
+     "daily_paid": [
+      "worked_days",
+      "holiday_days"
+     ]
+    },
+    "payroll.sso": {
+     "rate_employee": "3.5",
+     "rate_employer": "4",
+     "wage_floor": "1000",
+     "wage_cap": "20000",
+     "rounding": "half_up_baht"
+    },
+    "payroll.wht": null
+   },
+   "original": {},
+   "work_out_tax": true,
+   "expected": {
+    "lines": [
+     {
+      "code": "SALARY",
+      "amount": "15000.00",
+      "source_type": "profile"
+     },
+     {
+      "code": "SSO_EE",
+      "amount": "525.00",
+      "source_type": "sso"
+     },
+     {
+      "code": "SSO_ER",
+      "amount": "600.00",
+      "source_type": "sso"
+     }
+    ],
+    "totals": {
+     "gross": "15000.00",
+     "deductions": "525.00",
+     "net": "14475.00",
+     "employer": "600.00"
+    },
+    "warnings": []
+   }
+  },
+  {
+   "id": "GD-PAY-04",
+   "kind": "edge",
+   "title": "Joined mid-month, divisor proration (10 days ÷ 30)",
+   "mode": "regular",
+   "period_days": 31,
+   "employee": {
+    "days_employed": 10,
+    "time": null,
+    "ot": [],
+    "manual": [],
+    "welfare": [],
+    "tax": {
+     "ytd_taxable": "0",
+     "ytd_wht": "0",
+     "ytd_sso": "0",
+     "month": 10,
+     "declared": [],
+     "declared_ok": true
+    },
+    "profile": {
+     "basis": "monthly",
+     "base": "30000",
+     "items": []
+    }
+   },
+   "components": [
+    {
+     "id": 1,
+     "code": "SALARY",
+     "kind": "earning",
+     "method": "base",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 2,
+     "code": "POS",
+     "kind": "earning",
+     "method": "fixed",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 3,
+     "code": "OT",
+     "kind": "earning",
+     "method": "ot",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 4,
+     "code": "BONUS",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 1,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 5,
+     "code": "WELFARE",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 6,
+     "code": "ABSENT",
+     "kind": "deduction",
+     "method": "absence",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 7,
+     "code": "SSO_EE",
+     "kind": "deduction",
+     "method": "sso_employee",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employee"
+    },
+    {
+     "id": 8,
+     "code": "WHT_M",
+     "kind": "deduction",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "wht"
+    },
+    {
+     "id": 10,
+     "code": "SSO_ER",
+     "kind": "employer",
+     "method": "sso_employer",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employer"
+    }
+   ],
+   "config": {
+    "payroll.policy": {
+     "monthly_divisor": "30",
+     "hours_per_day": "8",
+     "proration": "divisor_days",
+     "daily_paid": [
+      "worked_days",
+      "holiday_days"
+     ]
+    },
+    "payroll.sso": {
+     "rate_employee": "3.5",
+     "rate_employer": "4",
+     "wage_floor": "1000",
+     "wage_cap": "20000",
+     "rounding": "half_up_baht"
+    },
+    "payroll.wht": null
+   },
+   "original": {},
+   "work_out_tax": true,
+   "expected": {
+    "lines": [
+     {
+      "code": "SALARY",
+      "amount": "10000.00",
+      "source_type": "profile"
+     },
+     {
+      "code": "SSO_EE",
+      "amount": "350.00",
+      "source_type": "sso"
+     },
+     {
+      "code": "SSO_ER",
+      "amount": "400.00",
+      "source_type": "sso"
+     }
+    ],
+    "totals": {
+     "gross": "10000.00",
+     "deductions": "350.00",
+     "net": "9650.00",
+     "employer": "400.00"
+    },
+    "warnings": []
+   }
+  },
+  {
+   "id": "GD-PAY-05",
+   "kind": "normal",
+   "title": "Daily paid: worked + holiday days, social security rounded to the baht",
+   "mode": "regular",
+   "period_days": 31,
+   "employee": {
+    "days_employed": 31,
+    "time": {
+     "worked_days": "20",
+     "absent_days": "0",
+     "holiday_days": "1",
+     "leave_days": "0"
+    },
+    "ot": [],
+    "manual": [],
+    "welfare": [],
+    "tax": {
+     "ytd_taxable": "0",
+     "ytd_wht": "0",
+     "ytd_sso": "0",
+     "month": 10,
+     "declared": [],
+     "declared_ok": true
+    },
+    "profile": {
+     "basis": "daily",
+     "base": "520",
+     "items": []
+    }
+   },
+   "components": [
+    {
+     "id": 1,
+     "code": "SALARY",
+     "kind": "earning",
+     "method": "base",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 2,
+     "code": "POS",
+     "kind": "earning",
+     "method": "fixed",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 3,
+     "code": "OT",
+     "kind": "earning",
+     "method": "ot",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 4,
+     "code": "BONUS",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 1,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 5,
+     "code": "WELFARE",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 6,
+     "code": "ABSENT",
+     "kind": "deduction",
+     "method": "absence",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 7,
+     "code": "SSO_EE",
+     "kind": "deduction",
+     "method": "sso_employee",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employee"
+    },
+    {
+     "id": 8,
+     "code": "WHT_M",
+     "kind": "deduction",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "wht"
+    },
+    {
+     "id": 10,
+     "code": "SSO_ER",
+     "kind": "employer",
+     "method": "sso_employer",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employer"
+    }
+   ],
+   "config": {
+    "payroll.policy": {
+     "monthly_divisor": "30",
+     "hours_per_day": "8",
+     "proration": "calendar_days",
+     "daily_paid": [
+      "worked_days",
+      "holiday_days"
+     ]
+    },
+    "payroll.sso": {
+     "rate_employee": "3.5",
+     "rate_employer": "4",
+     "wage_floor": "1000",
+     "wage_cap": "20000",
+     "rounding": "half_up_baht"
+    },
+    "payroll.wht": null
+   },
+   "original": {},
+   "work_out_tax": true,
+   "expected": {
+    "lines": [
+     {
+      "code": "SALARY",
+      "amount": "10920.00",
+      "source_type": "time"
+     },
+     {
+      "code": "SSO_EE",
+      "amount": "382.00",
+      "source_type": "sso"
+     },
+     {
+      "code": "SSO_ER",
+      "amount": "437.00",
+      "source_type": "sso"
+     }
+    ],
+    "totals": {
+     "gross": "10920.00",
+     "deductions": "382.00",
+     "net": "10538.00",
+     "employer": "437.00"
+    },
+    "warnings": []
+   }
+  },
+  {
+   "id": "GD-PAY-06",
+   "kind": "normal",
+   "title": "OT 1.5× 10 hours and 3× 2 hours",
+   "mode": "regular",
+   "period_days": 31,
+   "employee": {
+    "days_employed": 31,
+    "time": {
+     "worked_days": "22",
+     "absent_days": "0",
+     "holiday_days": "0",
+     "leave_days": "0"
+    },
+    "ot": [
+     {
+      "multiplier": "1.5",
+      "minutes": 600
+     },
+     {
+      "multiplier": "3",
+      "minutes": 120
+     }
+    ],
+    "manual": [],
+    "welfare": [],
+    "tax": {
+     "ytd_taxable": "0",
+     "ytd_wht": "0",
+     "ytd_sso": "0",
+     "month": 10,
+     "declared": [],
+     "declared_ok": true
+    },
+    "profile": {
+     "basis": "monthly",
+     "base": "24000",
+     "items": []
+    }
+   },
+   "components": [
+    {
+     "id": 1,
+     "code": "SALARY",
+     "kind": "earning",
+     "method": "base",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 2,
+     "code": "POS",
+     "kind": "earning",
+     "method": "fixed",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 3,
+     "code": "OT",
+     "kind": "earning",
+     "method": "ot",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 4,
+     "code": "BONUS",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 1,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 5,
+     "code": "WELFARE",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 6,
+     "code": "ABSENT",
+     "kind": "deduction",
+     "method": "absence",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 7,
+     "code": "SSO_EE",
+     "kind": "deduction",
+     "method": "sso_employee",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employee"
+    },
+    {
+     "id": 8,
+     "code": "WHT_M",
+     "kind": "deduction",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "wht"
+    },
+    {
+     "id": 10,
+     "code": "SSO_ER",
+     "kind": "employer",
+     "method": "sso_employer",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employer"
+    }
+   ],
+   "config": {
+    "payroll.policy": {
+     "monthly_divisor": "30",
+     "hours_per_day": "8",
+     "proration": "calendar_days",
+     "daily_paid": [
+      "worked_days",
+      "holiday_days"
+     ]
+    },
+    "payroll.sso": {
+     "rate_employee": "3.5",
+     "rate_employer": "4",
+     "wage_floor": "1000",
+     "wage_cap": "20000",
+     "rounding": "half_up_baht"
+    },
+    "payroll.wht": null
+   },
+   "original": {},
+   "work_out_tax": true,
+   "expected": {
+    "lines": [
+     {
+      "code": "SALARY",
+      "amount": "24000.00",
+      "source_type": "profile"
+     },
+     {
+      "code": "OT",
+      "amount": "1500.00",
+      "source_type": "ot"
+     },
+     {
+      "code": "OT",
+      "amount": "600.00",
+      "source_type": "ot"
+     },
+     {
+      "code": "SSO_EE",
+      "amount": "700.00",
+      "source_type": "sso"
+     },
+     {
+      "code": "SSO_ER",
+      "amount": "800.00",
+      "source_type": "sso"
+     }
+    ],
+    "totals": {
+     "gross": "26100.00",
+     "deductions": "700.00",
+     "net": "25400.00",
+     "employer": "800.00"
+    },
+    "warnings": []
+   }
+  },
+  {
+   "id": "GD-PAY-07",
+   "kind": "normal",
+   "title": "Absence deduction: 2 days",
+   "mode": "regular",
+   "period_days": 31,
+   "employee": {
+    "days_employed": 31,
+    "time": {
+     "worked_days": "20",
+     "absent_days": "2",
+     "holiday_days": "0",
+     "leave_days": "0"
+    },
+    "ot": [],
+    "manual": [],
+    "welfare": [],
+    "tax": {
+     "ytd_taxable": "0",
+     "ytd_wht": "0",
+     "ytd_sso": "0",
+     "month": 10,
+     "declared": [],
+     "declared_ok": true
+    },
+    "profile": {
+     "basis": "monthly",
+     "base": "15000",
+     "items": []
+    }
+   },
+   "components": [
+    {
+     "id": 1,
+     "code": "SALARY",
+     "kind": "earning",
+     "method": "base",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 2,
+     "code": "POS",
+     "kind": "earning",
+     "method": "fixed",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 3,
+     "code": "OT",
+     "kind": "earning",
+     "method": "ot",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 4,
+     "code": "BONUS",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 1,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 5,
+     "code": "WELFARE",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 6,
+     "code": "ABSENT",
+     "kind": "deduction",
+     "method": "absence",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 7,
+     "code": "SSO_EE",
+     "kind": "deduction",
+     "method": "sso_employee",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employee"
+    },
+    {
+     "id": 8,
+     "code": "WHT_M",
+     "kind": "deduction",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "wht"
+    },
+    {
+     "id": 10,
+     "code": "SSO_ER",
+     "kind": "employer",
+     "method": "sso_employer",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employer"
+    }
+   ],
+   "config": {
+    "payroll.policy": {
+     "monthly_divisor": "30",
+     "hours_per_day": "8",
+     "proration": "calendar_days",
+     "daily_paid": [
+      "worked_days",
+      "holiday_days"
+     ]
+    },
+    "payroll.sso": {
+     "rate_employee": "3.5",
+     "rate_employer": "4",
+     "wage_floor": "1000",
+     "wage_cap": "20000",
+     "rounding": "half_up_baht"
+    },
+    "payroll.wht": null
+   },
+   "original": {},
+   "work_out_tax": true,
+   "expected": {
+    "lines": [
+     {
+      "code": "SALARY",
+      "amount": "15000.00",
+      "source_type": "profile"
+     },
+     {
+      "code": "ABSENT",
+      "amount": "1000.00",
+      "source_type": "time"
+     },
+     {
+      "code": "SSO_EE",
+      "amount": "490.00",
+      "source_type": "sso"
+     },
+     {
+      "code": "SSO_ER",
+      "amount": "560.00",
+      "source_type": "sso"
+     }
+    ],
+    "totals": {
+     "gross": "15000.00",
+     "deductions": "1490.00",
+     "net": "13510.00",
+     "employer": "560.00"
+    },
+    "warnings": []
+   }
+  },
+  {
+   "id": "GD-PAY-08",
+   "kind": "edge",
+   "title": "Withholding tax, cumulative method, opening amounts and declared allowances (as G6C-01)",
+   "mode": "regular",
+   "period_days": 31,
+   "employee": {
+    "days_employed": 31,
+    "time": null,
+    "ot": [],
+    "manual": [],
+    "welfare": [],
+    "tax": {
+     "ytd_taxable": "166500",
+     "ytd_wht": "1200",
+     "ytd_sso": "5250",
+     "month": 10,
+     "declared": [
+      {
+       "code": "INS",
+       "value": "30000"
+      },
+      {
+       "code": "CHILD",
+       "value": "1"
+      }
+     ],
+     "declared_ok": true
+    },
+    "profile": {
+     "basis": "monthly",
+     "base": "18500",
+     "items": []
+    }
+   },
+   "components": [
+    {
+     "id": 1,
+     "code": "SALARY",
+     "kind": "earning",
+     "method": "base",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 2,
+     "code": "POS",
+     "kind": "earning",
+     "method": "fixed",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 3,
+     "code": "OT",
+     "kind": "earning",
+     "method": "ot",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 4,
+     "code": "BONUS",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 1,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 5,
+     "code": "WELFARE",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 6,
+     "code": "ABSENT",
+     "kind": "deduction",
+     "method": "absence",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 7,
+     "code": "SSO_EE",
+     "kind": "deduction",
+     "method": "sso_employee",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employee"
+    },
+    {
+     "id": 8,
+     "code": "WHT_M",
+     "kind": "deduction",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "wht"
+    },
+    {
+     "id": 10,
+     "code": "SSO_ER",
+     "kind": "employer",
+     "method": "sso_employer",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employer"
+    },
+    {
+     "id": 9,
+     "code": "TAX",
+     "kind": "deduction",
+     "method": "wht",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "wht"
+    }
+   ],
+   "config": {
+    "payroll.policy": {
+     "monthly_divisor": "30",
+     "hours_per_day": "8",
+     "proration": "calendar_days",
+     "daily_paid": [
+      "worked_days",
+      "holiday_days"
+     ]
+    },
+    "payroll.sso": {
+     "rate_employee": "3.5",
+     "rate_employer": "4",
+     "wage_floor": "1000",
+     "wage_cap": "20000",
+     "rounding": "half_up_baht"
+    },
+    "payroll.wht": {
+     "method": "cumulative",
+     "expense_rate": "40",
+     "expense_cap": "80000",
+     "personal_allowance": "50000",
+     "sso_allowance_cap": "9000",
+     "brackets": [
+      {
+       "up_to": "20000",
+       "rate": "0"
+      },
+      {
+       "up_to": "100000",
+       "rate": "10"
+      },
+      {
+       "up_to": null,
+       "rate": "20"
+      }
+     ],
+     "allowances": [
+      {
+       "code": "INS",
+       "name": "INS",
+       "unit": "amount",
+       "per_unit": null,
+       "cap": "20000"
+      },
+      {
+       "code": "CHILD",
+       "name": "CHILD",
+       "unit": "count",
+       "per_unit": "25000",
+       "cap": null
+      }
+     ],
+     "rounding": "half_up_satang"
+    }
+   },
+   "original": {},
+   "work_out_tax": true,
+   "expected": {
+    "lines": [
+     {
+      "code": "SALARY",
+      "amount": "18500.00",
+      "source_type": "profile"
+     },
+     {
+      "code": "SSO_EE",
+      "amount": "648.00",
+      "source_type": "sso"
+     },
+     {
+      "code": "SSO_ER",
+      "amount": "740.00",
+      "source_type": "sso"
+     },
+     {
+      "code": "TAX",
+      "amount": "260.20",
+      "source_type": "tax"
+     }
+    ],
+    "totals": {
+     "gross": "18500.00",
+     "deductions": "908.20",
+     "net": "17591.80",
+     "employer": "740.00"
+    },
+    "warnings": []
+   }
+  },
+  {
+   "id": "GD-PAY-09",
+   "kind": "normal",
+   "title": "Withholding tax, ×12 method, no declaration",
+   "mode": "regular",
+   "period_days": 31,
+   "employee": {
+    "days_employed": 31,
+    "time": null,
+    "ot": [],
+    "manual": [],
+    "welfare": [],
+    "tax": {
+     "ytd_taxable": "0",
+     "ytd_wht": "0",
+     "ytd_sso": "0",
+     "month": 10,
+     "declared": [],
+     "declared_ok": true
+    },
+    "profile": {
+     "basis": "monthly",
+     "base": "50000",
+     "items": []
+    }
+   },
+   "components": [
+    {
+     "id": 1,
+     "code": "SALARY",
+     "kind": "earning",
+     "method": "base",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 2,
+     "code": "POS",
+     "kind": "earning",
+     "method": "fixed",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 3,
+     "code": "OT",
+     "kind": "earning",
+     "method": "ot",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 4,
+     "code": "BONUS",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 1,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 5,
+     "code": "WELFARE",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 6,
+     "code": "ABSENT",
+     "kind": "deduction",
+     "method": "absence",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 7,
+     "code": "SSO_EE",
+     "kind": "deduction",
+     "method": "sso_employee",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employee"
+    },
+    {
+     "id": 8,
+     "code": "WHT_M",
+     "kind": "deduction",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "wht"
+    },
+    {
+     "id": 10,
+     "code": "SSO_ER",
+     "kind": "employer",
+     "method": "sso_employer",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employer"
+    },
+    {
+     "id": 9,
+     "code": "TAX",
+     "kind": "deduction",
+     "method": "wht",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "wht"
+    }
+   ],
+   "config": {
+    "payroll.policy": {
+     "monthly_divisor": "30",
+     "hours_per_day": "8",
+     "proration": "calendar_days",
+     "daily_paid": [
+      "worked_days",
+      "holiday_days"
+     ]
+    },
+    "payroll.sso": {
+     "rate_employee": "3.5",
+     "rate_employer": "4",
+     "wage_floor": "1000",
+     "wage_cap": "20000",
+     "rounding": "half_up_baht"
+    },
+    "payroll.wht": {
+     "method": "annualize_current",
+     "expense_rate": "40",
+     "expense_cap": "80000",
+     "personal_allowance": "50000",
+     "sso_allowance_cap": "9000",
+     "brackets": [
+      {
+       "up_to": "20000",
+       "rate": "0"
+      },
+      {
+       "up_to": "100000",
+       "rate": "10"
+      },
+      {
+       "up_to": null,
+       "rate": "20"
+      }
+     ],
+     "allowances": [
+      {
+       "code": "INS",
+       "name": "INS",
+       "unit": "amount",
+       "per_unit": null,
+       "cap": "20000"
+      },
+      {
+       "code": "CHILD",
+       "name": "CHILD",
+       "unit": "count",
+       "per_unit": "25000",
+       "cap": null
+      }
+     ],
+     "rounding": "half_up_satang"
+    }
+   },
+   "original": {},
+   "work_out_tax": true,
+   "expected": {
+    "lines": [
+     {
+      "code": "SALARY",
+      "amount": "50000.00",
+      "source_type": "profile"
+     },
+     {
+      "code": "SSO_EE",
+      "amount": "700.00",
+      "source_type": "sso"
+     },
+     {
+      "code": "SSO_ER",
+      "amount": "800.00",
+      "source_type": "sso"
+     },
+     {
+      "code": "TAX",
+      "amount": "6693.33",
+      "source_type": "tax"
+     }
+    ],
+    "totals": {
+     "gross": "50000.00",
+     "deductions": "7393.33",
+     "net": "42606.67",
+     "employer": "800.00"
+    },
+    "warnings": []
+   }
+  },
+  {
+   "id": "GD-PAY-10",
+   "kind": "normal",
+   "title": "Welfare claim and a manual bonus in a regular run",
+   "mode": "regular",
+   "period_days": 31,
+   "employee": {
+    "days_employed": 31,
+    "time": null,
+    "ot": [],
+    "manual": [
+     {
+      "code": "BONUS",
+      "amount": "5000"
+     }
+    ],
+    "welfare": [
+     {
+      "code": "WELFARE",
+      "amount": "3000",
+      "ref": "WF-2026-00001"
+     }
+    ],
+    "tax": {
+     "ytd_taxable": "0",
+     "ytd_wht": "0",
+     "ytd_sso": "0",
+     "month": 10,
+     "declared": [],
+     "declared_ok": true
+    },
+    "profile": {
+     "basis": "monthly",
+     "base": "20000",
+     "items": []
+    }
+   },
+   "components": [
+    {
+     "id": 1,
+     "code": "SALARY",
+     "kind": "earning",
+     "method": "base",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 2,
+     "code": "POS",
+     "kind": "earning",
+     "method": "fixed",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 3,
+     "code": "OT",
+     "kind": "earning",
+     "method": "ot",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 4,
+     "code": "BONUS",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 1,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 5,
+     "code": "WELFARE",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 6,
+     "code": "ABSENT",
+     "kind": "deduction",
+     "method": "absence",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 7,
+     "code": "SSO_EE",
+     "kind": "deduction",
+     "method": "sso_employee",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employee"
+    },
+    {
+     "id": 8,
+     "code": "WHT_M",
+     "kind": "deduction",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "wht"
+    },
+    {
+     "id": 10,
+     "code": "SSO_ER",
+     "kind": "employer",
+     "method": "sso_employer",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employer"
+    }
+   ],
+   "config": {
+    "payroll.policy": {
+     "monthly_divisor": "30",
+     "hours_per_day": "8",
+     "proration": "calendar_days",
+     "daily_paid": [
+      "worked_days",
+      "holiday_days"
+     ]
+    },
+    "payroll.sso": {
+     "rate_employee": "3.5",
+     "rate_employer": "4",
+     "wage_floor": "1000",
+     "wage_cap": "20000",
+     "rounding": "half_up_baht"
+    },
+    "payroll.wht": null
+   },
+   "original": {},
+   "work_out_tax": true,
+   "expected": {
+    "lines": [
+     {
+      "code": "SALARY",
+      "amount": "20000.00",
+      "source_type": "profile"
+     },
+     {
+      "code": "BONUS",
+      "amount": "5000.00",
+      "source_type": "manual"
+     },
+     {
+      "code": "WELFARE",
+      "amount": "3000.00",
+      "source_type": "welfare"
+     },
+     {
+      "code": "SSO_EE",
+      "amount": "700.00",
+      "source_type": "sso"
+     },
+     {
+      "code": "SSO_ER",
+      "amount": "800.00",
+      "source_type": "sso"
+     }
+    ],
+    "totals": {
+     "gross": "28000.00",
+     "deductions": "700.00",
+     "net": "27300.00",
+     "employer": "800.00"
+    },
+    "warnings": []
+   }
+  },
+  {
+   "id": "GD-PAY-11",
+   "kind": "edge",
+   "title": "Off-cycle bonus with tax entered by Payroll — nothing else is worked out",
+   "mode": "off_cycle",
+   "period_days": 31,
+   "employee": {
+    "days_employed": 31,
+    "time": null,
+    "ot": [],
+    "manual": [
+     {
+      "code": "BONUS",
+      "amount": "50000"
+     },
+     {
+      "code": "WHT_M",
+      "amount": "2500"
+     }
+    ],
+    "welfare": [],
+    "tax": {
+     "ytd_taxable": "0",
+     "ytd_wht": "0",
+     "ytd_sso": "0",
+     "month": 10,
+     "declared": [],
+     "declared_ok": true
+    },
+    "profile": {
+     "basis": "monthly",
+     "base": "20000",
+     "items": []
+    }
+   },
+   "components": [
+    {
+     "id": 1,
+     "code": "SALARY",
+     "kind": "earning",
+     "method": "base",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 2,
+     "code": "POS",
+     "kind": "earning",
+     "method": "fixed",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 3,
+     "code": "OT",
+     "kind": "earning",
+     "method": "ot",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 4,
+     "code": "BONUS",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 1,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 5,
+     "code": "WELFARE",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 6,
+     "code": "ABSENT",
+     "kind": "deduction",
+     "method": "absence",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 7,
+     "code": "SSO_EE",
+     "kind": "deduction",
+     "method": "sso_employee",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employee"
+    },
+    {
+     "id": 8,
+     "code": "WHT_M",
+     "kind": "deduction",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "wht"
+    },
+    {
+     "id": 10,
+     "code": "SSO_ER",
+     "kind": "employer",
+     "method": "sso_employer",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employer"
+    },
+    {
+     "id": 9,
+     "code": "TAX",
+     "kind": "deduction",
+     "method": "wht",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "wht"
+    }
+   ],
+   "config": {
+    "payroll.policy": {
+     "monthly_divisor": "30",
+     "hours_per_day": "8",
+     "proration": "calendar_days",
+     "daily_paid": [
+      "worked_days",
+      "holiday_days"
+     ]
+    },
+    "payroll.sso": {
+     "rate_employee": "3.5",
+     "rate_employer": "4",
+     "wage_floor": "1000",
+     "wage_cap": "20000",
+     "rounding": "half_up_baht"
+    },
+    "payroll.wht": {
+     "method": "cumulative",
+     "expense_rate": "40",
+     "expense_cap": "80000",
+     "personal_allowance": "50000",
+     "sso_allowance_cap": "9000",
+     "brackets": [
+      {
+       "up_to": "20000",
+       "rate": "0"
+      },
+      {
+       "up_to": "100000",
+       "rate": "10"
+      },
+      {
+       "up_to": null,
+       "rate": "20"
+      }
+     ],
+     "allowances": [
+      {
+       "code": "INS",
+       "name": "INS",
+       "unit": "amount",
+       "per_unit": null,
+       "cap": "20000"
+      },
+      {
+       "code": "CHILD",
+       "name": "CHILD",
+       "unit": "count",
+       "per_unit": "25000",
+       "cap": null
+      }
+     ],
+     "rounding": "half_up_satang"
+    }
+   },
+   "original": {},
+   "work_out_tax": true,
+   "expected": {
+    "lines": [
+     {
+      "code": "BONUS",
+      "amount": "50000.00",
+      "source_type": "manual"
+     },
+     {
+      "code": "WHT_M",
+      "amount": "2500.00",
+      "source_type": "manual"
+     }
+    ],
+    "totals": {
+     "gross": "50000.00",
+     "deductions": "2500.00",
+     "net": "47500.00",
+     "employer": "0.00"
+    },
+    "warnings": []
+   }
+  },
+  {
+   "id": "GD-PAY-12",
+   "kind": "edge",
+   "title": "Correction: pay raised back in time 15,000 → 16,000 (salary and social security differences)",
+   "mode": "correction",
+   "period_days": 31,
+   "employee": {
+    "days_employed": 31,
+    "time": null,
+    "ot": [],
+    "manual": [],
+    "welfare": [],
+    "tax": {
+     "ytd_taxable": "0",
+     "ytd_wht": "0",
+     "ytd_sso": "0",
+     "month": 10,
+     "declared": [],
+     "declared_ok": true
+    },
+    "profile": {
+     "basis": "monthly",
+     "base": "16000",
+     "items": []
+    }
+   },
+   "components": [
+    {
+     "id": 1,
+     "code": "SALARY",
+     "kind": "earning",
+     "method": "base",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 2,
+     "code": "POS",
+     "kind": "earning",
+     "method": "fixed",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 3,
+     "code": "OT",
+     "kind": "earning",
+     "method": "ot",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 4,
+     "code": "BONUS",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 1,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 5,
+     "code": "WELFARE",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 6,
+     "code": "ABSENT",
+     "kind": "deduction",
+     "method": "absence",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 7,
+     "code": "SSO_EE",
+     "kind": "deduction",
+     "method": "sso_employee",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employee"
+    },
+    {
+     "id": 8,
+     "code": "WHT_M",
+     "kind": "deduction",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "wht"
+    },
+    {
+     "id": 10,
+     "code": "SSO_ER",
+     "kind": "employer",
+     "method": "sso_employer",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employer"
+    }
+   ],
+   "config": {
+    "payroll.policy": {
+     "monthly_divisor": "30",
+     "hours_per_day": "8",
+     "proration": "calendar_days",
+     "daily_paid": [
+      "worked_days",
+      "holiday_days"
+     ]
+    },
+    "payroll.sso": {
+     "rate_employee": "3.5",
+     "rate_employer": "4",
+     "wage_floor": "1000",
+     "wage_cap": "20000",
+     "rounding": "half_up_baht"
+    },
+    "payroll.wht": null
+   },
+   "original": {
+    "SALARY": "15000",
+    "SSO_EE": "525",
+    "SSO_ER": "600"
+   },
+   "work_out_tax": true,
+   "expected": {
+    "lines": [
+     {
+      "code": "SALARY",
+      "amount": "1000.00",
+      "source_type": "correction"
+     },
+     {
+      "code": "SSO_EE",
+      "amount": "35.00",
+      "source_type": "correction"
+     },
+     {
+      "code": "SSO_ER",
+      "amount": "40.00",
+      "source_type": "correction"
+     }
+    ],
+    "totals": {
+     "gross": "1000.00",
+     "deductions": "35.00",
+     "net": "965.00",
+     "employer": "40.00"
+    },
+    "warnings": []
+   }
+  },
+  {
+   "id": "GD-PAY-13",
+   "kind": "edge",
+   "title": "Correction that lowers pay 16,000 → 15,000 (negative difference, warning only)",
+   "mode": "correction",
+   "period_days": 31,
+   "employee": {
+    "days_employed": 31,
+    "time": null,
+    "ot": [],
+    "manual": [],
+    "welfare": [],
+    "tax": {
+     "ytd_taxable": "0",
+     "ytd_wht": "0",
+     "ytd_sso": "0",
+     "month": 10,
+     "declared": [],
+     "declared_ok": true
+    },
+    "profile": {
+     "basis": "monthly",
+     "base": "15000",
+     "items": []
+    }
+   },
+   "components": [
+    {
+     "id": 1,
+     "code": "SALARY",
+     "kind": "earning",
+     "method": "base",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 2,
+     "code": "POS",
+     "kind": "earning",
+     "method": "fixed",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 3,
+     "code": "OT",
+     "kind": "earning",
+     "method": "ot",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 4,
+     "code": "BONUS",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 1,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 5,
+     "code": "WELFARE",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 6,
+     "code": "ABSENT",
+     "kind": "deduction",
+     "method": "absence",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 7,
+     "code": "SSO_EE",
+     "kind": "deduction",
+     "method": "sso_employee",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employee"
+    },
+    {
+     "id": 8,
+     "code": "WHT_M",
+     "kind": "deduction",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "wht"
+    },
+    {
+     "id": 10,
+     "code": "SSO_ER",
+     "kind": "employer",
+     "method": "sso_employer",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employer"
+    }
+   ],
+   "config": {
+    "payroll.policy": {
+     "monthly_divisor": "30",
+     "hours_per_day": "8",
+     "proration": "calendar_days",
+     "daily_paid": [
+      "worked_days",
+      "holiday_days"
+     ]
+    },
+    "payroll.sso": {
+     "rate_employee": "3.5",
+     "rate_employer": "4",
+     "wage_floor": "1000",
+     "wage_cap": "20000",
+     "rounding": "half_up_baht"
+    },
+    "payroll.wht": null
+   },
+   "original": {
+    "SALARY": "16000",
+    "SSO_EE": "560",
+    "SSO_ER": "640"
+   },
+   "work_out_tax": true,
+   "expected": {
+    "lines": [
+     {
+      "code": "SALARY",
+      "amount": "-1000.00",
+      "source_type": "correction"
+     },
+     {
+      "code": "SSO_EE",
+      "amount": "-35.00",
+      "source_type": "correction"
+     },
+     {
+      "code": "SSO_ER",
+      "amount": "-40.00",
+      "source_type": "correction"
+     }
+    ],
+    "totals": {
+     "gross": "-1000.00",
+     "deductions": "-35.00",
+     "net": "-965.00",
+     "employer": "-40.00"
+    },
+    "warnings": [
+     "payroll.warn.correction_negative"
+    ]
+   }
+  },
+  {
+   "id": "GD-PAY-14",
+   "kind": "edge",
+   "title": "Daily paid without company pay rules: nothing guessed, blocking",
+   "mode": "regular",
+   "period_days": 31,
+   "employee": {
+    "days_employed": 31,
+    "time": {
+     "worked_days": "20",
+     "absent_days": "0",
+     "holiday_days": "0",
+     "leave_days": "0"
+    },
+    "ot": [],
+    "manual": [],
+    "welfare": [],
+    "tax": {
+     "ytd_taxable": "0",
+     "ytd_wht": "0",
+     "ytd_sso": "0",
+     "month": 10,
+     "declared": [],
+     "declared_ok": true
+    },
+    "profile": {
+     "basis": "daily",
+     "base": "520",
+     "items": []
+    }
+   },
+   "components": [
+    {
+     "id": 1,
+     "code": "SALARY",
+     "kind": "earning",
+     "method": "base",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 2,
+     "code": "POS",
+     "kind": "earning",
+     "method": "fixed",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 3,
+     "code": "OT",
+     "kind": "earning",
+     "method": "ot",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 4,
+     "code": "BONUS",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 1,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 5,
+     "code": "WELFARE",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 6,
+     "code": "ABSENT",
+     "kind": "deduction",
+     "method": "absence",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 7,
+     "code": "SSO_EE",
+     "kind": "deduction",
+     "method": "sso_employee",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employee"
+    },
+    {
+     "id": 8,
+     "code": "WHT_M",
+     "kind": "deduction",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "wht"
+    },
+    {
+     "id": 10,
+     "code": "SSO_ER",
+     "kind": "employer",
+     "method": "sso_employer",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employer"
+    }
+   ],
+   "config": {
+    "payroll.policy": null,
+    "payroll.sso": {
+     "rate_employee": "3.5",
+     "rate_employer": "4",
+     "wage_floor": "1000",
+     "wage_cap": "20000",
+     "rounding": "half_up_baht"
+    },
+    "payroll.wht": null
+   },
+   "original": {},
+   "work_out_tax": true,
+   "expected": {
+    "lines": [],
+    "totals": {
+     "gross": "0.00",
+     "deductions": "0.00",
+     "net": "0.00",
+     "employer": "0.00"
+    },
+    "warnings": [
+     "payroll.warn.policy_missing"
+    ]
+   }
+  },
+  {
+   "id": "GD-PAY-15",
+   "kind": "edge",
+   "title": "Correction with tax: 50,000 → 60,000 in October, tax worked out again from the tax position the original month used",
+   "mode": "correction",
+   "period_days": 31,
+   "employee": {
+    "days_employed": 31,
+    "time": null,
+    "ot": [],
+    "manual": [],
+    "welfare": [],
+    "tax": {
+     "ytd_taxable": "450000",
+     "ytd_wht": "27000",
+     "ytd_sso": "6750",
+     "month": 10,
+     "declared": [],
+     "declared_ok": true
+    },
+    "profile": {
+     "basis": "monthly",
+     "base": "60000",
+     "items": []
+    }
+   },
+   "components": [
+    {
+     "id": 1,
+     "code": "SALARY",
+     "kind": "earning",
+     "method": "base",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 2,
+     "code": "POS",
+     "kind": "earning",
+     "method": "fixed",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 3,
+     "code": "OT",
+     "kind": "earning",
+     "method": "ot",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 4,
+     "code": "BONUS",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 1,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 5,
+     "code": "WELFARE",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 6,
+     "code": "ABSENT",
+     "kind": "deduction",
+     "method": "absence",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 7,
+     "code": "SSO_EE",
+     "kind": "deduction",
+     "method": "sso_employee",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employee"
+    },
+    {
+     "id": 8,
+     "code": "WHT_M",
+     "kind": "deduction",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "wht"
+    },
+    {
+     "id": 10,
+     "code": "SSO_ER",
+     "kind": "employer",
+     "method": "sso_employer",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employer"
+    },
+    {
+     "id": 9,
+     "code": "TAX",
+     "kind": "deduction",
+     "method": "wht",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "wht"
+    }
+   ],
+   "config": {
+    "payroll.policy": {
+     "monthly_divisor": "30",
+     "hours_per_day": "8",
+     "proration": "calendar_days",
+     "daily_paid": [
+      "worked_days",
+      "holiday_days"
+     ]
+    },
+    "payroll.sso": {
+     "rate_employee": "3.5",
+     "rate_employer": "4",
+     "wage_floor": "1000",
+     "wage_cap": "20000",
+     "rounding": "half_up_baht"
+    },
+    "payroll.wht": {
+     "method": "cumulative",
+     "expense_rate": "40",
+     "expense_cap": "80000",
+     "personal_allowance": "50000",
+     "sso_allowance_cap": "9000",
+     "brackets": [
+      {
+       "up_to": "20000",
+       "rate": "0"
+      },
+      {
+       "up_to": "100000",
+       "rate": "10"
+      },
+      {
+       "up_to": null,
+       "rate": "20"
+      }
+     ],
+     "allowances": [
+      {
+       "code": "INS",
+       "name": "INS",
+       "unit": "amount",
+       "per_unit": null,
+       "cap": "20000"
+      },
+      {
+       "code": "CHILD",
+       "name": "CHILD",
+       "unit": "count",
+       "per_unit": "25000",
+       "cap": null
+      }
+     ],
+     "rounding": "half_up_satang"
+    }
+   },
+   "original": {
+    "SALARY": "50000.00",
+    "SSO_EE": "700.00",
+    "SSO_ER": "800.00",
+    "TAX": "17743.33"
+   },
+   "work_out_tax": true,
+   "expected": {
+    "lines": [
+     {
+      "code": "SALARY",
+      "amount": "10000.00",
+      "source_type": "correction"
+     },
+     {
+      "code": "TAX",
+      "amount": "2000.00",
+      "source_type": "correction"
+     }
+    ],
+    "totals": {
+     "gross": "10000.00",
+     "deductions": "2000.00",
+     "net": "8000.00",
+     "employer": "0.00"
+    },
+    "warnings": []
+   }
+  },
+  {
+   "id": "GD-PAY-16",
+   "kind": "edge",
+   "title": "Correction of a month whose tax was not worked out (tax entered by hand then): no tax worked out now either",
+   "mode": "correction",
+   "period_days": 31,
+   "employee": {
+    "days_employed": 31,
+    "time": null,
+    "ot": [],
+    "manual": [
+     {
+      "code": "WHT_M",
+      "amount": "3000"
+     }
+    ],
+    "welfare": [],
+    "tax": {
+     "ytd_taxable": "0",
+     "ytd_wht": "0",
+     "ytd_sso": "0",
+     "month": 10,
+     "declared": [],
+     "declared_ok": true
+    },
+    "profile": {
+     "basis": "monthly",
+     "base": "60000",
+     "items": []
+    }
+   },
+   "components": [
+    {
+     "id": 1,
+     "code": "SALARY",
+     "kind": "earning",
+     "method": "base",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 2,
+     "code": "POS",
+     "kind": "earning",
+     "method": "fixed",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 3,
+     "code": "OT",
+     "kind": "earning",
+     "method": "ot",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 4,
+     "code": "BONUS",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 1,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 5,
+     "code": "WELFARE",
+     "kind": "earning",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "none"
+    },
+    {
+     "id": 6,
+     "code": "ABSENT",
+     "kind": "deduction",
+     "method": "absence",
+     "taxable": 1,
+     "sso_base": 1,
+     "statutory": "none"
+    },
+    {
+     "id": 7,
+     "code": "SSO_EE",
+     "kind": "deduction",
+     "method": "sso_employee",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employee"
+    },
+    {
+     "id": 8,
+     "code": "WHT_M",
+     "kind": "deduction",
+     "method": "manual",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "wht"
+    },
+    {
+     "id": 10,
+     "code": "SSO_ER",
+     "kind": "employer",
+     "method": "sso_employer",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "sso_employer"
+    },
+    {
+     "id": 9,
+     "code": "TAX",
+     "kind": "deduction",
+     "method": "wht",
+     "taxable": 0,
+     "sso_base": 0,
+     "statutory": "wht"
+    }
+   ],
+   "config": {
+    "payroll.policy": {
+     "monthly_divisor": "30",
+     "hours_per_day": "8",
+     "proration": "calendar_days",
+     "daily_paid": [
+      "worked_days",
+      "holiday_days"
+     ]
+    },
+    "payroll.sso": {
+     "rate_employee": "3.5",
+     "rate_employer": "4",
+     "wage_floor": "1000",
+     "wage_cap": "20000",
+     "rounding": "half_up_baht"
+    },
+    "payroll.wht": {
+     "method": "cumulative",
+     "expense_rate": "40",
+     "expense_cap": "80000",
+     "personal_allowance": "50000",
+     "sso_allowance_cap": "9000",
+     "brackets": [
+      {
+       "up_to": "20000",
+       "rate": "0"
+      },
+      {
+       "up_to": "100000",
+       "rate": "10"
+      },
+      {
+       "up_to": null,
+       "rate": "20"
+      }
+     ],
+     "allowances": [
+      {
+       "code": "INS",
+       "name": "INS",
+       "unit": "amount",
+       "per_unit": null,
+       "cap": "20000"
+      },
+      {
+       "code": "CHILD",
+       "name": "CHILD",
+       "unit": "count",
+       "per_unit": "25000",
+       "cap": null
+      }
+     ],
+     "rounding": "half_up_satang"
+    }
+   },
+   "original": {
+    "SALARY": "50000",
+    "SSO_EE": "700",
+    "SSO_ER": "800",
+    "WHT_M": "3000"
+   },
+   "work_out_tax": false,
+   "expected": {
+    "lines": [
+     {
+      "code": "SALARY",
+      "amount": "10000.00",
+      "source_type": "correction"
+     }
+    ],
+    "totals": {
+     "gross": "10000.00",
+     "deductions": "0.00",
+     "net": "10000.00",
+     "employer": "0.00"
+    },
+    "warnings": []
+   }
+  }
+ ]
+}

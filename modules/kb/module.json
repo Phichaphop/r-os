@@ -1,0 +1,87 @@
+{
+  "code": "kb",
+  "version": "1.0.0",
+  "pack": "workplace",
+  "nav_section": "core_plus",
+  "spec": "M55",
+  "name": {
+    "th": "ถาม-ตอบ / ฐานความรู้",
+    "en": "Q&A / knowledge base"
+  },
+  "icon": "help-circle",
+  "sort_order": 99,
+  "depends_on": [
+    "employees"
+  ],
+  "permissions": {
+    "kb.read": "normal",
+    "kb.author": "normal",
+    "kb.review": "high"
+  },
+  "grants": {
+    "*": [
+      "kb.read"
+    ],
+    "HRA": [
+      "kb.author",
+      "kb.review"
+    ],
+    "HRT": [
+      "kb.author"
+    ],
+    "WPA": [
+      "kb.author",
+      "kb.review"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "kb.nav",
+      "icon": "help-circle",
+      "href": "/kb",
+      "permission": "kb.read"
+    },
+    {
+      "group": "work",
+      "label": "kb.nav_manage",
+      "icon": "pencil",
+      "href": "/kb/manage",
+      "permission": "kb.author"
+    },
+    {
+      "group": "settings",
+      "label": "kb.nav_settings",
+      "icon": "settings",
+      "href": "/kb/settings",
+      "permission": "kb.review"
+    }
+  ],
+  "document_classes": {
+    "kb.file": [
+      "I",
+      "kb.author",
+      "kb.author",
+      [
+        "pdf",
+        "png",
+        "jpeg",
+        "webp",
+        "docx",
+        "xlsx"
+      ],
+      10,
+      false,
+      "general_document",
+      "finalized"
+    ]
+  },
+  "jobs": {
+    "kb.tick": {
+      "every": 60,
+      "call": "Blue\\Modules\\Kb\\KbService::tickJob"
+    }
+  },
+  "demo": "Blue\\Modules\\Kb\\KbDemo::run",
+  "routes": "routes.php"
+}

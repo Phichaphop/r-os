@@ -1,0 +1,23 @@
+01-register: /assets overflow=0 axe=[]
+02-new: /assets/new overflow=0 axe=[]
+register: ขึ้นทะเบียนแล้ว /assets/a/01M6CFEBPH4EQRQSS4FZYGCEFB
+03-asset-new: /assets/a/01M6CFEBPH4EQRQSS4FZYGCEFB overflow=0 axe=[]
+assign: มอบทรัพย์สินแล้ว — รอผู้ถือยืนยันรับ
+04-asset-assigned: /assets/a/01M6CFDS154CZ529F3T2EPA4QX overflow=0 axe=[]
+05-mine: /assets/mine overflow=0 axe=[]
+employee QR -> /assets/a/01M6CFDS154CZ529F3T2EPA4QX
+06-custodian-view: /assets/a/01M6CFDS154CZ529F3T2EPA4QX overflow=0 axe=[]
+ack: ยืนยันรับแล้ว
+employee other asset status: ไม่พบหน้าที่ต้องการ · R-OS
+return: บันทึกรับคืนแล้ว
+dispose: ส่งขออนุมัติจำหน่ายแล้ว
+finance approved /approvals/01M6CFEGJCG354TANVM41PY6FQ: อนุมัติและดำเนินการแล้ว
+finance approvals: 1
+07-disposed: /assets/a/01M6CFDS19FZ5B8PH74HSMDYQH overflow=0 axe=[]
+08-labels: /assets/labels overflow=0 axe=[]
+09-types: /assets/types overflow=0 axe=[]
+10-report: /assets/report overflow=0 axe=[]
+11-register-390-dark: /assets overflow=0 axe=[]
+12-asset-390-dark: /assets/a/01M6CFDS154CZ529F3T2EPA4QX overflow=0 axe=[]
+13-report-390-dark: /assets/report overflow=0 axe=[]
+14-mine-390-dark: /assets/mine overflow=0 axe=[]

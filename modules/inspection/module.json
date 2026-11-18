@@ -1,0 +1,63 @@
+{
+  "code": "inspection",
+  "version": "1.0.0",
+  "pack": "workplace",
+  "spec": "M18",
+  "name": {
+    "th": "ตรวจเช็คอุปกรณ์/สถานที่",
+    "en": "Inspections"
+  },
+  "icon": "clipboard-check",
+  "sort_order": 95,
+  "depends_on": [
+    "core",
+    "helpdesk"
+  ],
+  "permissions": {
+    "inspection.use": "normal",
+    "inspection.manage": "normal"
+  },
+  "grants": {
+    "*": [
+      "inspection.use"
+    ],
+    "WPA": [
+      "inspection.manage"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "inspection.nav",
+      "icon": "clipboard-check",
+      "href": "/inspection",
+      "permission": "inspection.use"
+    }
+  ],
+  "document_classes": {
+    "inspection.photo": [
+      "I",
+      "inspection.manage",
+      "inspection.manage",
+      [
+        "png",
+        "jpeg",
+        "webp",
+        "pdf"
+      ],
+      10,
+      false,
+      "general_document",
+      "finalized"
+    ]
+  },
+  "jobs": {
+    "inspection.tick": {
+      "every": 60,
+      "call": "Blue\\Modules\\Inspection\\InspectionService::tickJob"
+    }
+  },
+  "demo": "Blue\\Modules\\Inspection\\InspectionDemo::run",
+  "personal_data": "Blue\\Modules\\Inspection\\InspectionPersonalData",
+  "routes": "routes.php"
+}

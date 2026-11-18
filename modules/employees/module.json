@@ -1,0 +1,189 @@
+{
+  "code": "employees",
+  "version": "1.1.0",
+  "pack": "hr",
+  "nav_section": "hr_people",
+  "spec": "M09",
+  "name": {
+    "th": "ข้อมูลพนักงาน",
+    "en": "Employees"
+  },
+  "icon": "id-badge-2",
+  "sort_order": 70,
+  "depends_on": [
+    "core"
+  ],
+  "permissions": {
+    "employees.self": "normal",
+    "employees.view": "normal",
+    "employees.manage": "high",
+    "employees.approve": "high",
+    "employees.personal": "high",
+    "employees.identifiers": "high",
+    "employees.file": "high",
+    "employees.file_pay": "high",
+    "employees.relations": "high",
+    "employees.medical": "high",
+    "employees.report": "normal"
+  },
+  "grants": {
+    "*": [
+      "employees.self"
+    ],
+    "HRA": [
+      "employees.view",
+      "employees.manage",
+      "employees.approve",
+      "employees.personal",
+      "employees.identifiers",
+      "employees.file",
+      "employees.relations",
+      "employees.report"
+    ],
+    "HRT": [
+      "employees.view"
+    ],
+    "PYO": [
+      "employees.view",
+      "employees.personal",
+      "employees.identifiers",
+      "employees.file_pay"
+    ],
+    "PYA": [
+      "employees.view",
+      "employees.file_pay"
+    ],
+    "AUD": [
+      "employees.view",
+      "employees.report"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "employees.nav_me",
+      "icon": "user",
+      "href": "/me/profile",
+      "permission": "employees.self"
+    },
+    {
+      "group": "work",
+      "label": "employees.nav",
+      "icon": "id-badge-2",
+      "href": "/employees",
+      "permission": "employees.view"
+    },
+    {
+      "group": "work",
+      "label": "employees.nav_report",
+      "icon": "clipboard-check",
+      "href": "/employees/report",
+      "permission": "employees.report"
+    },
+    {
+      "group": "settings",
+      "label": "employees.nav_rules",
+      "icon": "settings",
+      "href": "/employees/rules",
+      "permission": "employees.manage"
+    }
+  ],
+  "config": {
+    "employees.file_rules": [
+      "employees",
+      "json",
+      null,
+      "organization,legal_entity",
+      {},
+      "high",
+      "COMPANY_POLICY",
+      false
+    ]
+  },
+  "config_owners": {
+    "employees.file_rules": {
+      "propose": "employees.manage",
+      "workflow": "employees.file_rules",
+      "describe": "Blue\\Modules\\Employees\\FileRules::describe"
+    }
+  },
+  "workflows": {
+    "employees.change": {
+      "subject": "emp_change",
+      "class": "Blue\\Modules\\Employees\\ChangeSubject",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "permission",
+            "value": "employees.approve"
+          },
+          "scope": "subject",
+          "sla_hours": 48
+        }
+      ]
+    },
+    "employees.file_rules": {
+      "subject": "config_version",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "permission",
+            "value": "employees.approve"
+          },
+          "scope": "subject",
+          "sla_hours": 72
+        }
+      ]
+    }
+  },
+  "document_classes": {
+    "employees.file": [
+      "R",
+      "employees.file",
+      "employees.file",
+      [
+        "pdf",
+        "png",
+        "jpeg",
+        "webp",
+        "docx",
+        "xlsx"
+      ],
+      20,
+      true,
+      "employee_file",
+      "employment_ended"
+    ],
+    "employees.medical": [
+      "R",
+      "employees.medical",
+      "employees.medical",
+      [
+        "pdf",
+        "png",
+        "jpeg",
+        "webp"
+      ],
+      20,
+      true,
+      "medical_claims",
+      "employment_ended"
+    ]
+  },
+  "jobs": {
+    "employees.changes_due": {
+      "every": 60,
+      "call": "Blue\\Modules\\Employees\\ChangeService::dueJob"
+    },
+    "employees.file_expiry": {
+      "every": 1440,
+      "call": "Blue\\Modules\\Employees\\PersonnelFileService::expiryJob"
+    }
+  },
+  "demo": "Blue\\Modules\\Employees\\EmployeesDemo::run",
+  "measures": "Blue\\Modules\\Employees\\EmployeeMeasures",
+  "personal_data": "Blue\\Modules\\Employees\\EmployeePersonalData",
+  "routes": "routes.php"
+}

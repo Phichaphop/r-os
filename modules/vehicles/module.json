@@ -1,0 +1,76 @@
+{
+  "code": "vehicles",
+  "version": "1.0.0",
+  "pack": "workplace",
+  "spec": "M05",
+  "name": {
+    "th": "จองรถส่วนกลาง",
+    "en": "Vehicle booking"
+  },
+  "icon": "car",
+  "sort_order": 92,
+  "depends_on": [
+    "core",
+    "employees"
+  ],
+  "permissions": {
+    "vehicles.use": "normal",
+    "vehicles.approve": "normal",
+    "vehicles.manage": "normal",
+    "vehicles.settings": "high"
+  },
+  "grants": {
+    "*": [
+      "vehicles.use"
+    ],
+    "WPA": [
+      "vehicles.manage",
+      "vehicles.approve"
+    ],
+    "SYS": [
+      "vehicles.settings"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "vehicles.nav",
+      "icon": "car",
+      "href": "/vehicles",
+      "permission": "vehicles.use"
+    },
+    {
+      "group": "settings",
+      "label": "vehicles.nav_settings",
+      "icon": "map",
+      "href": "/vehicles/settings",
+      "permission": "vehicles.settings"
+    }
+  ],
+  "workflows": {
+    "vehicles.request": {
+      "subject": "vh_booking",
+      "class": "Blue\\Modules\\Vehicles\\BookingSubject",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "manager",
+            "value": "vehicles.approve"
+          },
+          "scope": "subject",
+          "sla_hours": 24
+        }
+      ]
+    }
+  },
+  "jobs": {
+    "vehicles.purge": {
+      "every": 1440,
+      "call": "Blue\\Modules\\Vehicles\\VehicleService::purgeJob"
+    }
+  },
+  "demo": "Blue\\Modules\\Vehicles\\VehiclesDemo::run",
+  "personal_data": "Blue\\Modules\\Vehicles\\VehiclesPersonalData",
+  "routes": "routes.php"
+}

@@ -1,0 +1,77 @@
+{
+  "code": "filing",
+  "version": "1.0.0",
+  "pack": "hr",
+  "nav_section": "hr_people",
+  "spec": "M58",
+  "name": {
+    "th": "ยื่นแบบราชการ (เงินเดือน)",
+    "en": "Government filing (payroll)"
+  },
+  "icon": "file-text",
+  "sort_order": 81,
+  "depends_on": [
+    "core",
+    "employees",
+    "payroll"
+  ],
+  "permissions": {
+    "filing.view": "high",
+    "filing.prepare": "high",
+    "filing.approve": "high"
+  },
+  "grants": {
+    "PYO": [
+      "filing.view",
+      "filing.prepare"
+    ],
+    "PYA": [
+      "filing.view",
+      "filing.approve"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "filing.nav",
+      "icon": "file-text",
+      "href": "/filing",
+      "permission": "filing.view"
+    }
+  ],
+  "document_classes": {
+    "filing.receipt": [
+      "R",
+      "filing.view",
+      "filing.prepare",
+      [
+        "pdf",
+        "png",
+        "jpeg",
+        "webp"
+      ],
+      10,
+      true,
+      "payroll_tax_sso",
+      "finalized"
+    ]
+  },
+  "workflows": {
+    "filing.review": {
+      "subject": "fl_revision",
+      "class": "Blue\\Modules\\Filing\\RevisionSubject",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "permission",
+            "value": "filing.approve"
+          },
+          "scope": "subject",
+          "sla_hours": 48
+        }
+      ]
+    }
+  },
+  "routes": "routes.php"
+}

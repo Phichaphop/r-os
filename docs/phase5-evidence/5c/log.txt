@@ -1,0 +1,42 @@
+leftover approve: อนุมัติและดำเนินการแล้ว
+g1-gps-admin: /gps/admin overflow=0 axe=[]
+e1-gps-notice: /gps overflow=0 axe=[]
+e2-gps-ready: /gps overflow=0 axe=[]
+check in: ลงเวลาแล้ว
+check out far: บันทึกแล้ว รอหัวหน้าตรวจก่อนนับเป็นเวลาทำงาน
+e3-gps-list: /gps overflow=0 axe=[]
+e4-gps-detail-map: /gps/p/01M5RZ6MYPDH9HH1GNWPCX3X8E overflow=0 axe=[]
+m1-gps-review: /gps/review overflow=0 axe=[]
+m2-gps-punch-review: /gps/p/01M5RZ6MYPDH9HH1GNWPCX3X8E overflow=0 axe=[]
+review: อนุมัติแล้ว นับเป็นเวลาทำงาน
+h1-gps-report: /gps/report overflow=0 axe=[]
+attendance rows from gps: 2
+i1-eid-admin: /eid/admin overflow=0 axe=[]
+issue missing: ออกบัตรแล้ว 7 ใบ
+photo: 
+i2-eid-employee: /eid/admin/c/01M5RZ6VP3K0NAX5919XC9PV8Z overflow=0 axe=[]
+c1-eid-home: /eid overflow=0 axe=[]
+c2-eid-card-390: /eid/card overflow=0 axe=[]
+c3-eid-fullscreen: /eid/card overflow=0 axe=[]
+c4-eid-card-dark: /eid/card overflow=0 axe=["serious:color-contrast(1) .eid-card__state"]
+v1-eid-verify-valid: /eid/v/2lPaGi8S5GbbXx_I14CFzg.59763771.nfqTqL9-hIMGmi50 overflow=0 axe=[]
+verify: บัตรถูกต้อง ใช้งานได้ เทียบรูปและชื่อกับผู้ถือบัตร
+verify tampered: ไม่พบบัตร QR ไม่ใช่บัตรพนักงานของระบบ หรือถูกแก้ไข
+w1-wallet-admin: /eid/wallet/admin overflow=0 axe=[]
+wallet rules: ส่งกติกาให้อนุมัติแล้ว || Wallet เป็นยอดสวัสดิการภายในแบบปิด (DEC-24) ไม่โอนระหว่างพนักงาน ไม่แลกเป็นเงินสด ไม่ใช้ร้านภายนอก จนกว่าฝ่ายกฎหมายยืนยั || ยังไม่มีกติกา Wallet ที่อนุมัติแล้ว — เติมเงินไม่ได้ || ยอดคงเหลือทุกกระเป๋า (0) ตรงกับสมุดรายการ — รวม 0.00 || ยังไม่มีกติกา — เติมเงินไม่ได้ || 
+wallet rules approve: อนุมัติและดำเนินการแล้ว
+people: 7
+topup: ส่งชุดเติมเงินให้อนุมัติแล้ว
+w2-topup-pending: /eid/wallet/topup/01M5RZ78G79C8DD9HF6KGEN804 overflow=0 axe=[]
+topup approve: อนุมัติและดำเนินการแล้ว
+w3-topup-approved: /eid/wallet/topup/01M5RZ78G79C8DD9HF6KGEN804 overflow=0 axe=[]
+w4-wallet-recon: /eid/wallet/admin overflow=0 axe=[]
+c5-eid-wallet: /eid overflow=0 axe=[]
+f1-posting-request: /finance/requests overflow=0 axe=[]
+
+--- recheck after fixes ---
+photo (after fix): บันทึกรูปแล้ว
+i2-eid-employee: /eid/admin/e/01M57N3W7W9TQ6FQDHWPPNWTKW overflow=0 axe=[]
+c2-eid-card-390: /eid/card overflow=0 axe=[]
+c4-eid-card-dark: /eid/card overflow=0 axe=[]
+e4-gps-detail-map: /gps/p/01M5RZ6MYPDH9HH1GNWPCX3X8E overflow=0 axe=[]

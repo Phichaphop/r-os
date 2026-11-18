@@ -1,0 +1,31 @@
+{
+  "code": "esign",
+  "version": "1.0.0",
+  "pack": "core_plus",
+  "spec": "M20",
+  "name": { "th": "เซ็นเอกสารออนไลน์", "en": "Online signing" },
+  "icon": "pencil",
+  "sort_order": 22,
+  "depends_on": ["core"],
+  "permissions": {
+    "esign.use": "normal",
+    "esign.send": "normal",
+    "esign.manage": "high"
+  },
+  "grants": {
+    "*": ["esign.use"],
+    "HRA": ["esign.send", "esign.manage"]
+  },
+  "menu": [
+    { "group": "work", "label": "esign.nav", "icon": "pencil", "href": "/esign", "permission": "esign.use" },
+    { "group": "work", "label": "esign.nav_admin", "icon": "list-check", "href": "/esign/admin", "permission": "esign.manage" }
+  ],
+  "document_classes": {
+    "esign.source": ["C", "esign.manage", "esign.manage", ["pdf"], 10, true, "general_confidential", "finalized"],
+    "esign.signed": ["C", "esign.manage", "esign.manage", ["pdf"], 20, true, "general_confidential", "finalized"]
+  },
+  "jobs": {
+    "esign.housekeeping": { "every": 360, "call": "Blue\\Modules\\Esign\\EsignService::housekeepingJob" }
+  },
+  "routes": "routes.php"
+}

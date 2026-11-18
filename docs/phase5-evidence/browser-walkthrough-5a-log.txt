@@ -1,0 +1,47 @@
+rules proposed ส่งกติกาให้อนุมัติแล้ว || ยังไม่มีกติกาที่อนุมัติ ระบบไม่กำหนดเอกสารที่ต้องมีให้เอง ระหว่างนี้ไม่นับ % ความครบ และเช็กลิสต์พ้นสภาพใช้ราย
+personal บันทึกข้อมูลแล้ว
+upload เพิ่มเอกสารแล้ว — รอ HR อีกคนตรวจ || บริษัทยังไม่ได้กำหนดเอกสารที่ต้องมี ระบบไม่กำหนดเอกสารที่ต้องมีให้เอง — HR เสนอที่เมนู "กติกาแฟ้มประวัติพนักงา
+status request ส่งคำขอแล้ว — รอ HR อีกคนอนุมัติ
+inbox links 4
+inbox links 4
+approved /approvals/01M59EE6Y21ENZJH0DCEDMBDY1 
+approved /approvals/01M59EEA4TAHS797TE0A4AZXCH อนุมัติและดำเนินการแล้ว
+verified บันทึกผลการตรวจแล้ว || บริษัทยังไม่ได้กำหนดเอกสารที่ต้องมี ระบบไม่กำหนดเอกสารที่ต้องมีให้เอง — HR เสนอที่เมนู "กติกาแฟ้มประวัติพนักงา
+self contacts บันทึกข้อมูลแล้ว
+console employee.demo1: Failed to load resource: the server responded with a status of 403 (Forbidden)
+employee /employees 403
+console manager.demo1: Failed to load resource: the server responded with a status of 404 (Not Found)
+manager record 404
+hr_l_overview: 200 overflow=0 axe=[]
+hr_l_personal: 200 overflow=0 axe=[]
+hr_l_job: 200 overflow=0 axe=[]
+hr_l_file: 200 overflow=0 axe=[]
+hr_l_changes: 200 overflow=0 axe=[]
+hr_l_log: 200 overflow=0 axe=[]
+hr_l_employees: 200 overflow=0 axe=[]
+hr_l_employees_report: 200 overflow=0 axe=[]
+hr_l_employees_rules: 200 overflow=0 axe=[]
+hr_l_employees_new: 200 overflow=0 axe=[]
+emp_l_me: 200 overflow=0 axe=[]
+hr_d_overview: 200 overflow=0 axe=[]
+hr_d_personal: 200 overflow=0 axe=[]
+hr_d_job: 200 overflow=0 axe=[]
+hr_d_file: 200 overflow=0 axe=[]
+hr_d_changes: 200 overflow=0 axe=[]
+hr_d_log: 200 overflow=0 axe=[]
+hr_d_employees: 200 overflow=0 axe=[]
+hr_d_employees_report: 200 overflow=0 axe=[]
+hr_d_employees_rules: 200 overflow=0 axe=[]
+hr_d_employees_new: 200 overflow=0 axe=[]
+emp_d_me: 200 overflow=0 axe=[]
+hr_m_overview: 200 overflow=0 axe=[]
+hr_m_personal: 200 overflow=0 axe=[]
+hr_m_job: 200 overflow=0 axe=[]
+hr_m_file: 200 overflow=0 axe=[]
+hr_m_changes: 200 overflow=0 axe=[]
+hr_m_log: 200 overflow=0 axe=[]
+hr_m_employees: 200 overflow=0 axe=[]
+hr_m_employees_report: 200 overflow=0 axe=[]
+hr_m_employees_rules: 200 overflow=0 axe=[]
+hr_m_employees_new: 200 overflow=0 axe=[]
+emp_m_me: 200 overflow=0 axe=[]

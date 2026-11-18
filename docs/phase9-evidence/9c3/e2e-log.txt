@@ -1,0 +1,30 @@
+01-companies: /contractors overflow=0 axe=[]
+02-company-pending: /contractors/c/01M6CNMPY0R3Y2WY5FFAPR16WR overflow=0 axe=[]
+doc กรมธรรม์ : ข้อมูลบางช่องยังไม่ถูกต้อง — ตรวจข้อความใต้ช่องที่มีกรอบสีแดง || เอกสารไม่ครบ ขาด/หมดอายุ: กรมธรรม์ประกันความรับผิด (DEMO), สัญญาจ้างเหมา (DEMO)
+03-doc-error: /contractors/c/01M6CNMPY0R3Y2WY5FFAPR16WR/document overflow=0 axe=[]
+doc สัญญา : แนบเอกสารแล้ว || เอกสารไม่ครบ ขาด/หมดอายุ: กรมธรรม์ประกันความรับผิด (DEMO)
+doc กรมธรรม์ : แนบเอกสารแล้ว || เอกสารบังคับของบริษัทครบและยังไม่หมดอายุ
+doc อบรม ช่างไฟฟ้า: แนบเอกสารแล้ว || เอกสารบังคับของบริษัทครบและยังไม่หมดอายุ
+doc อบรม ผู้ช่วยช่าง: แนบเอกสารแล้ว || เอกสารบังคับของบริษัทครบและยังไม่หมดอายุ
+04-company-qualified: /contractors/c/01M6CNMPY0R3Y2WY5FFAPR16WR overflow=0 axe=[]
+05-permit-new: /contractors/permits/new overflow=0 axe=[]
+send: ส่งขออนุมัติแล้ว
+06-permit-review: /contractors/p/01M6CNP8W3QX771X6QXRF9BD5Z overflow=0 axe=[]
+safety approved /approvals/01M6CNP8W93M2YXVH1K83PX17Y: อนุมัติและดำเนินการแล้ว
+approvals 1
+07-permit-approved: /contractors/p/01M6CNP8W3QX771X6QXRF9BD5Z overflow=0 axe=[]
+waiting for the window to open 2026-11-02T06:06
+08-gate: /contractors/gate overflow=0 axe=[]
+check-in: เช็กอินแล้ว
+09-gate-inside: /contractors/gate overflow=0 axe=[]
+check-out: เช็กเอาต์แล้ว
+10-permit-supervisor: /contractors/p/01M6CNP8W3QX771X6QXRF9BD5Z overflow=0 axe=[]
+complete: ปิดงานแล้ว
+11-permit-completed: /contractors/p/01M6CNP8W3QX771X6QXRF9BD5Z overflow=0 axe=[]
+12-permits: /contractors/permits overflow=0 axe=[]
+13-settings: /contractors/settings overflow=0 axe=[]
+14-companies-390-dark: /contractors overflow=0 axe=[]
+15-permit-390-dark: /contractors/p/01M6CNP8W3QX771X6QXRF9BD5Z overflow=0 axe=[]
+16-gate-390-dark: /contractors/gate overflow=0 axe=[]
+17-new-390-dark: /contractors/permits/new overflow=0 axe=[]
+status completed	CP2611-0001	5

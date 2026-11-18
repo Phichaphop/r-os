@@ -1,0 +1,110 @@
+{
+  "code": "shifts",
+  "version": "1.0.0",
+  "pack": "hr",
+  "nav_section": "hr_time",
+  "spec": "M35",
+  "name": {
+    "th": "จัดตารางกะ",
+    "en": "Shift scheduling"
+  },
+  "icon": "calendar-event",
+  "sort_order": 73,
+  "depends_on": [
+    "employees",
+    "attendance"
+  ],
+  "permissions": {
+    "shifts.use": "normal",
+    "shifts.approve": "normal",
+    "shifts.manage": "high",
+    "shifts.policy": "high",
+    "shifts.policy_approve": "high"
+  },
+  "grants": {
+    "*": [
+      "shifts.use"
+    ],
+    "HRA": [
+      "shifts.approve",
+      "shifts.manage",
+      "shifts.policy",
+      "shifts.policy_approve"
+    ],
+    "HRT": [
+      "shifts.approve",
+      "shifts.manage"
+    ],
+    "MGR": [
+      "shifts.manage"
+    ]
+  },
+  "menu": [
+    {
+      "group": "work",
+      "label": "shifts.nav",
+      "icon": "calendar-event",
+      "href": "/shifts",
+      "permission": "shifts.use"
+    },
+    {
+      "group": "settings",
+      "label": "shifts.nav_admin",
+      "icon": "settings",
+      "href": "/shifts/admin",
+      "permission": "shifts.manage"
+    }
+  ],
+  "config": {
+    "shifts.rules": [
+      "shifts",
+      "json",
+      null,
+      "organization,legal_entity",
+      {},
+      "high",
+      "COMPANY_POLICY",
+      false
+    ]
+  },
+  "config_owners": {
+    "shifts.rules": {
+      "propose": "shifts.policy",
+      "workflow": "shifts.rules",
+      "describe": "Blue\\Modules\\Shifts\\ShiftService::describeRules"
+    }
+  },
+  "workflows": {
+    "shifts.swap": {
+      "subject": "sh_swap",
+      "class": "Blue\\Modules\\Shifts\\SwapSubject",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "manager",
+            "value": "shifts.approve"
+          },
+          "scope": "subject",
+          "sla_hours": 24
+        }
+      ]
+    },
+    "shifts.rules": {
+      "subject": "config_version",
+      "no_fallback": true,
+      "steps": [
+        {
+          "approver": {
+            "type": "permission",
+            "value": "shifts.policy_approve"
+          },
+          "scope": "subject",
+          "sla_hours": 72
+        }
+      ]
+    }
+  },
+  "demo": "Blue\\Modules\\Shifts\\ShiftsDemo::run",
+  "routes": "routes.php"
+}

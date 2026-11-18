@@ -1,0 +1,44 @@
+01-kaizen: /kaizen overflow=0 axe=[]
+named: ส่งข้อเสนอ KZ2611-0002 แล้ว
+02-idea-sent: /kaizen/i/01M6CYD0TXR16NNDGH1QQ0A0NR overflow=0 axe=[]
+anonymous code shown: yes
+03-anonymous-code: /kaizen overflow=0 axe=[]
+04-track: /kaizen/track overflow=0 axe=[]
+05-admin: /kaizen/admin overflow=0 axe=[]
+screen: คัดกรองและมอบหมายแล้ว
+06-idea-screened: /kaizen/i/01M6CYD0TXR16NNDGH1QQ0A0NR overflow=0 axe=[]
+score: บันทึกคะแนนแล้ว
+07-idea-scored: /kaizen/i/01M6CYD0TXR16NNDGH1QQ0A0NR overflow=0 axe=[]
+vote: โหวตแล้ว
+accept: รับไปดำเนินการแล้ว
+08-idea-accepted: /kaizen/i/01M6CYD0TXR16NNDGH1QQ0A0NR overflow=0 axe=[]
+09-report: /kaizen/report overflow=0 axe=[]
+10-criteria: /kaizen/settings overflow=0 axe=[]
+11-survey-admin: /kaizen/surveys/admin overflow=0 axe=[]
+12-survey-draft: /kaizen/surveys/m/01M6CYBZB2KCETH4N2YFMAXVRY overflow=0 axe=[]
+open: เปิดแบบสำรวจแล้ว
+13-surveys-mine: /kaizen/surveys overflow=0 axe=[]
+14-survey-answer: /kaizen/surveys/s/01M6CYBZB2KCETH4N2YFMAXVRY overflow=0 axe=[]
+answer: ส่งคำตอบแล้ว ขอบคุณ
+15-results-below-min: /kaizen/surveys/m/01M6CYBZB2KCETH4N2YFMAXVRY/results overflow=0 axe=[]
+16-kb: /kb overflow=0 axe=[]
+17-kb-search: /kb overflow=0 axe=[]
+18-kb-article: /kb/a/01M6CYBZB8Q81BFRA0E5CSK7KJ overflow=0 axe=[]
+feedback: ขอบคุณสำหรับความเห็น
+ask: ส่งคำถามแล้ว
+helpdesk suggestion: 1
+19-helpdesk-suggest: /helpdesk/new overflow=0 axe=[]
+20-kb-manage: /kb/manage overflow=0 axe=[]
+kb draft: บันทึกแล้ว
+21-kb-draft: /kb/manage/a/01M6CYDKMX6KB4R1HNCS7G239F overflow=0 axe=[]
+kb submit: ส่งให้ผู้ตรวจแล้ว
+22-kb-review: /kb/manage/a/01M6CYDKMX6KB4R1HNCS7G239F overflow=0 axe=[]
+kb approve: เผยแพร่แล้ว
+23-kb-settings: /kb/settings overflow=0 axe=[]
+24-kaizen-390-dark: /kaizen overflow=0 axe=[]
+25-idea-390-dark: /kaizen/i/01M6CYD0TXR16NNDGH1QQ0A0NR overflow=0 axe=[]
+26-kb-390-dark: /kb overflow=0 axe=[]
+27-article-390-dark: /kb/a/01M6CYDKMX6KB4R1HNCS7G239F overflow=0 axe=[]
+28-survey-manage-390-dark: /kaizen/surveys/m/01M6CYBZB2KCETH4N2YFMAXVRY overflow=0 axe=[]
+29-kb-manage-390-dark: /kb/manage/a/01M6CYDKMX6KB4R1HNCS7G239F overflow=0 axe=[]
+status idea accepted	4.00 · kb published
