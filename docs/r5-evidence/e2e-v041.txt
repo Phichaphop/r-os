@@ -1,0 +1,21 @@
+chat-home: /chat overflow=0 axe=[]
+chat-new: /chat/new overflow=0 axe=[]
+  conversation /chat/c/01M7P53731CXSTF48FTXE17ARN
+  sender sees own message in 205 ms (no reload)
+  manager sees it without reload after 6121 ms
+  sender read receipt: "อ่านแล้ว"
+  manager polls in 19 s while open+visible: 3 (every 6 s expected)
+  polls in 14 s while hidden: 0
+  poll right after becoming visible: 1
+  polls in 13 s on the conversation list (not open): 0
+chat-conversation: /chat/c/01M7P53731CXSTF48FTXE17ARN overflow=0 axe=[]
+  picture shown: true
+  offline error: "ส่งไม่สำเร็จ — ลองอีกครั้ง (ข้อความจะไม่ซ้ำ)" text kept=true
+  stored after retry: 1
+  group owner sees own message in 215 ms
+chat-group: /chat/c/01M7P558N0N813HWYS0GE580ZW overflow=0 axe=[]
+  report flash: ส่งรายงานแล้ว — ผู้ดูแลจะเห็นเฉพาะข้อความนี้
+chat-moderate: /chat/moderate overflow=0 axe=[]
+  moderation page shows the reported message: true · other group messages: false
+chat-390-dark: /chat/c/01M7P53731CXSTF48FTXE17ARN overflow=0 axe=[]
+chat-home-390-dark: /chat overflow=0 axe=[]

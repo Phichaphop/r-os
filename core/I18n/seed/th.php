@@ -148,7 +148,7 @@ return [
     'home.welcome_text' => 'แกนระบบ (เฟส 1–3) และเครื่องมือ Utilities พร้อมแล้ว — เมนูงานบุคคลและเงินเดือนจะเพิ่มตามแผนในเฟสถัดไป',
     'home.status_cards' => 'สรุปสถานะ',
     'home.phase' => 'เฟสปัจจุบัน',
-    'home.phase_name' => 'R4 · แข่งเป็ดและบริษัทตัวอย่าง 0.40.0',
+    'home.phase_name' => 'R5 · แชท 0.41.0',
     'home.scheduler' => 'งานเบื้องหลังทำงานล่าสุด',
     'home.scheduler_never' => 'ยังไม่เคยทำงาน',
     'home.scheduler_note' => 'บน Prototype งานจะทำเมื่อมีผู้ใช้เปิดหน้าเว็บ',

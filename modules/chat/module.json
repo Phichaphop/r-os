@@ -1,0 +1,30 @@
+{
+  "code": "chat",
+  "version": "1.0.0",
+  "pack": "workplace",
+  "nav_section": "core_plus",
+  "spec": "M17",
+  "name": { "th": "แชท", "en": "Chat" },
+  "icon": "message-circle",
+  "sort_order": 98,
+  "depends_on": ["employees"],
+  "permissions": { "chat.use": "normal", "chat.moderate": "normal", "chat.settings": "high" },
+  "grants": { "*": ["chat.use"], "HRA": ["chat.moderate"], "SYS": ["chat.settings"] },
+  "menu": [
+    { "group": "work", "label": "chat.nav", "icon": "message-circle", "href": "/chat", "permission": "chat.use" },
+    { "group": "work", "label": "chat.nav_moderate", "icon": "shield-check", "href": "/chat/moderate", "permission": "chat.moderate" }
+  ],
+  "config": {
+    "chat.retention_days": ["chat", "integer", "day", "organization", { "min": 30, "max": 3650 }, "normal", "TECHNICAL", false],
+    "chat.edit_minutes": ["chat", "integer", "minute", "organization", { "min": 1, "max": 1440 }, "normal", "TECHNICAL", false],
+    "chat.max_mb": ["chat", "integer", "MB", "organization", { "min": 1, "max": 20 }, "normal", "TECHNICAL", false],
+    "chat.poll_seconds": ["chat", "integer", "second", "organization", { "min": 5, "max": 10 }, "normal", "TECHNICAL", false]
+  },
+  "document_classes": {
+    "chat.file": ["C", "chat.moderate", "chat.moderate", ["pdf", "png", "jpeg", "webp"], 20, true, "general_confidential", "finalized"]
+  },
+  "jobs": {
+    "chat.retention": { "every": 360, "call": "Blue\\Modules\\Chat\\ChatService::retentionJob" }
+  },
+  "routes": "routes.php"
+}
