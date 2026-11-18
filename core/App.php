@@ -73,7 +73,7 @@ use Blue\Core\Ui\View;
 final class App
 {
     /** Release shown in backups and on the status page. */
-    public const RELEASE = '0.41.1 (QR reader)';
+    public const RELEASE = '0.42.0 (R6-1: privacy centre)';
 
     private ?Connection $db = null;
     private ?Translator $translator = null;

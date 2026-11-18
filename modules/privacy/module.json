@@ -1,0 +1,25 @@
+{
+  "code": "privacy",
+  "version": "1.0.0",
+  "pack": "core_plus",
+  "nav_section": "core_plus",
+  "spec": "P-01 / Q-07 / Q-08 / Q-13",
+  "name": { "th": "ศูนย์ความเป็นส่วนตัว", "en": "Privacy centre" },
+  "icon": "shield-check",
+  "sort_order": 34,
+  "depends_on": ["employees"],
+  "permissions": { "privacy.read": "normal", "privacy.manage": "normal", "privacy.approve": "high" },
+  "grants": { "*": ["privacy.read"], "PRV": ["privacy.manage", "privacy.approve"] },
+  "menu": [
+    { "group": "work", "label": "privacy.nav_mine", "icon": "shield-check", "href": "/privacy/notices", "permission": "privacy.read" },
+    { "group": "work", "label": "privacy.nav_center", "icon": "shield-check", "href": "/privacy/center", "permission": "privacy.manage" }
+  ],
+  "public_paths": ["/privacy-notice/"],
+  "config": {
+    "privacy.breach_notify_hours": ["privacy", "integer", "hour", "organization", { "min": 1, "max": 720 }, "high", "LAW", false]
+  },
+  "jobs": {
+    "privacy.tick": { "every": 60, "call": "Blue\\Modules\\Privacy\\PrivacyCenterService::tickJob" }
+  },
+  "routes": "routes.php"
+}

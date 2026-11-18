@@ -1,0 +1,29 @@
+center-notices: /privacy/center status-ok overflow=0 axe=[]
+notice-ai-draft: /privacy/center/n/01M7P9XMQTPA6PQXDCPCTTHVNX status-ok overflow=0 axe=[]
+  AI label shown: true · gaps warning: true
+console dpo.demo1: Failed to load resource: the server responded with a status of 422 (Unknown Status Code)
+  submit with gaps: true
+  after submit: ส่งอนุมัติแล้ว — เจ้าหน้าที่อีกคนจะตรวจและเผยแพร่
+  same officer sees publish form: false
+notice-review: /privacy/center/n/01M7P9XMQTPA6PQXDCPCTTHVNX status-ok overflow=0 axe=[]
+  publish: เผยแพร่ประกาศแล้ว
+notice-published: /privacy/center/n/01M7P9XMQTPA6PQXDCPCTTHVNX status-ok overflow=0 axe=[]
+mine: /privacy/notices status-ok overflow=0 axe=[]
+read: /privacy/notices/01M7P9XMQTPA6PQXDCPCTTHVNX status-ok overflow=0 axe=[]
+  ack: รับทราบประกาศแล้ว · stored 1
+console employee.demo1: Failed to load resource: the server responded with a status of 403 (Forbidden)
+  employee opens centre: HTTP 403
+public page HTTP 200
+public: /privacy-notice/DEMO1/employee status-ok overflow=0 axe=[]
+  public shows AI label: false
+console null: Failed to load resource: the server responded with a status of 404 (Not Found)
+  unpublished audience HTTP 404
+activities seeded: เพิ่มร่างกิจกรรม 15 รายการ | บันทึกว่าบริษัทใช้ข้อมูลส่วนบุคคลทำอะไร ของใคร ข้อมูลใด ให้ใคร และเก็บนานแค่ไหน · ร่างจากโมดูลที่เปิดใช้ได้ แต่ฐานทางกฎหมายและระยะเ · rows 15
+center-activities: /privacy/center status-ok overflow=0 axe=[]
+activity: /privacy/center/a/01M7P9XSW1B1J6T77HWMA6DZBH status-ok overflow=0 axe=[]
+center-breaches: /privacy/center status-ok overflow=0 axe=[]
+breach: บันทึกเหตุแล้ว — แจ้งเจ้าหน้าที่คนอื่นแล้ว | บริษัทยังไม่ได้กำหนดเวลาตัดสินและแจ้งเหตุละเมิด (privacy.breach_notify_hours) — ให้ผู้มีความรู้ด้านกฎหมายกำหนดในหน้ · ref BR2611-0001
+breach: /privacy/center/b/01M7P9XVDZ9XEPYFN2VSQH6SSN status-ok overflow=0 axe=[]
+center-390-dark: /privacy/center status-ok overflow=0 axe=[]
+notice-390-dark: /privacy/center/n/01M7P9XMQTPA6PQXDCPCTTHVNX status-ok overflow=212 axe=[]
+notice-390-dark (rerun after fix): overflow=0 axe violations=0
