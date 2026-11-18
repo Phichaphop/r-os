@@ -4,6 +4,7 @@
  * @var callable $e @var callable $t @var callable $ui @var callable $url @var callable $date @var callable $partial @var array<string, mixed> $v
  * @var int|null $le @var array<string, mixed>|null $settings @var string|null $notice @var bool $alternate @var string $company
  * @var list<array<string, mixed>> $rows @var array<string, string> $errors @var array<string, mixed> $old @var string|null $alert
+ * 0.44.1: "keep in My complaints" is ticked by default (a fresh form); a re-shown form keeps what the person chose.
  */
 $o = static fn (string $k, string $d = ''): string => is_scalar($old[$k] ?? null) ? (string) $old[$k] : $d;
 $csrf = '<input type="hidden" name="_csrf" value="' . $e($v['csrf'] ?? '') . '">';
@@ -51,7 +52,7 @@ foreach (\Blue\Modules\Complaints\ComplaintService::CATEGORIES as $c) {
       <?php if (isset($errors['ack'])): ?><p class="field__error" id="cp-ack-err"><?= $e($errors['ack']) ?></p><?php endif; ?>
     </div>
     <div class="stack-sm">
-      <label class="check"><input type="checkbox" name="remember" value="1" aria-describedby="cp-rem-help"<?= $o('remember') !== '' ? ' checked' : '' ?>> <?= $e($t('complaints.field.remember')) ?></label>
+      <label class="check"><input type="checkbox" name="remember" value="1" aria-describedby="cp-rem-help"<?= $old === [] || $o('remember') !== '' ? ' checked' : '' ?>> <?= $e($t('complaints.field.remember')) ?></label>
       <p class="field__help" id="cp-rem-help"><?= $e($t('complaints.remember_help')) ?></p>
     </div>
     <div class="row"><?= $ui('button', ['label' => $t('complaints.new.submit'), 'type' => 'submit', 'variant' => 'primary', 'icon' => 'send']) ?></div>

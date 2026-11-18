@@ -97,7 +97,7 @@ return [
     'complaints.field.route' => 'Send to',
     'complaints.field.files' => 'Evidence pictures',
     'complaints.field.ack' => 'I have read the privacy notice for complainants',
-    'complaints.field.remember' => 'Keep this in "My complaints" (optional)',
+    'complaints.field.remember' => 'Keep this in "My complaints" to open it without typing the code',
     'complaints.field.code' => 'Tracking code',
     'complaints.field.ref' => 'Ref',
     'complaints.field.status' => 'Status',
@@ -150,7 +150,7 @@ return [
     'complaints.body_help' => 'What, where, when, who was involved — at least 20 characters',
     'complaints.route_help' => 'The alternate route reaches only the independent people the company appointed; the usual handlers cannot see it',
     'complaints.files_help' => 'PNG/JPG/WebP pictures, up to 3, at most 8 MB each · no PDF/Office files because their author data cannot be removed — take a screenshot instead',
-    'complaints.remember_help' => 'The code is kept encrypted with your account, without dates. Handlers cannot see it, but someone holding both the server key and the database could link it — for the strongest anonymity leave this off and note the code yourself',
+    'complaints.remember_help' => 'The code is kept encrypted with your account, without dates. Handlers cannot see it, but someone holding both the server key and the database could link it — for the strongest anonymity untick this and note the code yourself',
     'complaints.code_help' => '20 characters, e.g. ABCD-EFGH-… (case and dashes do not matter)',
     'complaints.forget' => 'Remove from list',
 

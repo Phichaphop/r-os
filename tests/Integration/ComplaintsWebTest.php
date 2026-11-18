@@ -95,8 +95,11 @@ final class ComplaintsWebTest extends TestCase
         self::assertSame(403, $emp->get('/complaints/inbox')->status, 'employees are not handlers');
 
         // submit: validation, then a case that keeps no sender
-        $emp->get('/complaints');
-        self::assertSame(422, $emp->post('/complaints', ['category' => 'x', 'title' => 'ส', 'body' => 'สั้น'])->status);
+        // 0.44.1: "keep in My complaints" is ticked on a fresh form; a re-shown form keeps the person's choice (here: unticked)
+        self::assertStringContainsString('name="remember" value="1" aria-describedby="cp-rem-help" checked', $emp->get('/complaints')->body);
+        $bad = $emp->post('/complaints', ['category' => 'x', 'title' => 'ส', 'body' => 'สั้น']);
+        self::assertSame(422, $bad->status);
+        self::assertStringNotContainsString('name="remember" value="1" aria-describedby="cp-rem-help" checked', $bad->body);
         self::assertSame(422, $emp->post('/complaints', ['category' => 'harassment', 'title' => 'หัวข้อทดสอบ', 'body' => str_repeat('ก', 30), 'ack' => '1'], ['files' => [['notes.pdf', "%PDF-1.4\n%%EOF"]]])->status, 'documents are refused');
         $auditBefore = (int) $db->scalar('SELECT COUNT(*) FROM audit_events');
         $res = $emp->post(

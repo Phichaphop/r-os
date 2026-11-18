@@ -1,0 +1,6 @@
+remember ticked by default: true
+mine: /complaints overflow=0 axe=[]
+sent: cases 1 -> 2 · kept message shown: true
+my list shows CP2611-0002: true
+opened from list without typing the code: true
+mine-390-dark: /complaints overflow=0 axe=[]
