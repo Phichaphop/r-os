@@ -110,6 +110,10 @@ final class Catalog
         'WPA' => ['legal_entity', false, false, ['core.org.view', 'core.calendar.view']],
         // 0.37.0 (DEC-102): safety officer (จป.) — split from WPA; safety incidents and their follow-up (M39); no personal records
         'SFO' => ['legal_entity', false, false, ['core.org.view', 'core.calendar.view']],
+        // 0.44.0 (DEC-111): complaint handlers (M16) — receive, triage, assign and investigate anonymous complaints; and the
+        // alternate route for complaints about handlers or management (assign to an independent person / board member)
+        'CMP' => ['legal_entity', false, false, ['core.org.view']],
+        'CMX' => ['legal_entity', false, false, ['core.org.view']],
     ];
 
     /** Roles a single person must not hold in the same legal entity (P0-04 §4.4) — reported as SoD conflicts. */

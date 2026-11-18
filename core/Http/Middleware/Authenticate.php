@@ -76,10 +76,11 @@ final class Authenticate implements Middleware
         foreach (self::PUBLIC_PREFIX as $p) {
             $isPublic = $isPublic || str_starts_with($path . '/', $p) || str_starts_with($path, $p);
         }
-        // enabled modules may declare public GET prefixes (e.g. M27 managed QR redirect "/q/") — GET/HEAD only
-        if (!$isPublic && $request->isSafeMethod()) {
+        // enabled modules may declare public GET prefixes (e.g. M27 managed QR redirect "/q/") — GET/HEAD only — and, for
+        // forms a person without an account must send (0.44.0: following an anonymous complaint), public POST prefixes
+        if (!$isPublic) {
             foreach ($this->app->modules()->enabled() as $m) {
-                foreach ((array) ($m['public_paths'] ?? []) as $p) {
+                foreach ((array) ($m[$request->isSafeMethod() ? 'public_paths' : 'public_forms'] ?? []) as $p) {
                     $isPublic = $isPublic || (is_string($p) && strlen($p) > 2 && str_starts_with($path, $p));
                 }
             }

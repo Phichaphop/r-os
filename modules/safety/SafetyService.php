@@ -12,6 +12,7 @@ use Blue\Core\Error\BusinessException;
 use Blue\Core\Error\HttpException;
 use Blue\Core\Error\ValidationException;
 use Blue\Core\Files\UploadedFile;
+use Blue\Core\Support\FrozenClock;
 use Blue\Core\Support\Ulid;
 use Blue\Modules\Employees\Audience;
 use Blue\Modules\Employees\EmployeeService;
@@ -285,7 +286,8 @@ final class SafetyService
         // an anonymous report is stamped with the day only, so its time cannot be matched to a sign-in or a request log line
         $at = $anon ? $this->app->clock->now()->format('Y-m-d') . ' 00:00:00.000000' : $this->stamp();
         $by = $anon ? null : $az->userId;
-        $pid = Ulid::generate($this->app->clock);
+        // 0.44.0: the public id of an anonymous record carries the day only too (a ULID encodes its creation time to the millisecond)
+        $pid = $anon ? Ulid::generate(new FrozenClock(substr($at, 0, 10) . 'T00:00:00Z')) : Ulid::generate($this->app->clock);
         $ref = $db->transactional(function () use ($db, $le, $pid, $at, $by, $site, $kind, $sev, $when, $loc, $desc, $imm, $people, $anon, $hash, $stored, $az): string {
             $db->one('SELECT id FROM legal_entities WHERE id = ? FOR UPDATE', [$le]);
             $ref = $this->nextRef($le);

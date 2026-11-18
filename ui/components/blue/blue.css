@@ -1370,3 +1370,12 @@ a.pdf-tool:focus-visible { outline: 3px solid var(--color-action-primary); outli
 /* 0.43.0 — visitors (M43) */
 .visit-qr svg { width: min(240px, 100%); height: auto; display: block; }
 .visit-public { max-width: 560px; margin: 0 auto; }
+
+/* 0.44.0 M16 anonymous complaints (DEC-111): the one-time tracking code, texts, evidence links, public follow-up page */
+.cp-code { margin: 0; font-family: var(--font-mono); font-size: var(--font-size-xl); font-weight: var(--font-weight-semibold); letter-spacing: 0.06em; overflow-wrap: anywhere; color: var(--color-text); }
+.cp-text { white-space: normal; overflow-wrap: anywhere; line-height: 1.6; }
+.cp-promise { margin: 0; padding-left: var(--space-5); }
+.cp-files { list-style: none; margin: 0; padding: 0; flex-wrap: wrap; gap: var(--space-2); }
+.cp-outcome { padding: var(--space-3); border-radius: var(--radius-control); background: var(--color-success-subtle); }
+.cp-policy > summary { cursor: pointer; font-weight: var(--font-weight-semibold); min-height: 32px; display: flex; align-items: center; }
+.cp-public { max-width: 640px; margin: 0 auto; }

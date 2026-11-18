@@ -16,7 +16,8 @@ use Throwable;
  *
  * Manifest keys: code, version, pack, name{th,en}, icon, depends_on[], permissions{code: normal|high},
  * grants{ROLE|"*": [permission…]} ("*" = every role), menu[{group, label, icon, href, permission}],
- * config{key: definition as in ConfigCatalog}, routes ("routes.php"), public_paths["/x/"] (GET without sign-in), sort_order,
+ * config{key: definition as in ConfigCatalog}, routes ("routes.php"), public_paths["/x/"] (GET without sign-in),
+ * public_forms["/x/"] (0.44.0: POST without sign-in too — CSRF still checked; must also be a public path), sort_order,
  * jobs{"<code>.x": {every, call}}, workflows{"<code>.x": {subject, class, steps, no_fallback?, distinct_steps?}} (class::create(App) returns the
  * WorkflowSubject), config_owners{"<code>.key": {propose: permission, workflow: "<code>.x"}} (a module-owned key is proposed and
  * approved with the module's own permissions instead of core.config.*), demo ("Class::method", DEC-34 demo data, called by
@@ -206,6 +207,14 @@ final class ModuleRegistry
         foreach ((array) ($m['public_paths'] ?? []) as $pp) {
             if (!is_string($pp) || !preg_match('#^/[a-z0-9_-]+/$#', $pp) || in_array($pp, ['/admin/', '/system/', '/api/', '/m2m/'], true)) {
                 $p[] = 'public_paths must be "/segment/" prefixes outside /admin/, /system/, /api/';
+            }
+        }
+        foreach ((array) ($m['public_forms'] ?? []) as $pp) {
+            if (
+                !is_string($pp) || !preg_match('#^/[a-z0-9_-]+/$#', $pp) || in_array($pp, ['/admin/', '/system/', '/api/', '/m2m/'], true)
+                || !in_array($pp, (array) ($m['public_paths'] ?? []), true)
+            ) {
+                $p[] = 'public_forms must be "/segment/" prefixes that are also public_paths';
             }
         }
         if (isset($m['routes']) && !preg_match('/^[a-z_]+\.php$/', (string) $m['routes'])) {

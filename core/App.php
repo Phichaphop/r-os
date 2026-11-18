@@ -73,7 +73,7 @@ use Blue\Core\Ui\View;
 final class App
 {
     /** Release shown in backups and on the status page. */
-    public const RELEASE = '0.43.0 (R6-2: visitors)';
+    public const RELEASE = '0.44.0 (R6-3: anonymous complaints)';
 
     private ?Connection $db = null;
     private ?Translator $translator = null;

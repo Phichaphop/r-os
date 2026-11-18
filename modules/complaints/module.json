@@ -1,0 +1,25 @@
+{
+  "code": "complaints",
+  "version": "1.0.0",
+  "pack": "workplace",
+  "spec": "M16",
+  "name": { "th": "ร้องเรียนไม่ระบุตัวตน", "en": "Anonymous complaints" },
+  "icon": "shield-check",
+  "sort_order": 98,
+  "depends_on": ["employees", "privacy"],
+  "permissions": { "complaints.submit": "normal", "complaints.manage": "high", "complaints.investigate": "high", "complaints.alternate": "high", "complaints.stats": "normal" },
+  "grants": { "*": ["complaints.submit"], "CMP": ["complaints.manage", "complaints.investigate", "complaints.stats"], "CMX": ["complaints.alternate", "complaints.investigate", "complaints.stats"], "EXE": ["complaints.stats"] },
+  "menu": [
+    { "group": "work", "label": "complaints.nav_mine", "icon": "shield-check", "href": "/complaints", "permission": "complaints.submit" },
+    { "group": "work", "label": "complaints.nav_inbox", "icon": "inbox", "href": "/complaints/inbox", "permission": "complaints.investigate" },
+    { "group": "work", "label": "complaints.nav_stats", "icon": "chart-bar", "href": "/complaints/stats", "permission": "complaints.stats" },
+    { "group": "work", "label": "complaints.nav_settings", "icon": "settings", "href": "/complaints/settings", "permission": "complaints.manage" }
+  ],
+  "public_paths": ["/speak-up/"],
+  "public_forms": ["/speak-up/"],
+  "jobs": {
+    "complaints.tick": { "every": 60, "call": "Blue\\Modules\\Complaints\\ComplaintService::tickJob" }
+  },
+  "demo": "Blue\\Modules\\Complaints\\ComplaintsDemo::run",
+  "routes": "routes.php"
+}
