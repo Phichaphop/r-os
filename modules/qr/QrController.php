@@ -24,6 +24,14 @@ final class QrController extends Controller
         return $this->generator($r, $this->defaults(), null, [], 200);
     }
 
+    /** 0.41.1 — QR reader: read in the browser only; the camera is allowed on this page and nowhere else. */
+    public function scan(Request $r): Response
+    {
+        $this->ctx($r)->az();
+        return $this->page('@qr/scan', ['title' => $this->app->translator()->get('qr.scan.title')])
+            ->withHeader('Permissions-Policy', 'geolocation=(), camera=(self), microphone=(), payment=()');
+    }
+
     public function preview(Request $r): Response
     {
         $in = $this->input($r);

@@ -9,7 +9,8 @@ $levels = ['L' => $t('qr.level.L'), 'M' => $t('qr.level.M'), 'Q' => $t('qr.level
 $stTone = ['generated' => ['neutral', 'qrcode'], 'active' => ['success', 'circle-check'], 'revoked' => ['danger', 'circle-x'], 'expired' => ['warning', 'hourglass']];
 ?>
 <?= $ui('page-header', ['title' => $t('qr.title'), 'subtitle' => $t('qr.subtitle'),
-    'actions' => $guest ? '' : $ui('button', ['label' => $t('qr.batch.title'), 'href' => $url('/qr/batch'), 'variant' => 'secondary', 'icon' => 'upload'])]) ?>
+    'actions' => $ui('button', ['label' => $t('qr.scan.open_reader'), 'href' => $url('/qr/scan'), 'variant' => 'secondary', 'icon' => 'camera'])
+        . ($guest ? '' : $ui('button', ['label' => $t('qr.batch.title'), 'href' => $url('/qr/batch'), 'variant' => 'secondary', 'icon' => 'upload']))]) ?>
 <div class="settings-grid">
   <form method="post" action="<?= $e($url('/qr/preview')) ?>" id="qr-form" class="card stack qr-form" novalidate aria-labelledby="qr-form-h">
     <h2 id="qr-form-h" class="card__title"><?= $e($t('qr.create')) ?></h2>

@@ -10,9 +10,10 @@
   "permissions": { "qr.use": "normal", "qr.manage": "high" },
   "grants": { "*": ["qr.use"], "SYS": ["qr.manage"] },
   "menu": [
-    { "group": "tools", "label": "qr.nav", "icon": "qrcode", "href": "/qr", "permission": "qr.use" }
+    { "group": "tools", "label": "qr.nav", "icon": "qrcode", "href": "/qr", "permission": "qr.use" },
+    { "group": "tools", "label": "qr.scan.nav", "icon": "camera", "href": "/qr/scan", "permission": "qr.use" }
   ],
   "public_paths": ["/q/"],
-  "guest": {"paths": ["GET /qr", "POST /qr/(preview|download)"], "permissions": ["qr.use"]},
+  "guest": {"paths": ["GET /qr", "GET /qr/scan", "POST /qr/(preview|download)"], "permissions": ["qr.use"]},
   "routes": "routes.php"
 }

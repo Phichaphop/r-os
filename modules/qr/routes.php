@@ -12,6 +12,7 @@ return static function (Router $r, App $app): void {
     $id = '{id:[0-9A-HJKMNP-TV-Z]{26}}';
     $c = new QrController($app);
     $r->get('/qr', [$c, 'index'], 'qr.index');
+    $r->get('/qr/scan', [$c, 'scan']);
     $r->post('/qr/preview', [$c, 'preview']);
     $r->post('/qr/download', [$c, 'download']);
     $r->post('/qr/save', [$c, 'save']);

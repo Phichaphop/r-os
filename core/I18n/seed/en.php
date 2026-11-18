@@ -148,7 +148,7 @@ return [
     'home.welcome_text' => 'The platform (phases 1–3) and the Utilities tools are ready — HR and payroll menus arrive in the next phases',
     'home.status_cards' => 'Status summary',
     'home.phase' => 'Current phase',
-    'home.phase_name' => 'R5 · Chat 0.41.0',
+    'home.phase_name' => 'R5 · Chat + QR reader 0.41.1',
     'home.scheduler' => 'Background tasks last ran',
     'home.scheduler_never' => 'Never',
     'home.scheduler_note' => 'On the prototype, tasks run when someone opens a page',

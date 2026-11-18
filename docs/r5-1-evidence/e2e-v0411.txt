@@ -1,0 +1,23 @@
+generator links to reader: true
+Permissions-Policy on reader: geolocation=(), camera=(self), microphone=(), payment=()
+scan-empty: /qr/scan overflow=0 axe=[]
+url read in 32 ms
+  result: ลิงก์ (URL) เว็บไซต์ https://example.com/r5?x=ทดสอบ คัดลอก ลิงก์นี้ไปที่ example.com — ตรวจชื่อเว็บไซต์ก่อนเปิด และอย่ากรอกรหัสผ่านถ้าไม่แน่ใจ เปิดลิงก์
+  open link href=https://example.com/r5?x=%E0%B8%97%E0%B8%94%E0%B8%AA%E0%B8%AD%E0%B8%9A rel=noopener noreferrer nofollow
+scan-url: /qr/scan overflow=0 axe=[]
+wifi read in 105 ms
+  password hidden: true
+  after show: true
+scan-wifi: /qr/scan overflow=0 axe=[]
+thai text: true
+vcard: true · นามบัตร (vCard) ชื่อ สมชาย ใจดี คัดลอก บริษัท DEMO คัดลอก โทรศัพท์ +66812345678 คัดลอก อีเมล somchai@example.com คัดลอก ข้อมูลทั้งหมด BEGIN:VCARD VERSION:3.0 N:
+photo-like (small, rotated, big canvas): true
+no QR: "ไม่พบ QR Code ในรูปนี้ — ลองครอปให้เห็น QR ชัดขึ้น หรือถ่ายใหม่ให้ตรงและไม่สะท้อนแสง"
+paste: true
+copy: status "คัดลอกแล้ว" clipboard="ข้อความภาษาไทย 123"
+camera read wifi in 106 ms · camera stopped after read: true · tracks live: 0
+scan-camera-result: /qr/scan overflow=0 axe=[]
+stop button: video hidden true · tracks 0
+network requests while reading (blob: picture URLs excluded — should be none): []
+scan-390-dark: /qr/scan overflow=0 axe=[]
+visitor (QR not opened): /login
