@@ -5,7 +5,7 @@
  * @var callable $e @var callable $t @var callable $ui @var callable $url @var callable $date @var array<string, mixed> $v
  * @var array<string, string> $companies @var string $lePid @var array{policy: ?\Blue\Core\Registry\ResolvedConfig, sso: ?\Blue\Core\Registry\ResolvedConfig} $rules
  * @var list<array{0: string, 1: string}> $policyRows @var list<array{0: string, 1: string}> $ssoRows @var list<array{0: string, 1: string}> $whtRows @var list<array{0: string, 1: string}> $payerRows
- * @var list<array{0: string, 1: string}> $ssoEmployerRows @var list<array{0: string, 1: string}> $dueRows
+ * @var list<array{0: string, 1: string}> $ssoEmployerRows @var list<array{0: string, 1: string}> $dueRows @var list<array{0: string, 1: string}> $rdRows
  * @var array<string, int> $pending @var bool $canPrepare @var string $today @var array<string, string> $errors @var array<string, mixed> $old @var string $form
  */
 use Blue\Modules\Payroll\PayrollRules;
@@ -68,6 +68,12 @@ $common = static function (string $f) use ($ui, $t, $o, $err, $today): string {
   <?php if ($pending['payroll.filing_due'] > 0): ?><p class="text-sm"><?= $ui('badge', ['tone' => 'info', 'label' => $t('payroll.change_waiting')]) ?></p><?php endif; ?>
 </section>
 </div>
+<section class="card stack" aria-labelledby="ps-rd">
+  <h2 id="ps-rd" class="card__title"><?= $e($t('payroll.rd_file_title')) ?></h2>
+  <p class="text-sm text-muted"><?= $e($t('payroll.rd_file_help')) ?></p>
+  <dl class="facts"><?php foreach ($rdRows as [$k, $val]): ?><div><dt><?= $e($k) ?></dt><dd><?= $e($val) ?></dd></div><?php endforeach; ?></dl>
+  <?php if ($pending['payroll.rd_file'] > 0): ?><p class="text-sm"><?= $ui('badge', ['tone' => 'info', 'label' => $t('payroll.change_waiting')]) ?></p><?php endif; ?>
+</section>
 <?php if ($canPrepare): ?>
 <div class="grid grid--2">
 <section class="card stack" aria-labelledby="ps-pn">
@@ -183,4 +189,20 @@ $common = static function (string $f) use ($ui, $t, $o, $err, $today): string {
   </form>
 </section>
 </div>
+<section class="card stack" aria-labelledby="ps-rdn">
+  <h2 id="ps-rdn" class="card__title"><?= $e($t('payroll.propose_rd_file')) ?></h2>
+  <?= $ui('alert', ['tone' => 'info', 'text' => $t('payroll.rd_file_sample_note')]) ?>
+  <form method="post" action="<?= $e($url('/payroll/settings/rd_file')) ?>" class="stack" novalidate><?= $csrf ?>
+    <input type="hidden" name="le" value="<?= $e($lePid) ?>">
+    <div class="grid grid--2">
+      <?php foreach (array_merge(array_keys(\Blue\Modules\Payroll\TaxRules::RD_FIELDS), ['d_tax_rate']) as $k): ?>
+        <?= $ui('field', ['name' => $k, 'id' => 'f-rd-' . $k, 'label' => $t('payroll.rd_file.' . $k), 'required' => true, 'value' => $o('rd_file', $k), 'inputmode' => $k === 'd_tax_rate' ? 'decimal' : 'numeric',
+            'help' => $t('payroll.rd_file.sample', ['v' => \Blue\Modules\Payroll\TaxRules::RD_SAMPLE[$k] !== '' ? \Blue\Modules\Payroll\TaxRules::RD_SAMPLE[$k] : '—']), 'error' => $err('rd_file', $k)]) ?>
+      <?php endforeach; ?>
+    </div>
+    <label class="check"><input type="checkbox" name="names_line" value="1"<?= $o('rd_file', 'names_line') !== '' ? ' checked' : '' ?>> <?= $e($t('payroll.rd_file.names_line_check')) ?></label>
+    <?= $common('rd_file') ?>
+    <div class="row"><?= $ui('button', ['label' => $t('payroll.propose'), 'type' => 'submit', 'variant' => 'primary', 'icon' => 'send']) ?></div>
+  </form>
+</section>
 <?php endif; ?>

@@ -1,0 +1,22 @@
+# run 1 (same day, clean install state): propose: ส่งค่าใหม่ไปอนุมัติแล้ว · approved by payroll.checker (script) · settings-set axe=[] · reauth asked: yes
+# the "no settings yet" state of the card is checked by FilingOfficialWebTest (run 2 already has the approved settings)
+# run 2 (below, evidence run): the same proposal again is refused — the approved version's dates overlap (expected); the approved settings from run 1 are used
+# downloaded files were deleted after checking; only masked copies are kept (ids are made up 19999…)
+card: ไฟล์ทางการ ภ.ง.ด.1 (.txt) รูปแบบไฟล์ทำตามไฟล์ตัวอย่างที่ได้รับ ยังไม่ได้ทดสอบอัปโหลดกับระบบของหน่วยงาน — ตรวจไฟล์ก่อนยื่นทุกครั้ง ไฟล์ข้อความ UTF-8 คั่นด้วย | : บรรทัด H หนึ่งบรรทัด แล้วบรรทัด D หนึ่งบรรทัดต่อคน · ใช้ค่า
+official-card: /filing/r/01M7T6RKECJGWF4DPMXS63Y6DQ overflow=0 axe=[]
+settings: /payroll/settings overflow=0 axe=[]
+propose: ช่วงวันมีผลซ้อนกับฉบับที่อนุมัติแล้ว | ระบบไม่มีค่าเริ่มต้นและไม่เดาอัตราตามกฎหมาย — ตรวจจากแหล่งทางการ (สำนักงานประกันสังคม) และข้อบังคับกา
+no pending proposal
+settings-set: /payroll/settings overflow=0 axe=[]
+official-ready: /filing/r/01M7T6RKECJGWF4DPMXS63Y6DQ overflow=0 axe=[]
+  reauth asked: yes
+reauth: /reauth overflow=0 axe=[]
+pnd1 file: PND1-DEMO1-2026-10-r1.txt
+  lines 37 · H|0000|<ID13>|000000|PND1|<ID13>|0000|10|2569|1 · D|1|000000|<ID13>|0000000000|นาย|ผู้จัดการฝ่ายบุคคล|(DEMO)|31102569|0.00|55000.00|1500.00|1
+official-sso: /filing/r/01M7T6RKFM1NFGYP504EK22M2B overflow=0 axe=[]
+  reauth asked: no
+sso file: SSO-1-10-DEMO1-2026-10-r1.xlsx
+events official: 9 · documents stored: 0
+checker sees card: 0
+official-390-dark: /filing/r/01M7T6RKECJGWF4DPMXS63Y6DQ overflow=0 axe=[]
+settings-390-dark: /payroll/settings overflow=0 axe=[]

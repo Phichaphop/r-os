@@ -16,6 +16,7 @@ return static function (Router $r, App $app): void {
     $r->get('/filing/r/' . $id, [$c, 'show']);
     $r->post('/filing/r/' . $id . '/submit', [$c, 'submit']);
     $r->get('/filing/r/' . $id . '/export', [$c, 'export']);
+    $r->get('/filing/r/' . $id . '/official', [$c, 'official']);
     $r->post('/filing/r/' . $id . '/submission', [$c, 'submission']);
     $r->post('/filing/r/' . $id . '/result', [$c, 'result']);
     $r->get('/filing/r/' . $id . '/receipt', [$c, 'receipt']);

@@ -4,7 +4,7 @@
  * rows, what can be done next (send for review → export the review workbook → record the submission → record the
  * authority's result), the other revisions and the history.
  * @var callable $e @var callable $t @var callable $ui @var callable $url @var callable $date @var array<string, mixed> $v
- * @var array<string, mixed> $rev @var string $today @var array<string, string> $errors @var array<string, mixed> $old @var string $form
+ * @var array<string, mixed>|null $official @var array<string, mixed> $rev @var string $today @var array<string, string> $errors @var array<string, mixed> $old @var string $form
  */
 use Blue\Core\Support\Money;
 
@@ -114,6 +114,22 @@ $checkText = static fn (array $c): string => $t((string) $c['key'], (array) $c['
         'help' => $t($rev['additional_next'] ? 'filing.additional_help' : 'filing.regenerate_help')]) ?>
     <div class="row"><?= $ui('button', ['label' => $t($rev['additional_next'] ? 'filing.make_additional' : 'filing.regenerate'), 'type' => 'submit', 'variant' => 'secondary', 'icon' => 'refresh']) ?></div>
   </form>
+  <?php endif; ?>
+</section>
+<?php endif; ?>
+
+<?php if ($official !== null): ?>
+<section class="card stack" id="official" aria-labelledby="fr-o">
+  <h2 id="fr-o" class="card__title"><?= $e($t($wht ? 'filing.official.title_pnd1' : 'filing.official.title_sso')) ?></h2>
+  <?= $ui('alert', ['tone' => 'warning', 'text' => $t('filing.official.not_verified')]) ?>
+  <p class="text-sm text-muted"><?= $e($t($wht ? 'filing.official.help_pnd1' : 'filing.official.help_sso')) ?></p>
+  <?php if ($wht && count($official['paid_dates']) > 1): ?><p class="text-sm"><?= $ui('badge', ['tone' => 'warning', 'label' => $t('filing.official.many_dates', ['d' => $date($official['paid_dates'][0], false)])]) ?></p><?php endif; ?>
+  <?php if ($official['problems'] !== []): ?>
+    <p class="text-sm"><strong><?= $e($t('filing.official.blocked')) ?></strong></p>
+    <ul class="text-sm"><?php foreach (array_slice($official['problems'], 0, 20) as $c): ?><li><?= $e($checkText($c)) ?></li><?php endforeach; ?></ul>
+  <?php else: ?>
+    <div class="row"><?= $ui('button', ['label' => $t($wht ? 'filing.official.download_pnd1' : 'filing.official.download_sso'), 'href' => $url($base . '/official'), 'variant' => 'primary', 'icon' => 'download']) ?></div>
+    <p class="text-sm text-muted"><?= $e($t('filing.official.download_help')) ?></p>
   <?php endif; ?>
 </section>
 <?php endif; ?>

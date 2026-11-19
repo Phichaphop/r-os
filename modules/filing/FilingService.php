@@ -447,6 +447,65 @@ final class FilingService
         return ['bytes' => $bytes, 'name' => $name];
     }
 
+    /** the statuses from which the official upload file may be built (approved by another person, made from current runs) */
+    public const OFFICIAL_FROM = ['approved', 'exported', 'submitted', 'accepted', 'rejected'];
+
+    /**
+     * Builds the official upload file of an approved revision in memory (0.46.0 · DEC-115): the text file of the
+     * Revenue Department (P.N.D. 1) or the social security workbook (Sor.Por.Sor. 1-10). Full id numbers are decrypted
+     * only here and not kept; the file is not stored — its SHA-256 goes to the history and the audit (no amounts, no ids).
+     * With $build false only the problems are worked out (nothing is decrypted).
+     *
+     * @return array{bytes: ?string, name: string, mime: string, problems: list<array{key: string, params: array<string, string>}>, paid_dates: list<string>}
+     */
+    public function official(Authorizer $az, string $pid, bool $build = true): array
+    {
+        $r = $this->revision($az, $pid);
+        $le = (int) $r['legal_entity_id'];
+        $this->require($az, 'filing.prepare', $le);
+        if (!in_array($r['status'], self::OFFICIAL_FROM, true)) {
+            throw new BusinessException('filing.error.approve_first', [], 409);
+        }
+        if ($r['status'] === 'approved' && $r['source_changed']) {
+            throw new BusinessException('filing.error.stale', [], 409);
+        }
+        $db = $this->app->db();
+        $tax = TaxService::of($this->app);
+        $wht = $r['kind'] === 'wht_monthly';
+        $dates = array_values(array_unique(array_map(static fn (array $x): string => (string) $x['pay_date'], $r['runs'])));
+        rsort($dates);
+        $people = [];
+        foreach ($r['rows'] as $x) {
+            $emp = $db->one('SELECT id, title, name_th FROM employees WHERE employee_code = ?', [(string) $x['code']]);
+            $id = $build && $emp !== null ? ($tax->idForFiling((int) $emp['id'])['value'] ?? null) : ($emp !== null ? str_repeat('0', 13) : null);
+            $base = ['code' => (string) $x['code'], 'title' => (string) ($emp['title'] ?? ''), 'name' => (string) ($emp['name_th'] ?? $x['name']), 'id' => $id];
+            $people[] = $wht ? $base + ['income' => (int) $x['income'], 'wht' => (int) $x['wht']] : $base + ['wage' => (int) $x['wage'], 'ee' => (int) $x['ee']];
+        }
+        $period = (string) $r['period'];
+        if ($wht) {
+            $payer = $tax->payer($le);
+            $out = OfficialFile::pnd1($tax->filingSetting('rd_file', $le), is_array($payer) ? (string) ($payer['tax_id'] ?? '') : null, $period, (string) $r['purpose'], $dates[0] ?? $this->today(), $people);
+            $bytes = $out['text'];
+            $name = 'PND1-' . $r['le_code'] . '-' . $period . '-r' . $r['revision_no'] . '.txt';
+            $mime = 'text/plain; charset=utf-8';
+            $format = OfficialFile::PND1;
+        } else {
+            $emp = $tax->filingSetting('sso_employer', $le);
+            $branch = is_array($emp) && (string) ($emp['branch_no'] ?? '') !== '' ? (string) $emp['branch_no'] : null;
+            $out = OfficialFile::sso($branch, $people);
+            $bytes = $out['bytes'];
+            $name = 'SSO-1-10-' . $r['le_code'] . '-' . $period . '-r' . $r['revision_no'] . '.xlsx';
+            $mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            $format = OfficialFile::SSO;
+        }
+        if ($build && $bytes !== null) {
+            $hash = hash('sha256', $bytes);
+            $this->event((int) $r['id'], 'official', $az->userId, $format . ' · ' . substr($hash, 0, 16));
+            $this->audit('filing.official_exported', (string) $r['public_id'], $le, ['format' => $format, 'sha256' => $hash, 'people' => count($people)]);
+        }
+        return ['bytes' => $build ? $bytes : null, 'name' => $name, 'mime' => $mime, 'problems' => $out['problems'], 'paid_dates' => $dates];
+    }
+
     /**
      * Records that an exported revision was filed with the authority: the day, the reference the authority gave and
      * (optional) the receipt file (kept as a restricted document).

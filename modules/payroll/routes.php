@@ -31,7 +31,7 @@ return static function (Router $r, App $app): void {
     $r->get('/payroll/people/' . $emp, [$c, 'person']);
     $r->post('/payroll/people/' . $emp, [$c, 'propose']);
     $r->get('/payroll/settings', [$c, 'settings'], 'payroll.settings');
-    $r->post('/payroll/settings/{key:policy|sso|wht|wht_payer|sso_employer|filing_due}', [$c, 'proposeRules']);
+    $r->post('/payroll/settings/{key:policy|sso|wht|wht_payer|sso_employer|filing_due|rd_file}', [$c, 'proposeRules']);
     // 6B — payslips and year-to-date
     $s = new PayslipController($app);
     $r->get('/me/payslips', [$s, 'mine'], 'payroll.mine');

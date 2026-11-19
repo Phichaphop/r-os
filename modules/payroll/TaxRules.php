@@ -229,6 +229,60 @@ final class TaxRules
         return [[$t->get('payroll.filing_due.wht_day'), $d('wht_day')], [$t->get('payroll.filing_due.sso_day'), $d('sso_day')]];
     }
 
+    /** the fixed-value fields of the Revenue Department text file (0.46.0 · DEC-115) and their digit length */
+    public const RD_FIELDS = ['type_original' => 1, 'type_additional' => 1, 'h_field1' => 4, 'h_field3' => 6, 'h_field6' => 4, 'd_branch' => 6, 'd_tin' => 10, 'd_cond' => 1];
+
+    /** what the sample file the owner gave uses (shown as a hint only — never filled in for the user) */
+    public const RD_SAMPLE = ['type_original' => '2', 'type_additional' => '', 'h_field1' => '0000', 'h_field3' => '000000', 'h_field6' => '0000', 'd_branch' => '000000', 'd_tin' => '0000000000',
+        'd_cond' => '1', 'd_tax_rate' => '0.00', 'names_line' => '1'];
+
+    /**
+     * Settings of the official withholding tax text file (P.N.D. 1, RD Prep layout — 0.46.0 · DEC-115): the codes the
+     * file needs that the system cannot know — the filing type numbers, the fixed fields of the H and D lines, the tax
+     * rate column and whether the first line holds the column names. No default: taken from the Revenue Department's
+     * specification by the payroll/tax owner, with its reference; another person approves.
+     *
+     * @param array<string, mixed> $in
+     * @return array{0: ?array<string, string|bool>, 1: array<string, string>}
+     */
+    public static function validateRdFile(array $in): array
+    {
+        $errors = [];
+        $out = [];
+        foreach (self::RD_FIELDS as $k => $len) {
+            $v = trim((string) ($in[$k] ?? ''));
+            if (preg_match('/^\d{' . $len . '}$/', $v) !== 1) {
+                $errors[$k] = 'payroll.rd_file.error_digits_' . $len;
+            } else {
+                $out[$k] = $v;
+            }
+        }
+        if (!isset($errors['type_original']) && !isset($errors['type_additional']) && $out['type_original'] === $out['type_additional']) {
+            $errors['type_additional'] = 'payroll.rd_file.error_same_type';
+        }
+        $rate = trim((string) ($in['d_tax_rate'] ?? ''));
+        if (preg_match('/^\d{1,2}\.\d{2}$/', $rate) !== 1) {
+            $errors['d_tax_rate'] = 'payroll.rd_file.error_rate';
+        } else {
+            $out['d_tax_rate'] = $rate;
+        }
+        $out['names_line'] = !empty($in['names_line']);
+        return $errors !== [] ? [null, $errors] : [$out, []];
+    }
+
+    /** @return list<array{0: string, 1: string}> */
+    public static function describeRdFile(App $app, mixed $value): array
+    {
+        $t = $app->translator();
+        $v = is_array($value) ? $value : [];
+        $rows = [];
+        foreach (array_merge(array_keys(self::RD_FIELDS), ['d_tax_rate']) as $k) {
+            $rows[] = [$t->get('payroll.rd_file.' . $k), (string) (($v[$k] ?? '') !== '' ? $v[$k] : '—')];
+        }
+        $rows[] = [$t->get('payroll.rd_file.names_line'), $v === [] ? '—' : $t->get(!empty($v['names_line']) ? 'payroll.rd_file.yes' : 'payroll.rd_file.no')];
+        return $rows;
+    }
+
     /** @return list<array{0: string, 1: string}> */
     public static function describeWht(App $app, mixed $value): array
     {

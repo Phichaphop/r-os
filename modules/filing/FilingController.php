@@ -85,7 +85,11 @@ final class FilingController extends Controller
     {
         $rev = $this->svc()->revision($this->ctx($r)->az(), (string) $r->params['id']);
         $t = $this->app->translator();
-        return $this->page('@filing/revision', ['title' => $t->get('filing.kind.' . $rev['kind']) . ' ' . $rev['period'], 'rev' => $rev, 'today' => $this->svc()->today(),
+        $official = null;
+        if ($rev['can_prepare'] && in_array($rev['status'], FilingService::OFFICIAL_FROM, true) && !($rev['status'] === 'approved' && $rev['source_changed'])) {
+            $official = $this->svc()->official($this->ctx($r)->az(), (string) $rev['public_id'], false);
+        }
+        return $this->page('@filing/revision', ['title' => $t->get('filing.kind.' . $rev['kind']) . ' ' . $rev['period'], 'rev' => $rev, 'today' => $this->svc()->today(), 'official' => $official,
             'errors' => $errors, 'old' => $old, 'form' => $form], $status)->withHeader('Cache-Control', 'no-store, max-age=0');
     }
 
@@ -118,6 +122,28 @@ final class FilingController extends Controller
         $this->ctx($r)->requireFreshReauth();
         $f = $this->svc()->export($this->ctx($r)->az(), (string) $r->params['id']);
         return DocumentsController::fileResponse($f['bytes'], 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', $f['name'], false)->withHeader('Cache-Control', 'no-store, max-age=0');
+    }
+
+    /** the official upload file (0.46.0) — password confirmed again; a revision with something missing goes back with the first problem */
+    public function official(Request $r): Response
+    {
+        $pid = (string) $r->params['id'];
+        $this->svc()->revision($this->ctx($r)->az(), $pid); // 404 for those who may not see it, before asking for the password
+        $this->ctx($r)->requireFreshReauth();
+        try {
+            $f = $this->svc()->official($this->ctx($r)->az(), $pid);
+        } catch (BusinessException $e) {
+            if ($e instanceof HttpException) {
+                throw $e;
+            }
+            $this->flash($r, 'danger', $e->messageKey, $e->params);
+            return $this->redirect($r, '/filing/r/' . $pid);
+        }
+        if ($f['bytes'] === null) {
+            $this->flash($r, 'danger', $f['problems'][0]['key'] ?? 'filing.official.blocked', $f['problems'][0]['params'] ?? []);
+            return $this->redirect($r, '/filing/r/' . $pid . '#official');
+        }
+        return DocumentsController::fileResponse($f['bytes'], $f['mime'], $f['name'], false)->withHeader('Cache-Control', 'no-store, max-age=0');
     }
 
     public function submission(Request $r): Response

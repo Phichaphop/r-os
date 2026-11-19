@@ -348,6 +348,7 @@ final class PayrollController extends Controller
             'policyRows' => PayrollRules::describePolicy($this->app, $rules['policy']?->value), 'ssoRows' => PayrollRules::describeSso($this->app, $rules['sso']?->value),
             'whtRows' => $rules['wht'] !== null ? TaxRules::describeWht($this->app, $rules['wht']->value) : [], 'payerRows' => TaxRules::describePayer($this->app, TaxService::of($this->app)->payer($le)),
             'ssoEmployerRows' => TaxRules::describeSsoEmployer($this->app, TaxService::of($this->app)->filingSetting('sso_employer', $le)), 'dueRows' => TaxRules::describeFilingDue($this->app, TaxService::of($this->app)->filingSetting('filing_due', $le)),
+            'rdRows' => TaxRules::describeRdFile($this->app, TaxService::of($this->app)->filingSetting('rd_file', $le)),
             'pending' => $pending, 'canPrepare' => $az->scope('payroll.prepare')->coversLegalEntity($le), 'today' => $this->svc()->today(), 'errors' => $errors, 'old' => $old, 'form' => $form], $status);
     }
 

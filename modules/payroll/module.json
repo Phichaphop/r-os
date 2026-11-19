@@ -141,6 +141,17 @@
       "LAW",
       false
     ]
+,
+    "payroll.rd_file": [
+      "payroll",
+      "json",
+      null,
+      "legal_entity",
+      {},
+      "high",
+      "LAW",
+      false
+    ]
   },
   "config_owners": {
     "payroll.policy": {
@@ -172,6 +183,11 @@
       "propose": "payroll.prepare",
       "workflow": "payroll.config",
       "describe": "Blue\\Modules\\Payroll\\TaxRules::describeFilingDue"
+    },
+    "payroll.rd_file": {
+      "propose": "payroll.prepare",
+      "workflow": "payroll.config",
+      "describe": "Blue\\Modules\\Payroll\\TaxRules::describeRdFile"
     }
   },
   "workflows": {

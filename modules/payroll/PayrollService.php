@@ -421,7 +421,7 @@ final class PayrollService
         return ['policy' => $reg->resolveOrNull('payroll.policy', $le, null, $at), 'sso' => $reg->resolveOrNull('payroll.sso', $le, null, $at), 'wht' => $reg->resolveOrNull('payroll.wht', $le, null, $at)];
     }
 
-    public const RULE_KEYS = ['payroll.policy', 'payroll.sso', 'payroll.wht', 'payroll.wht_payer', 'payroll.sso_employer', 'payroll.filing_due'];
+    public const RULE_KEYS = ['payroll.policy', 'payroll.sso', 'payroll.wht', 'payroll.wht_payer', 'payroll.sso_employer', 'payroll.filing_due', 'payroll.rd_file'];
 
     /** @param array<string, mixed> $in */
     public function proposeRules(Authorizer $az, int $le, string $key, array $in, string $from, string $source, string $reason): string
@@ -436,6 +436,7 @@ final class PayrollService
             'payroll.wht' => TaxRules::validateWht($in),
             'payroll.sso_employer' => TaxRules::validateSsoEmployer($in),
             'payroll.filing_due' => TaxRules::validateFilingDue($in),
+            'payroll.rd_file' => TaxRules::validateRdFile($in),
             default => TaxRules::validatePayer($in),
         };
         $d = DateTimeImmutable::createFromFormat('!Y-m-d', $from, $this->tz());

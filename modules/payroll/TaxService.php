@@ -221,7 +221,7 @@ final class TaxService
      */
     public function filingSetting(string $which, int $le, ?string $date = null): ?array
     {
-        if (!in_array($which, ['sso_employer', 'filing_due'], true)) {
+        if (!in_array($which, ['sso_employer', 'filing_due', 'rd_file'], true)) {
             return null;
         }
         $r = $this->rule('payroll.' . $which, $le, $date ?? PayrollService::of($this->app)->today());
@@ -258,6 +258,17 @@ final class TaxService
             $r['has_id'] = $this->taxId((int) $r['id']) !== null;
         }
         return $rows;
+    }
+
+    /**
+     * The full current Thai citizen id or tax id of a person, for an official filing file built in memory (0.46.0 ·
+     * DEC-115) — the caller never stores it.
+     *
+     * @return array{value: string, last4: string}|null
+     */
+    public function idForFiling(int $employeeId): ?array
+    {
+        return $this->taxId($employeeId);
     }
 
     /** @return array{value: string, last4: string}|null the person's current Thai citizen id or tax id (decrypted only here) */
