@@ -109,6 +109,15 @@ final class ComplaintsWebTest extends TestCase
         );
         self::assertSame(200, $res->status, substr(strip_tags($res->body), 0, 1500));
         $code = $this->code($res->body);
+        // 0.44.2: a follow-up ticket — ref, code, day and a QR for the public page; no subject or details on the page
+        self::assertStringContainsString('data-cp-ticket', $res->body);
+        self::assertStringContainsString('ใบติดตาม', $res->body);
+        self::assertStringContainsString('<svg', $res->body);
+        self::assertMatchesRegularExpression('/data-modules="[01|]{400,}"/', $res->body);
+        self::assertStringContainsString('/speak-up/track', $res->body);
+        self::assertStringNotContainsString('หัวหน้าแผนกพูดจาคุกคาม', $res->body, 'the ticket has no subject');
+        self::assertStringNotContainsString('ห้องประชุมชั้น 3', $res->body, 'the ticket has no details');
+        self::assertSame('no-store', $res->headers['Cache-Control'] ?? null);
         self::assertSame($auditBefore, (int) $db->scalar('SELECT COUNT(*) FROM audit_events'), 'no audit event for a submission');
         $c = $db->one('SELECT * FROM cp_cases');
         self::assertNotNull($c);
@@ -138,7 +147,10 @@ final class ComplaintsWebTest extends TestCase
 
         // the public page: no sign-in, POST only, wrong codes refused
         $pub = $this->t->browser();
-        self::assertSame(200, $pub->get('/speak-up/track')->status);
+        $form = $pub->get('/speak-up/track');
+        self::assertSame(200, $form->status);
+        self::assertStringContainsString('data-cp-track', $form->body, 'the code form can read a ticket QR / a "#" code');
+        self::assertStringContainsString('camera=(self)', (string) ($form->headers['Permissions-Policy'] ?? ''));
         self::assertSame(404, $pub->post('/speak-up/track', ['code' => 'AAAA-BBBB-CCCC-DDDD-EEEE'])->status);
         $tr = $pub->post('/speak-up/track', ['code' => strtolower(str_replace('-', '', $code))]);
         self::assertSame(200, $tr->status);

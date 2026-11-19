@@ -13,6 +13,8 @@ use Blue\Core\Http\Controller;
 use Blue\Core\Http\Request;
 use Blue\Core\Http\Response;
 use Blue\Core\Records\DocumentsController;
+use Blue\Core\Support\Qr\QrEncoder;
+use Blue\Core\Support\Qr\QrRender;
 
 /**
  * M16 screens (R6-3 · 0.44.0): send + my list + follow with the code (signed in or the public page), the handlers'
@@ -105,8 +107,32 @@ final class ComplaintController extends Controller
             return $this->mine($r, [], $r->body, $e->httpStatus, $this->t($e->messageKey, $e->params));
         }
         // shown once, straight from this POST — never stored in the session
-        return $this->page('@complaints/sent', ['title' => $this->t('complaints.sent.title'), 'res' => $res])
+        return $this->page('@complaints/sent', ['title' => $this->t('complaints.sent.title'), 'res' => $res, 'ticket' => $this->ticket($r, $az, $res['code'])])
             ->withHeader('Cache-Control', 'no-store');
+    }
+
+    private function origin(Request $r): string
+    {
+        $configured = rtrim($this->app->config->string('APP_URL'), '/');
+        return $configured !== '' ? $configured : ($r->secure ? 'https' : 'http') . '://' . $r->host . $r->basePath();
+    }
+
+    /**
+     * 0.44.2 (DEC-113): the follow-up ticket the sender saves on their own device. Its QR opens the public follow-up page
+     * with the code after "#" — a fragment never reaches the server or its logs; the page fills the form from it and then
+     * removes it from the address. Nothing here is stored: the ticket is drawn in the browser (picture) or printed (PDF).
+     * @return array{url: string, qr: string, modules: string, company: string, day: string}
+     */
+    private function ticket(Request $r, Authorizer $az, string $code): array
+    {
+        $url = $this->origin($r) . '/speak-up/track#' . $code;
+        $qr = QrEncoder::encode($url, 'M');
+        $rows = array_map(static fn (array $row): string => implode('', array_map(static fn (bool $b): string => $b ? '1' : '0', $row)), $qr['modules']);
+        $le = $this->svc()->employerOf($az->userId);
+        return [
+            'url' => $this->origin($r) . '/speak-up/track', 'qr' => QrRender::svg($qr['modules'], 5, null, $this->t('complaints.ticket.qr_alt')),
+            'modules' => implode('|', $rows), 'company' => $le === null ? '' : $this->svc()->companyName($le), 'day' => $this->svc()->dayStamp(),
+        ];
     }
 
     public function vault(Request $r): Response
@@ -137,7 +163,9 @@ final class ComplaintController extends Controller
         $data = ['title' => $this->t('complaints.track.title'), 'public' => $public, 'case' => $view, 'code' => $case === null ? '' : $code,
             'errors' => $errors, 'asked' => $asked, 'done' => $flash, 'base' => $public ? '/speak-up/track' : '/complaints/track',
             'notice' => $case === null ? null : $this->svc()->noticeUrl((int) $case['legal_entity_id'])];
-        return $this->page('@complaints/track', $data, $status, $public ? 'layouts/minimal' : 'layouts/app')->withHeader('Cache-Control', 'no-store');
+        $res = $this->page('@complaints/track', $data, $status, $public ? 'layouts/minimal' : 'layouts/app')->withHeader('Cache-Control', 'no-store');
+        // 0.44.2: the code form may read the ticket's QR with the camera — allowed on this page only (camera=(self))
+        return $case === null ? $res->withHeader('Permissions-Policy', 'geolocation=(), camera=(self), microphone=(), payment=()') : $res;
     }
 
     private function lookup(Request $r, bool $public): Response

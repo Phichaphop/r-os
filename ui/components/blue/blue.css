@@ -1379,3 +1379,22 @@ a.pdf-tool:focus-visible { outline: 3px solid var(--color-action-primary); outli
 .cp-outcome { padding: var(--space-3); border-radius: var(--radius-control); background: var(--color-success-subtle); }
 .cp-policy > summary { cursor: pointer; font-weight: var(--font-weight-semibold); min-height: 32px; display: flex; align-items: center; }
 .cp-public { max-width: 640px; margin: 0 auto; }
+
+/* 0.44.2 M16 follow-up ticket (DEC-113): saved by the sender as a picture (drawn in the browser) or printed to PDF */
+.cp-ticket { max-width: 640px; display: flex; flex-direction: column; gap: var(--space-3); border: var(--border-width-strong) dashed var(--color-border); }
+.cp-ticket__head { display: flex; flex-direction: column; gap: var(--space-1); }
+.cp-ticket__title { margin: 0; font-size: var(--font-size-xl); }
+.cp-ticket__company { margin: 0; color: var(--color-text-muted); }
+.cp-ticket__body { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
+.cp-ticket__qr { flex: 0 0 auto; background: var(--color-paper); padding: var(--space-2); border-radius: var(--radius-control); line-height: 0; }
+.cp-ticket__qr svg { width: 180px; height: 180px; }
+.cp-ticket__facts { margin: 0; display: flex; flex-direction: column; gap: var(--space-2); flex: 1 1 240px; min-width: 0; }
+.cp-ticket__facts dt { font-size: var(--font-size-sm); color: var(--color-text-muted); }
+.cp-ticket__facts dd { margin: 0; font-weight: var(--font-weight-semibold); overflow-wrap: anywhere; }
+.cp-ticket__how, .cp-ticket__keep { margin: 0; overflow-wrap: anywhere; }
+@media print {
+  body:has(.cp-ticket) { visibility: hidden; background: var(--color-paper); }
+  body:has(.cp-ticket) .cp-ticket, body:has(.cp-ticket) .cp-ticket * { visibility: visible; }
+  body:has(.cp-ticket) .cp-ticket { position: absolute; inset: 0 auto auto 0; max-width: 160mm; margin: 10mm; box-shadow: none; background: var(--color-paper); color: var(--color-paper-ink); }
+  body:has(.cp-ticket) .cp-ticket__company, body:has(.cp-ticket) .cp-ticket__facts dt, body:has(.cp-ticket) .cp-ticket__keep { color: var(--color-paper-muted); }
+}

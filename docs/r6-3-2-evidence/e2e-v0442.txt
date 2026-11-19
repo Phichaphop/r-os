@@ -1,0 +1,8 @@
+ticket shown: 1 · QR svg 1 · subject on page false · details on page false
+ticket: /complaints overflow=0 axe=[]
+picture saved: blue-ticket-cp2611-0006.png · 130747 bytes · server requests while saving 1 · status "บันทึกรูปใบติดตามแล้ว — ดูในโฟลเดอร์ดาวน์โหลดของอุปกรณ์"
+PDF printed: 53163 bytes
+track-form-390-dark: /speak-up/track overflow=0 axe=[]
+opened from ticket picture: true · url /speak-up/track
+opened from QR link: true · code in any request url false · hash left false
+ticket-390-dark: /complaints overflow=0 axe=[]

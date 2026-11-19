@@ -1,7 +1,8 @@
 <?php
 /**
  * Follow a complaint with its tracking code (signed in, or the public page). The code travels only in POST bodies.
- * @var callable $e @var callable $t @var callable $ui @var callable $url @var callable $date @var callable $partial @var array<string, mixed> $v
+ * @var callable $e @var callable $t @var callable $ui @var callable $url @var callable $date @var callable $partial @var callable $asset @var array<string, mixed> $v
+ * 0.44.2: a code after "#" (the ticket's QR) fills the form in the browser, or read the QR from a saved ticket picture / the camera.
  * @var bool $public @var array<string, mixed>|null $case @var string $code @var array<string, string> $errors @var bool $asked
  * @var string|null $done @var string $base @var string|null $notice
  */
@@ -28,16 +29,34 @@ $fileForms = static function (array $files) use ($e, $url, $hid, $base, $ui): st
     return $h . '</ul>';
 };
 ?>
-<div class="stack<?= $public ? ' cp-public' : '' ?>">
+<div class="stack<?= $public ? ' cp-public' : '' ?>"<?php if ($c === null): ?> data-cp-track data-msg-found="<?= $e($t('complaints.scan.found')) ?>" data-msg-none="<?= $e($t('complaints.scan.none')) ?>" data-msg-looking="<?= $e($t('complaints.scan.looking')) ?>" data-msg-camera="<?= $e($t('complaints.scan.camera_error')) ?>"<?php endif; ?>>
 <?php if ($public): ?><h1><?= $e($t('complaints.track.title')) ?></h1><?php else: ?><?= $ui('page-header', ['title' => $t('complaints.track.title'), 'subtitle' => $t('complaints.track.subtitle')]) ?><?php endif; ?>
 <?php if ($done !== null): ?><?= $ui('alert', ['tone' => 'success', 'text' => $done]) ?><?php endif; ?>
 <?php if (isset($errors['state'])): ?><?= $ui('alert', ['tone' => 'danger', 'text' => $errors['state']]) ?><?php endif; ?>
 <?php if ($c === null): ?>
-  <form method="post" action="<?= $e($url($base)) ?>" class="stack-sm<?= $public ? '' : ' card' ?>" novalidate><?= $csrf ?>
+  <form method="post" action="<?= $e($url($base)) ?>" class="stack-sm<?= $public ? '' : ' card' ?>" data-cp-track-form novalidate><?= $csrf ?>
     <p class="text-sm text-muted"><?= $e($t('complaints.track.code_only')) ?></p>
     <?= $ui('field', ['name' => 'code', 'id' => 'tr-code', 'label' => $t('complaints.field.code'), 'required' => true, 'autocomplete' => 'off', 'help' => $t('complaints.code_help'), 'error' => $errors['code'] ?? null]) ?>
     <div class="row"><?= $ui('button', ['label' => $t('complaints.track.open'), 'type' => 'submit', 'variant' => 'primary']) ?></div>
   </form>
+  <section class="stack-sm<?= $public ? '' : ' card' ?>" aria-labelledby="tr-scan-h">
+    <h2 id="tr-scan-h" class="card__title"><?= $e($t('complaints.scan.title')) ?></h2>
+    <p class="text-sm text-muted"><?= $e($t('complaints.scan.help')) ?></p>
+    <noscript><p class="text-sm"><?= $e($t('complaints.scan.needs_script')) ?></p></noscript>
+    <div class="field">
+      <label class="field__label" for="tr-scan-file"><?= $e($t('complaints.scan.file')) ?></label>
+      <input class="input" type="file" id="tr-scan-file" accept="image/*" data-cp-scan-file>
+    </div>
+    <div class="row">
+      <?= $ui('button', ['label' => $t('complaints.scan.camera_start'), 'type' => 'button', 'variant' => 'secondary', 'icon' => 'camera', 'attrs' => ['data-cp-scan-start' => '1']]) ?>
+      <?= $ui('button', ['label' => $t('complaints.scan.camera_stop'), 'type' => 'button', 'variant' => 'secondary', 'icon' => 'x', 'attrs' => ['data-cp-scan-stop' => '1', 'hidden' => 'hidden']]) ?>
+    </div>
+    <div class="qr-scan__video" data-cp-scan-video-box hidden>
+      <video class="qr-scan__video-el" data-cp-scan-video muted playsinline aria-label="<?= $e($t('complaints.scan.camera_view')) ?>"></video>
+      <span class="qr-scan__frame" aria-hidden="true"></span>
+    </div>
+    <p class="text-sm" data-cp-scan-status role="status" aria-live="polite"></p>
+  </section>
 <?php else: ?>
   <section class="stack-sm<?= $public ? '' : ' card' ?>" aria-labelledby="tr-h">
     <h2 id="tr-h" class="card__title"><?= $e((string) $c['ref']) ?> · <?= $e($t('complaints.category.' . $c['category'])) ?></h2>
@@ -105,3 +124,7 @@ $fileForms = static function (array $files) use ($e, $url, $hid, $base, $ui): st
   <p class="text-sm text-muted"><?= $e($t('complaints.track.leave')) ?></p>
 <?php endif; ?>
 </div>
+<?php if ($c === null): ?>
+<script src="<?= $e($asset('ui/js/vendor/jsqr/jsQR.js')) ?>" defer></script>
+<script src="<?= $e($asset('ui/js/complaint-ticket.js')) ?>" defer></script>
+<?php endif; ?>
