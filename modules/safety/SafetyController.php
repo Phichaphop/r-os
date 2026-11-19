@@ -11,6 +11,7 @@ use Blue\Core\Files\UploadedFile;
 use Blue\Core\Http\Controller;
 use Blue\Core\Http\Request;
 use Blue\Core\Http\Response;
+use Blue\Core\Org\Translations;
 use Blue\Core\Records\DocumentsController;
 use Blue\Modules\Employees\Audience;
 
@@ -251,5 +252,113 @@ final class SafetyController extends Controller
         }
         $this->flash($r, 'success', 'safety.flash.settings');
         return $this->redirect($r, '/safety/settings?le=' . rawurlencode($lePid));
+    }
+
+    // ---- 0.45.0 (R7 · DEC-114): safety policy, internal forms, incident sheet ------------------------------------------------
+
+    private function policySvc(): SafetyPolicy
+    {
+        return SafetyPolicy::of($this->app);
+    }
+
+    /** @return array{0: array<string, string>, 1: string, 2: int} companies where I may edit or publish the policy */
+    private function policyEntity(Request $r): array
+    {
+        $az = $this->ctx($r)->az();
+        $ids = array_values(array_unique(array_merge($this->svc()->companies($az, 'safety.manage'), $this->svc()->companies($az, 'safety.approve'))));
+        if ($ids === []) {
+            throw HttpException::forbidden();
+        }
+        $companies = [];
+        foreach ($this->app->db()->all('SELECT public_id, code FROM legal_entities WHERE id IN (' . implode(',', $ids) . ') ORDER BY code') as $row) {
+            $companies[(string) $row['public_id']] = (string) $row['code'];
+        }
+        $pid = (string) ($r->query['le'] ?? $r->body['le'] ?? '');
+        if (!isset($companies[$pid])) {
+            $pid = (string) array_key_first($companies);
+        }
+        return [$companies, $pid, (int) $this->app->db()->scalar('SELECT id FROM legal_entities WHERE public_id = ?', [$pid])];
+    }
+
+    /**
+     * @param array<string, string> $errors
+     * @param array<string, mixed> $old
+     */
+    public function policy(Request $r, array $errors = [], array $old = [], int $status = 200): Response
+    {
+        [$companies, $lePid, $le] = $this->policyEntity($r);
+        $az = $this->ctx($r)->az();
+        return $this->fresh($this->page('@safety/policy', ['title' => $this->t('safety.policy.title'), 'companies' => $companies, 'lePid' => $lePid,
+            'ov' => $this->policySvc()->overview($le), 'canEdit' => $this->svc()->can($az, 'safety.manage', $le), 'canPublish' => $this->svc()->can($az, 'safety.approve', $le),
+            'uid' => $az->userId, 'errors' => $errors, 'old' => $old, 'today' => $this->svc()->today(), 'canManage' => $this->canManage($r), 'here' => '/safety/policy'], $status));
+    }
+
+    public function policyPost(Request $r): Response
+    {
+        [, $lePid, $le] = $this->policyEntity($r);
+        $az = $this->ctx($r)->az();
+        $what = (string) $r->params['what'];
+        try {
+            match ($what) {
+                'draft' => $this->policySvc()->startDraft($az, $le, (string) ($r->body['from'] ?? '') === 'current' ? 'current' : 'ai'),
+                'save' => $this->policySvc()->saveDraft($az, $le, $r->body),
+                'discard' => $this->policySvc()->discard($az, $le),
+                'publish' => $this->policySvc()->publish($az, $le, $r->body),
+                default => throw HttpException::notFound(),
+            };
+        } catch (ValidationException $e) {
+            return $this->policy($r, $this->errors($e), $r->body, 422);
+        } catch (BusinessException $e) {
+            return $this->fail($r, '/safety/policy?le=' . rawurlencode($lePid), $e);
+        }
+        $this->flash($r, 'success', 'safety.policy.flash.' . $what);
+        return $this->redirect($r, '/safety/policy?le=' . rawurlencode($lePid));
+    }
+
+    /** @return array{0: array<string, mixed>, 1: bool, 2: string} the policy for the forms (published, else the AI template), whether it is the template, company name */
+    private function formPolicy(Request $r): array
+    {
+        $az = $this->ctx($r)->az();
+        $me = $this->svc()->me($az);
+        $le = $me !== null && isset($me['job']['legal_entity_id']) ? (int) $me['job']['legal_entity_id'] : ($this->svc()->companies($az, 'safety.manage')[0] ?? null);
+        $pol = $le === null ? null : $this->policySvc()->published($le);
+        $name = $le === null ? '' : (string) $this->app->db()->scalar('SELECT code FROM legal_entities WHERE id = ?', [$le]);
+        if ($le !== null) {
+            $names = (new Translations($this->app->db()))->many('legal_entity', [$le]);
+            $n = isset($names[$le]) ? Translations::pick($names[$le], $this->app->translator()->locale()) : '';
+            $name = $n !== '' && $n !== '—' ? $n : $name;
+        }
+        return [$pol ?? SafetyPolicy::template($this->app->translator()->locale()), $pol === null, $name];
+    }
+
+    public function forms(Request $r): Response
+    {
+        if (!$this->ctx($r)->az()->can('safety.report')) {
+            throw HttpException::forbidden();
+        }
+        [, $isTemplate] = $this->formPolicy($r);
+        return $this->page('@safety/forms', ['title' => $this->t('safety.forms.title'), 'isTemplate' => $isTemplate, 'canManage' => $this->canManage($r), 'here' => '/safety/forms']);
+    }
+
+    public function form(Request $r): Response
+    {
+        if (!$this->ctx($r)->az()->can('safety.report')) {
+            throw HttpException::forbidden();
+        }
+        [$pol, $isTemplate, $company] = $this->formPolicy($r);
+        $form = (string) $r->params['form'];
+        return $this->page('@safety/form', ['title' => $this->t('safety.forms.' . $form), 'form' => $form, 'pol' => $pol, 'isTemplate' => $isTemplate, 'company' => $company,
+            'canManage' => $this->canManage($r), 'here' => '/safety/forms']);
+    }
+
+    /** The investigation sheet of an incident (A4), for those who see the whole record — never medical details. */
+    public function sheet(Request $r): Response
+    {
+        $i = $this->svc()->incident($this->ctx($r)->az(), (string) $r->params['id']);
+        if (!$i['roles']['full']) {
+            throw HttpException::notFound();
+        }
+        $this->app->audit()->record('safety.sheet_viewed', 'success', 'sf_incident', (string) $i['public_id'], (int) $i['legal_entity_id']);
+        return $this->fresh($this->page('@safety/sheet', ['title' => $this->t('safety.sheet.title') . ' ' . $i['ref'], 'in' => $i, 'canManage' => $this->canManage($r), 'here' => '/safety/manage']));
     }
 }

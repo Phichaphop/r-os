@@ -1398,3 +1398,26 @@ a.pdf-tool:focus-visible { outline: 3px solid var(--color-action-primary); outli
   body:has(.cp-ticket) .cp-ticket { position: absolute; inset: 0 auto auto 0; max-width: 160mm; margin: 10mm; box-shadow: none; background: var(--color-paper); color: var(--color-paper-ink); }
   body:has(.cp-ticket) .cp-ticket__company, body:has(.cp-ticket) .cp-ticket__facts dt, body:has(.cp-ticket) .cp-ticket__keep { color: var(--color-paper-muted); }
 }
+
+/* 0.45.0 M39 safety policy and printable internal forms (DEC-114) */
+.sf-forms { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--space-3); }
+.sp-level { padding: var(--space-3); border: var(--border-width) solid var(--color-border); border-radius: var(--radius-control); }
+.sp-publish { padding-top: var(--space-3); border-top: var(--border-width) solid var(--color-border); }
+.sf-form section > h3 { font-size: 1.1rem; }
+.sf-line { display: block; height: 1.9em; border-bottom: var(--border-width) dotted var(--color-paper-muted); }
+.sf-form p > .sf-line { display: inline-block; width: 60%; vertical-align: bottom; height: 1.4em; }
+.sf-box { display: inline-block; width: 0.95em; height: 0.95em; border: 1.5px solid var(--color-paper-ink); border-radius: 2px; vertical-align: -0.1em; }
+.sf-choice { display: inline-block; margin-inline-end: var(--space-4); white-space: nowrap; }
+.sf-levels { list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+.sf-scale { padding-inline-start: 1.6em; display: flex; flex-direction: column; gap: var(--space-1); }
+.sf-sign { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+.sf-sign p > .sf-line { width: 100%; display: block; }
+.sf-matrix { border-collapse: collapse; width: 100%; font-size: 1rem; }
+.sf-matrix th, .sf-matrix td { border: var(--border-width) solid var(--color-paper-rule); padding: var(--space-2); text-align: center; color: var(--color-paper-ink); }
+.sf-band--low { background: color-mix(in srgb, var(--color-success) 22%, var(--color-paper)); }
+.sf-band--medium { background: color-mix(in srgb, var(--color-info) 22%, var(--color-paper)); }
+.sf-band--high { background: color-mix(in srgb, var(--color-warning) 30%, var(--color-paper)); }
+.sf-band--very_high { background: color-mix(in srgb, var(--color-danger) 28%, var(--color-paper)); font-weight: var(--font-weight-semibold); }
+.sf-band__label { display: block; font-size: 0.8rem; }
+@media (max-width: 600px) { .sf-sign { grid-template-columns: 1fr; } .sf-matrix { font-size: 0.8rem; } .sf-matrix th, .sf-matrix td { padding: var(--space-1); } }
+@media print { .sf-band--low, .sf-band--medium, .sf-band--high, .sf-band--very_high { print-color-adjust: exact; -webkit-print-color-adjust: exact; } }

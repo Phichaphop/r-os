@@ -27,6 +27,7 @@ $fileLink = static fn (array $f): string => '<a href="' . $e($url('/safety/i/' .
 <?= $ui('page-header', ['title' => $in['ref'] . ' · ' . $kinds[$in['kind']], 'subtitle' => (string) $in['location'], 'crumbs' => [[$t('safety.title'), $url($here)], [(string) $in['ref'], null]]]) ?>
 <?php include __DIR__ . '/_nav.php'; ?>
 <?php if ($errors !== []): ?><?= $ui('alert', ['tone' => 'danger', 'title' => $t('form.has_errors')]) ?><?php endif; ?>
+<?php if ($r['full']): ?><p><a class="btn btn--secondary" href="<?= $e($url('/safety/i/' . $pid . '/sheet')) ?>"><?= $ui('icon', ['name' => 'printer', 'size' => 'sm']) ?> <?= $e($t('safety.sheet.open')) ?></a></p><?php endif; ?>
 
 <section class="card stack-sm" aria-labelledby="sf-sum">
   <h2 id="sf-sum" class="card__title"><?= $e($t('safety.summary')) ?></h2>
@@ -107,7 +108,8 @@ $fileLink = static fn (array $f): string => '<a href="' . $e($url('/safety/i/' .
     <?php if ($r['full']): ?><dt><?= $e($t('safety.field.temp_control')) ?></dt><dd class="sf-text"><?= $e((string) ($in['temp_control'] ?? '—')) ?></dd><?php endif; ?>
   </dl>
   <?php endif; ?>
-  <?php if ($r['full'] && $in['likelihood'] !== null && $in['impact'] !== null): ?><p class="text-sm"><?= $e($t('safety.risk_score', ['l' => (string) $in['likelihood'], 'i' => (string) $in['impact'], 'score' => (string) ((int) $in['likelihood'] * (int) $in['impact'])])) ?></p><?php endif; ?>
+  <?php if ($r['full'] && $in['likelihood'] !== null && $in['impact'] !== null): ?><p class="text-sm"><?= $e($t('safety.risk_score', ['l' => (string) $in['likelihood'], 'i' => (string) $in['impact'], 'score' => (string) ((int) $in['likelihood'] * (int) $in['impact'])])) ?>
+    <?php if ($in['band'] !== null): ?> · <?= $ui('badge', ['tone' => ['low' => 'success', 'medium' => 'info', 'high' => 'warning', 'very_high' => 'danger'][$in['band']['key']] ?? 'neutral', 'label' => $t('safety.policy.band.' . $in['band']['key'])]) ?> <?= $e((string) $in['band']['action']) ?><?php endif; ?></p><?php endif; ?>
   <?php $inv = array_values(array_filter($in['files'], static fn (array $f): bool => $f['stage'] === 'investigation')); if ($inv !== []): ?><p class="text-sm"><?= $e($t('safety.files')) ?>: <?= implode(' · ', array_map($fileLink, $inv)) ?></p><?php endif; ?>
 </section>
 <?php endif; ?>

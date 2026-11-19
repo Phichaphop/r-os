@@ -17,20 +17,25 @@
     "safety.report": "normal",
     "safety.manage": "normal",
     "safety.medical": "high",
-    "safety.view": "normal"
+    "safety.view": "normal",
+    "safety.approve": "high"
   },
   "grants": {
     "*": [
       "safety.report"
     ],
     "SFO": [
-      "safety.manage"
+      "safety.manage",
+      "safety.approve"
     ],
     "HRA": [
       "safety.medical"
     ],
     "AUD": [
       "safety.view"
+    ],
+    "EXE": [
+      "safety.approve"
     ]
   },
   "menu": [
@@ -49,11 +54,25 @@
       "permission": "safety.manage"
     },
     {
+      "group": "work",
+      "label": "safety.nav_forms",
+      "icon": "printer",
+      "href": "/safety/forms",
+      "permission": "safety.report"
+    },
+    {
       "group": "settings",
       "label": "safety.nav_settings",
       "icon": "settings",
       "href": "/safety/settings",
       "permission": "safety.manage"
+    },
+    {
+      "group": "settings",
+      "label": "safety.nav_policy",
+      "icon": "file-text",
+      "href": "/safety/policy",
+      "permission": "safety.approve"
     }
   ],
   "document_classes": {

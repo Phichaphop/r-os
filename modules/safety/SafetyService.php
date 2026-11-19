@@ -148,6 +148,16 @@ final class SafetyService
             $out['escalate'][$l] = $ids;
             $out['escalate_names'][$l] = $ids === [] ? '' : implode(', ', array_column($this->app->db()->all('SELECT username FROM users WHERE id IN (' . implode(',', $ids) . ') ORDER BY username'), 'username'));
         }
+        // 0.45.0: a published safety policy gives the meaning of each level (name — meaning)
+        $pol = SafetyPolicy::of($this->app)->published($le);
+        if ($pol !== null) {
+            foreach (self::LEVELS as $l) {
+                $lv = (array) ($pol['levels'][$l] ?? $pol['levels'][(string) $l] ?? []);
+                if (($lv['name'] ?? '') !== '') {
+                    $out['notes'][$l] = $lv['name'] . ' — ' . ($lv['meaning'] ?? '');
+                }
+            }
+        }
         return $out;
     }
 
@@ -315,13 +325,49 @@ final class SafetyService
         return ['pid' => $pid, 'ref' => $ref, 'code' => $code];
     }
 
-    /** Tell the safety team (and, for urgent levels, the company's escalation list) about a new report. */
+    /**
+     * People the policy chain names for a level: the reporter's line manager, HR (safety.medical) and executives (role EXE).
+     * @param list<string> $who
+     * @return list<int>
+     */
+    public function chainPeople(int $le, array $who, ?int $reporter): array
+    {
+        $to = [];
+        if (in_array('manager', $who, true) && $reporter !== null) {
+            $emp = $this->emp()->forUser($reporter);
+            if ($emp !== null) {
+                $to = array_merge($to, $this->emp()->managerUserIds((int) $emp['id'], $this->today()));
+            }
+        }
+        if (in_array('hr', $who, true)) {
+            $to = array_merge($to, $this->staff($le, 'safety.medical'));
+        }
+        if (in_array('exec', $who, true)) {
+            foreach ($this->staff($le, 'safety.approve') as $u) {
+                if ($this->app->db()->scalar("SELECT 1 FROM user_role_assignments a JOIN roles r ON r.id = a.role_id WHERE a.user_id = ? AND a.status = 'active' AND r.code = 'EXE' LIMIT 1", [$u]) !== null) {
+                    $to[] = $u;
+                }
+            }
+        }
+        return array_values(array_unique(array_map('intval', $to)));
+    }
+
+    /**
+     * Tell the safety team about a new report — and, for urgent levels, the company's named people; with a published policy
+     * also the people its chain names for that level (0.45.0).
+     */
     private function alert(int $le, string $pid, string $ref, string $kind, int $sev, string $loc, ?int $reporter): int
     {
         $to = $this->staff($le, 'safety.manage');
         if ($sev >= self::URGENT_LEVEL) {
             $to = array_merge($to, $this->settings($le)['escalate'][$sev] ?? []);
         }
+        $pol = SafetyPolicy::of($this->app)->published($le);
+        $chain = $pol === null ? null : (array) ($pol['chain'][$sev] ?? $pol['chain'][(string) $sev] ?? []);
+        if ($chain !== null) {
+            $to = array_merge($to, $this->chainPeople($le, array_values(array_filter(SafetyPolicy::WHO, static fn (string $w): bool => !empty($chain[$w]))), $reporter));
+        }
+        $this->app->db()->run('UPDATE sf_incidents SET alerted_at = COALESCE(alerted_at, ?) WHERE public_id = ?', [$this->stamp(), $pid]);
         $n = 0;
         $kindLabel = $this->app->translator()->get('safety.kind.' . $kind);
         foreach (array_unique($to) as $u) {
@@ -442,6 +488,9 @@ final class SafetyService
             }
         }
         $i['level_note'] = $this->settings((int) $i['legal_entity_id'])['notes'][(int) $i['severity']] ?? '';
+        $pol = SafetyPolicy::of($this->app)->published((int) $i['legal_entity_id']);
+        $i['policy'] = $pol;
+        $i['band'] = $r['full'] ? SafetyPolicy::band($pol, $i['likelihood'] === null ? null : (int) $i['likelihood'], $i['impact'] === null ? null : (int) $i['impact']) : null;
         $i['today'] = $this->today();
         return $i;
     }
@@ -1109,11 +1158,39 @@ final class SafetyService
         $midnight = $this->app->clock->now()->format('Y-m-d') . ' 00:00:00';
         foreach ($db->all('SELECT legal_entity_id, COUNT(*) AS c FROM sf_incidents WHERE digested = 0 AND created_at < ? GROUP BY legal_entity_id', [$midnight]) as $w) {
             $le = (int) $w['legal_entity_id'];
-            $db->run('UPDATE sf_incidents SET digested = 1 WHERE legal_entity_id = ? AND digested = 0 AND created_at < ?', [$le, $midnight]);
+            $db->run('UPDATE sf_incidents SET digested = 1, alerted_at = COALESCE(alerted_at, ?) WHERE legal_entity_id = ? AND digested = 0 AND created_at < ?', [$this->stamp(), $le, $midnight]);
             foreach ($this->staff($le, 'safety.manage') as $u) {
                 $this->app->notifier()->notify($u, 'safety.incident', 'safety.notify.digest', ['n' => (string) $w['c']], '/safety/manage', 'sf.dg:' . $today . ':' . $le . ':' . $u);
                 $n++;
             }
+        }
+        // 0.45.0: escalation — a report nobody has triaged within the policy's minutes for its level goes to the next people once
+        $now = $this->app->clock->now();
+        foreach (
+            $db->all("SELECT id, public_id, ref, legal_entity_id, severity, kind, location, reporter_id, alerted_at FROM sf_incidents
+            WHERE status = 'reported' AND acknowledged_at IS NULL AND escalated = 0 AND alerted_at IS NOT NULL LIMIT 500") as $i
+        ) {
+            $pol = SafetyPolicy::of($this->app)->published((int) $i['legal_entity_id']);
+            $chain = $pol === null ? [] : (array) ($pol['chain'][(int) $i['severity']] ?? $pol['chain'][(string) $i['severity']] ?? []);
+            $after = $chain['after_min'] ?? null;
+            if ($after === null) {
+                continue;
+            }
+            $since = DateTimeImmutable::createFromFormat('Y-m-d H:i:s.u', (string) $i['alerted_at'], new DateTimeZone('UTC'));
+            if ($since === false || $since->modify('+' . (int) $after . ' minutes') > $now) {
+                continue;
+            }
+            $db->run('UPDATE sf_incidents SET escalated = 1 WHERE id = ?', [$i['id']]);
+            $to = array_merge($this->staff((int) $i['legal_entity_id'], 'safety.manage'), $this->chainPeople((int) $i['legal_entity_id'], array_values((array) ($chain['then'] ?? [])), $i['reporter_id'] === null ? null : (int) $i['reporter_id']));
+            $kindLabel = $this->app->translator()->get('safety.kind.' . $i['kind']);
+            foreach (array_unique($to) as $u) {
+                if ($i['reporter_id'] !== null && (int) $i['reporter_id'] === $u) {
+                    continue;
+                }
+                $this->app->notifier()->notify($u, 'safety.incident', 'safety.notify.escalated', ['ref' => (string) $i['ref'], 'kind' => $kindLabel, 'level' => (string) $i['severity'], 'min' => (string) $after], '/safety/i/' . $i['public_id'], 'sf.es:' . $i['public_id'] . ':' . $u);
+                $n++;
+            }
+            $this->event((int) $i['id'], 'escalated', null, (string) $after);
         }
         foreach ($db->all("SELECT a.*, i.ref, i.public_id AS ipid FROM sf_actions a JOIN sf_incidents i ON i.id = a.incident_id WHERE a.status = 'open' AND a.reminded = 0 AND a.due_on = ? LIMIT 500", [$this->addDays($today, 1)]) as $a) {
             $db->run('UPDATE sf_actions SET reminded = 1 WHERE id = ?', [$a['id']]);

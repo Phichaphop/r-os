@@ -1,0 +1,20 @@
+policy-none: /safety/policy overflow=0 axe=[]
+draft: สร้างร่างแล้ว — ตรวจและแก้ไขก่อนส่งให้อีกคนเผยแพร่ | ร่างโดย AI — ต้องตรวจก่อนใช้ · ข้อความและจำนวนนาทีเป็นข้อเสนอเริ่มต้นสำหรับบริษัทที่ยัง · AI label true
+policy-draft: /safety/policy overflow=0 axe=[]
+save: บันทึกร่างแล้ว | ร่างโดย AI — ต้องตรวจก่อนใช้ · ข้อความและจำนวนนาทีเป็นข้อเสนอเริ่มต้นสำหรับบริษัทที่ยังไม่มี จป. วิชาชีพ ไม่ใช่ข้อกำหนดตามก
+  same person can publish: 0
+publish: เผยแพร่นโยบายแล้ว · status published
+policy-published: /safety/policy overflow=0 axe=[]
+report form shows policy level: true
+reported: /safety/i/01M7SEKEZC06AKGT9BXZZ368C7 · exec alerts 0 -> 1
+forms: /safety/forms overflow=0 axe=[]
+form-report: /safety/forms/report overflow=0 axe=[]
+form-near-miss: /safety/forms/near-miss overflow=0 axe=[]
+form-witness: /safety/forms/witness overflow=0 axe=[]
+form-risk: /safety/forms/risk overflow=0 axe=[]
+PDFs: risk 32460 · report 46641 bytes
+incident: /safety/i/01M7SEKEZC06AKGT9BXZZ368C7 overflow=0 axe=[]
+sheet: /safety/i/01M7SEKEZC06AKGT9BXZZ368C7/sheet overflow=0 axe=[]
+form-risk-390-dark: /safety/forms/risk overflow=0 axe=[]
+form-report-390-dark: /safety/forms/report overflow=0 axe=[]
+policy-390-dark: /safety/policy overflow=0 axe=[]
