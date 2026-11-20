@@ -12,7 +12,8 @@ $csrf = '<input type="hidden" name="_csrf" value="' . $e($v['csrf'] ?? '') . '">
 $o = static fn (string $k, string $d = ''): string => is_scalar($old[$k] ?? null) ? (string) $old[$k] : $d;
 $err = static fn (string $f, string $k): ?string => $form === $f ? ($errors[$k] ?? null) : null;
 $m = static fn (int $u): string => Money::format($u);
-$wht = $rev['kind'] === 'wht_monthly';
+$wht = \Blue\Modules\Filing\FilingCalc::isWht((string) $rev['kind']);
+$annual = $rev['kind'] === 'wht_annual';
 $base = '/filing/r/' . $rev['public_id'];
 $status = (string) $rev['status'];
 $checkText = static fn (array $c): string => $t((string) $c['key'], (array) $c['params']);
@@ -29,7 +30,7 @@ $checkText = static fn (array $c): string => $t((string) $c['key'], (array) $c['
   <dl class="facts">
     <div><dt><?= $e($t('filing.field.company')) ?></dt><dd><?= $e((string) $rev['le_code']) ?></dd></div>
     <div><dt><?= $e($t('filing.field.period')) ?></dt><dd><?= $e((string) $rev['period']) ?></dd></div>
-    <div><dt><?= $e($t('filing.field.due')) ?></dt><dd><?= $rev['due'] !== null ? $e($date((string) $rev['due'], false)) : $e($t('filing.due_not_set')) ?></dd></div>
+    <div><dt><?= $e($t('filing.field.due')) ?></dt><dd><?= $rev['due'] !== null ? $e($date((string) $rev['due'], false)) : $e($t($annual ? 'filing.due_annual' : 'filing.due_not_set')) ?></dd></div>
     <div><dt><?= $e($t('filing.field.revision')) ?></dt><dd><?= $e('#' . $rev['revision_no'] . ' · ' . $t('filing.purpose.' . $rev['purpose'])) ?></dd></div>
     <?php if ($rev['reason'] !== null): ?><div><dt><?= $e($t('filing.field.reason')) ?></dt><dd><?= $e((string) $rev['reason']) ?></dd></div><?php endif; ?>
     <div><dt><?= $e($t('filing.field.schema')) ?></dt><dd><code><?= $e((string) $rev['schema_version']) ?></code></dd></div>
@@ -120,15 +121,15 @@ $checkText = static fn (array $c): string => $t((string) $c['key'], (array) $c['
 
 <?php if ($official !== null): ?>
 <section class="card stack" id="official" aria-labelledby="fr-o">
-  <h2 id="fr-o" class="card__title"><?= $e($t($wht ? 'filing.official.title_pnd1' : 'filing.official.title_sso')) ?></h2>
+  <h2 id="fr-o" class="card__title"><?= $e($t($annual ? 'filing.official.title_pnd1a' : ($wht ? 'filing.official.title_pnd1' : 'filing.official.title_sso'))) ?></h2>
   <?= $ui('alert', ['tone' => 'warning', 'text' => $t('filing.official.not_verified')]) ?>
-  <p class="text-sm text-muted"><?= $e($t($wht ? 'filing.official.help_pnd1' : 'filing.official.help_sso')) ?></p>
+  <p class="text-sm text-muted"><?= $e($t($annual ? 'filing.official.help_pnd1a' : ($wht ? 'filing.official.help_pnd1' : 'filing.official.help_sso'))) ?></p>
   <?php if ($wht && count($official['paid_dates']) > 1): ?><p class="text-sm"><?= $ui('badge', ['tone' => 'warning', 'label' => $t('filing.official.many_dates', ['d' => $date($official['paid_dates'][0], false)])]) ?></p><?php endif; ?>
   <?php if ($official['problems'] !== []): ?>
     <p class="text-sm"><strong><?= $e($t('filing.official.blocked')) ?></strong></p>
     <ul class="text-sm"><?php foreach (array_slice($official['problems'], 0, 20) as $c): ?><li><?= $e($checkText($c)) ?></li><?php endforeach; ?></ul>
   <?php else: ?>
-    <div class="row"><?= $ui('button', ['label' => $t($wht ? 'filing.official.download_pnd1' : 'filing.official.download_sso'), 'href' => $url($base . '/official'), 'variant' => 'primary', 'icon' => 'download']) ?></div>
+    <div class="row"><?= $ui('button', ['label' => $t($annual ? 'filing.official.download_pnd1a' : ($wht ? 'filing.official.download_pnd1' : 'filing.official.download_sso')), 'href' => $url($base . '/official'), 'variant' => 'primary', 'icon' => 'download']) ?></div>
     <p class="text-sm text-muted"><?= $e($t('filing.official.download_help')) ?></p>
   <?php endif; ?>
 </section>
@@ -141,6 +142,7 @@ $checkText = static fn (array $c): string => $t((string) $c['key'], (array) $c['
     <table class="table table--stack">
       <thead><tr><th scope="col"><?= $e($t('filing.col.code')) ?></th><th scope="col"><?= $e($t('filing.col.id_last4')) ?></th>
       <?php if ($wht): ?><th scope="col" class="num"><?= $e($t('filing.col.income')) ?></th><th scope="col" class="num"><?= $e($t('filing.col.wht')) ?></th>
+      <?php if ($annual): ?><th scope="col" class="num"><?= $e($t('filing.col.opening')) ?></th><?php endif; ?>
       <?php else: ?><th scope="col" class="num"><?= $e($t('filing.col.wage')) ?></th><th scope="col" class="num"><?= $e($t('filing.col.wage_used')) ?></th><th scope="col" class="num"><?= $e($t('filing.col.ee')) ?></th><th scope="col" class="num"><?= $e($t('filing.col.er')) ?></th><?php endif; ?></tr></thead>
       <tbody>
       <?php foreach ($rev['rows'] as $x): ?>
@@ -149,6 +151,7 @@ $checkText = static fn (array $c): string => $t((string) $c['key'], (array) $c['
           <?php if ($wht): ?>
           <td data-label="<?= $e($t('filing.col.income')) ?>" class="num"><?= $e($m((int) $x['income'])) ?></td>
           <td data-label="<?= $e($t('filing.col.wht')) ?>" class="num"><?= $e($m((int) $x['wht'])) ?></td>
+          <?php if ($annual): ?><td data-label="<?= $e($t('filing.col.opening')) ?>" class="num"><?= (int) ($x['opening_income'] ?? 0) === 0 && (int) ($x['opening_wht'] ?? 0) === 0 ? '—' : $e($m((int) $x['opening_income']) . ' / ' . $m((int) $x['opening_wht'])) ?></td><?php endif; ?>
           <?php else: ?>
           <td data-label="<?= $e($t('filing.col.wage')) ?>" class="num"><?= $e($m((int) $x['wage'])) ?></td>
           <td data-label="<?= $e($t('filing.col.wage_used')) ?>" class="num"><?= $e($m((int) $x['wage_used'])) ?><?php if ($x['wage_unknown']): ?> <?= $ui('badge', ['tone' => 'warning', 'label' => $t('filing.wage_unknown_short')]) ?><?php endif; ?></td>

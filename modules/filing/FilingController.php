@@ -55,7 +55,7 @@ final class FilingController extends Controller
         $az = $this->ctx($r)->az();
         $year = $this->year($r);
         return $this->page('@filing/index', ['title' => $this->app->translator()->get('filing.title'), 'companies' => $companies, 'lePid' => $lePid, 'year' => $year,
-            'months' => $this->svc()->overview($az, $le, $year), 'canPrepare' => $az->scope('filing.prepare')->coversLegalEntity($le), 'today' => $this->svc()->today(),
+            'months' => $this->svc()->overview($az, $le, $year), 'annual' => $this->svc()->annual($az, $le, $year), 'canPrepare' => $az->scope('filing.prepare')->coversLegalEntity($le), 'today' => $this->svc()->today(),
             'errors' => $errors, 'old' => $old], $status)->withHeader('Cache-Control', 'no-store, max-age=0');
     }
 

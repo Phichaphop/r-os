@@ -9,6 +9,7 @@ use Blue\Core\App;
 use Blue\Core\Authz\Authorizer;
 use Blue\Core\Error\HttpException;
 use Blue\Core\Error\ValidationException;
+use Blue\Core\Support\ThaiProvinces;
 use Blue\Core\Support\Ulid;
 
 /**
@@ -24,6 +25,11 @@ use Blue\Core\Support\Ulid;
 final class ProfileService
 {
     public const CONTACTS = ['personal_phone', 'personal_email', 'address_current', 'address_registered'];
+
+    /** the registered address in the parts tax forms ask for (0.47.0 · DEC-116); building, alley and road may be empty */
+    public const TAX_ADDRESS = ['house_no', 'building', 'alley', 'road', 'subdistrict', 'district', 'province', 'postcode'];
+
+    private const TAX_ADDRESS_REQUIRED = ['house_no', 'subdistrict', 'district', 'province', 'postcode'];
     public const EDUCATION = ['primary', 'secondary', 'vocational', 'high_vocational', 'bachelor', 'master', 'doctorate', 'other'];
 
     private function __construct(private readonly App $app)
@@ -71,12 +77,13 @@ final class ProfileService
         $db = $this->app->db();
         $id = (int) $e['id'];
         $personal = $acc['personal'] || $acc['self'];
-        $out = ['personal' => null, 'contacts' => null, 'emergency' => null, 'identifiers' => null, 'education' => null, 'prior_jobs' => null];
+        $out = ['personal' => null, 'contacts' => null, 'tax_address' => null, 'emergency' => null, 'identifiers' => null, 'education' => null, 'prior_jobs' => null];
         if ($personal) {
             $out['personal'] = [
                 'title' => $e['title'], 'birth_date' => $this->birthDate($e), 'gender' => $e['gender'], 'nationality' => $e['nationality'],
             ];
             $out['contacts'] = array_column($db->all('SELECT contact_type, value FROM employee_contacts WHERE employee_id = ?', [$id]), 'value', 'contact_type');
+            $out['tax_address'] = $db->one('SELECT ' . implode(', ', self::TAX_ADDRESS) . ' FROM employee_tax_addresses WHERE employee_id = ?', [$id]);
             $out['emergency'] = $db->all('SELECT public_id, name, relation, phone FROM employee_emergency_contacts WHERE employee_id = ? ORDER BY sort_order, id', [$id]);
             $out['education'] = $db->all('SELECT public_id, level, institution, field, graduated_year FROM employee_education WHERE employee_id = ? ORDER BY graduated_year DESC, id DESC', [$id]);
             $out['prior_jobs'] = $db->all('SELECT public_id, company, position, from_month, to_month FROM employee_prior_jobs WHERE employee_id = ? ORDER BY from_month DESC, id DESC', [$id]);
@@ -160,6 +167,62 @@ final class ProfileService
     }
 
     /**
+     * The address in parts as one line ("-" parts left out), or null when there is none.
+     *
+     * @param array<string, mixed>|null $a
+     */
+    public static function addressLine(?array $a): ?string
+    {
+        if ($a === null) {
+            return null;
+        }
+        $parts = [];
+        foreach (self::TAX_ADDRESS as $k) {
+            $v = trim((string) ($a[$k] ?? ''));
+            if ($v !== '' && $v !== '-') {
+                $parts[] = $v;
+            }
+        }
+        return $parts === [] ? null : implode(' ', $parts);
+    }
+
+    /**
+     * The registered address in parts (0.47.0): all empty = none; otherwise house number, sub-district, district,
+     * province (one of the 77) and a 5-digit postcode are needed. No part may hold "|" or a line break (it goes into
+     * pipe-separated tax files as written).
+     *
+     * @param array<string, mixed> $in
+     * @return array{0: array<string, ?string>|null, 1: array<string, string>}
+     */
+    public static function validateTaxAddress(array $in): array
+    {
+        $v = [];
+        foreach (self::TAX_ADDRESS as $k) {
+            $v[$k] = trim(preg_replace('/\s+/u', ' ', (string) ($in[$k] ?? '')) ?? '');
+        }
+        if (implode('', $v) === '') {
+            return [null, []];
+        }
+        $errors = [];
+        foreach (self::TAX_ADDRESS as $k) {
+            $max = $k === 'house_no' ? 30 : ($k === 'province' ? 40 : 80);
+            if ((in_array($k, self::TAX_ADDRESS_REQUIRED, true) && $v[$k] === '') || mb_strlen($v[$k]) > $max || str_contains($v[$k], '|')) {
+                $errors['tax_address_' . $k] = 'employees.error.tax_address_' . (in_array($k, self::TAX_ADDRESS_REQUIRED, true) && $v[$k] === '' ? 'required' : 'text');
+            }
+        }
+        if ($v['province'] !== '' && !in_array($v['province'], ThaiProvinces::ALL, true)) {
+            $errors['tax_address_province'] = 'employees.error.tax_address_province';
+        }
+        if ($v['postcode'] !== '' && preg_match('/^\d{5}$/', $v['postcode']) !== 1) {
+            $errors['tax_address_postcode'] = 'employees.error.tax_address_postcode';
+        }
+        foreach (['building', 'alley', 'road'] as $k) {
+            $v[$k] = $v[$k] === '' ? null : $v[$k];
+        }
+        return $errors !== [] ? [null, $errors] : [$v, []];
+    }
+
+    /**
      * Personal contacts + emergency contacts — by the employee (own record) or HR with employees.personal.
      *
      * @param array<string, mixed> $in contacts[type], emergency[n][name|relation|phone]
@@ -209,14 +272,26 @@ final class ProfileService
             }
             $emergency[] = ['name' => $name, 'relation' => $rel, 'phone' => $phone];
         }
+        [$addr, $addrErrors] = self::validateTaxAddress((array) ($in['tax_address'] ?? []));
+        $errors += $addrErrors;
         if ($errors !== []) {
             throw new ValidationException($errors);
         }
         $db = $this->app->db();
         $id = (int) $e['id'];
+        $addrBefore = $db->one('SELECT ' . implode(', ', self::TAX_ADDRESS) . ' FROM employee_tax_addresses WHERE employee_id = ?', [$id]);
         $before = array_column($db->all('SELECT contact_type, value FROM employee_contacts WHERE employee_id = ?', [$id]), 'value', 'contact_type');
-        $db->transactional(function () use ($db, $id, $contacts, $emergency, $az): void {
+        $db->transactional(function () use ($db, $id, $contacts, $emergency, $addr, $az): void {
             $now = $this->now();
+            if ($addr === null) {
+                $db->run('DELETE FROM employee_tax_addresses WHERE employee_id = ?', [$id]);
+            } else {
+                $db->run(
+                    'INSERT INTO employee_tax_addresses (public_id, created_at, created_by, updated_at, updated_by, employee_id, ' . implode(', ', self::TAX_ADDRESS) . ') VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                     ON DUPLICATE KEY UPDATE ' . implode(', ', array_map(static fn (string $k): string => $k . ' = VALUES(' . $k . ')', self::TAX_ADDRESS)) . ', updated_at = VALUES(updated_at), updated_by = VALUES(updated_by), row_version = row_version + 1',
+                    [Ulid::generate($this->app->clock), $now, $az->userId, $now, $az->userId, $id, ...array_values($addr)]
+                );
+            }
             foreach (self::CONTACTS as $type) {
                 if (!isset($contacts[$type])) {
                     $db->run('DELETE FROM employee_contacts WHERE employee_id = ? AND contact_type = ?', [$id, $type]);
@@ -241,6 +316,11 @@ final class ProfileService
             if (($before[$type] ?? null) !== ($contacts[$type] ?? null)) {
                 $changed[] = $type;
             }
+        }
+        $after = $addr === null ? null : array_map(static fn (?string $v): string => (string) $v, $addr);
+        $prev = $addrBefore === null ? null : array_map(static fn (mixed $v): string => (string) $v, $addrBefore);
+        if ($after !== $prev) {
+            $changed[] = 'tax_address';
         }
         $this->app->audit()->record(
             'employee.contacts_updated',

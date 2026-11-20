@@ -478,7 +478,11 @@ final class EmployeesController extends Controller
             $em[] = ['name' => mb_substr(trim((string) ($row['name'] ?? '')), 0, 120), 'relation' => mb_substr(trim((string) ($row['relation'] ?? '')), 0, 40),
                 'phone' => mb_substr(trim((string) ($row['phone'] ?? '')), 0, 40)];
         }
-        return ['contacts' => $contacts, 'emergency' => $em];
+        $addr = [];
+        foreach (ProfileService::TAX_ADDRESS as $k) {
+            $addr[$k] = mb_substr(trim((string) (((array) ($r->body['tax_address'] ?? []))[$k] ?? '')), 0, 100);
+        }
+        return ['contacts' => $contacts, 'emergency' => $em, 'tax_address' => $addr];
     }
 
     /**

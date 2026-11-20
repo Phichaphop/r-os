@@ -56,7 +56,7 @@ final class RevisionSubject implements WorkflowSubject, DescribedSubject
         if ($r === null) {
             return ['rows' => [], 'link' => null];
         }
-        $wht = $r['kind'] === 'wht_monthly';
+        $wht = FilingCalc::isWht((string) $r['kind']);
         $rows = [
             [$t->get('filing.field.company'), (string) $r['le_code']],
             [$t->get('filing.field.kind'), $t->get('filing.kind.' . $r['kind'])],

@@ -31,6 +31,7 @@ final class EmployeePersonalData implements PersonalDataProvider
             ['key' => 'record', 'label' => 'employees.privacy.record', 'rows' => [$e]],
             ['key' => 'jobs', 'label' => 'employees.privacy.jobs', 'rows' => $jobs],
             ['key' => 'contacts', 'label' => 'employees.privacy.contacts', 'rows' => $db->all('SELECT contact_type, value FROM employee_contacts WHERE employee_id = ? ORDER BY contact_type', [$employeeId])],
+            ['key' => 'tax_address', 'label' => 'employees.privacy.tax_address', 'rows' => $db->all('SELECT house_no, building, alley, road, subdistrict, district, province, postcode FROM employee_tax_addresses WHERE employee_id = ?', [$employeeId])],
             ['key' => 'emergency', 'label' => 'employees.privacy.emergency', 'rows' => $db->all('SELECT name, relation, phone FROM employee_emergency_contacts WHERE employee_id = ? ORDER BY sort_order', [$employeeId])],
             ['key' => 'education', 'label' => 'employees.privacy.education', 'rows' => $db->all('SELECT level, institution, field, graduated_year FROM employee_education WHERE employee_id = ? ORDER BY id', [$employeeId])],
             ['key' => 'prior_jobs', 'label' => 'employees.privacy.prior_jobs', 'rows' => $db->all('SELECT company, position, from_month, to_month FROM employee_prior_jobs WHERE employee_id = ? ORDER BY id', [$employeeId])],

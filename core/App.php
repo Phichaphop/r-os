@@ -73,7 +73,7 @@ use Blue\Core\Ui\View;
 final class App
 {
     /** Release shown in backups and on the status page. */
-    public const RELEASE = '0.46.0 (R8-1: official filing files)';
+    public const RELEASE = '0.47.0 (R8-2: annual PND 1A file)';
 
     private ?Connection $db = null;
     private ?Translator $translator = null;

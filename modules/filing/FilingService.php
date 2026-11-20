@@ -68,9 +68,12 @@ final class FilingService
         }
     }
 
-    /** @return array{0: string, 1: string}|null first and last day of a "YYYY-MM" month */
+    /** @return array{0: string, 1: string}|null first and last day of a "YYYY-MM" month, or of a "YYYY" year (the annual filing) */
     public static function range(string $period): ?array
     {
+        if (preg_match('/^(19|20)\d{2}$/', $period) === 1) {
+            return [$period . '-01-01', $period . '-12-31'];
+        }
         $d = DateTimeImmutable::createFromFormat('!Y-m-d', $period . '-01');
         if (preg_match('/^\d{4}-(0[1-9]|1[0-2])$/', $period) !== 1 || $d === false) {
             return null;
@@ -81,6 +84,9 @@ final class FilingService
     /** the day a month's filing of a kind is due (day N of the next month, by the approved filing due days), or null */
     public function dueDate(int $le, string $kind, string $period): ?string
     {
+        if ($kind === 'wht_annual') {
+            return null; // no annual due day is kept in the system — taken from the Revenue Department's notice
+        }
         $due = TaxService::of($this->app)->filingSetting('filing_due', $le);
         $day = (int) ($due[$kind === 'wht_monthly' ? 'wht_day' : 'sso_day'] ?? 0);
         $r = self::range($period);
@@ -120,7 +126,7 @@ final class FilingService
             $db->all(
                 "SELECT f.kind, f.period, r.public_id, r.revision_no, r.purpose, r.status, r.people FROM fl_filings f
                    JOIN fl_revisions r ON r.filing_id = f.id AND r.revision_no = (SELECT MAX(x.revision_no) FROM fl_revisions x WHERE x.filing_id = f.id)
-                  WHERE f.legal_entity_id = ? AND f.period LIKE ?",
+                  WHERE f.legal_entity_id = ? AND f.period LIKE ? AND f.kind <> 'wht_annual'",
                 [$le, $year . '-%']
             ) as $x
         ) {
@@ -144,13 +150,61 @@ final class FilingService
         for ($m = $last; $m >= 1; $m--) {
             $period = sprintf('%04d-%02d', $year, $m);
             $row = ['period' => $period, 'runs' => $runs[$period] ?? 0, 'kinds' => []];
-            foreach (FilingCalc::KINDS as $k) {
+            foreach (FilingCalc::MONTHLY as $k) {
                 $due = $this->dueDate($le, $k, $period);
                 $isDone = isset($done[$period . '|' . $k]);
                 $row['kinds'][$k] = ['latest' => $latest[$period . '|' . $k] ?? null, 'due' => $due, 'done' => $isDone,
                     'overdue' => !$isDone && $due !== null && $today > $due && ($runs[$period] ?? 0) > 0];
             }
             $out[] = $row;
+        }
+        return $out;
+    }
+
+    /**
+     * The annual withholding tax filing of a year (0.47.0): its latest revision, whether one was submitted, how many
+     * approved runs were paid in the year and whether the year has ended.
+     *
+     * @return array{year: int, latest: ?array<string, mixed>, done: bool, runs: int, ended: bool}
+     */
+    public function annual(Authorizer $az, int $le, int $year): array
+    {
+        $this->require($az, 'filing.view', $le);
+        $db = $this->app->db();
+        $latest = $db->one(
+            "SELECT r.public_id, r.revision_no, r.purpose, r.status, r.people FROM fl_filings f JOIN fl_revisions r ON r.filing_id = f.id
+              WHERE f.legal_entity_id = ? AND f.kind = 'wht_annual' AND f.period = ? ORDER BY r.revision_no DESC LIMIT 1",
+            [$le, (string) $year]
+        );
+        $done = (int) $db->scalar(
+            "SELECT COUNT(*) FROM fl_filings f JOIN fl_revisions r ON r.filing_id = f.id WHERE f.legal_entity_id = ? AND f.kind = 'wht_annual' AND f.period = ? AND r.status IN ('submitted','accepted')",
+            [$le, (string) $year]
+        ) > 0;
+        $runs = (int) $db->scalar("SELECT COUNT(*) FROM pay_runs WHERE legal_entity_id = ? AND status = 'approved' AND YEAR(pay_date) = ?", [$le, $year]);
+        return ['year' => $year, 'latest' => $latest, 'done' => $done, 'runs' => $runs, 'ended' => $this->today() > $year . '-12-31'];
+    }
+
+    /**
+     * Approved opening balances of a tax year (what was paid before the company used the system), per employee.
+     *
+     * @return array<int, array{code: string, name: string, taxable: int, wht: int, refs: list<string>}>
+     */
+    private function openings(int $le, int $year): array
+    {
+        $out = [];
+        foreach (
+            $this->app->db()->all(
+                "SELECT y.employee_id, y.public_id, y.taxable_income, y.wht, e.employee_code, e.name_th FROM pay_ytd_entries y JOIN employees e ON e.id = y.employee_id
+                  WHERE y.legal_entity_id = ? AND y.tax_year = ? AND y.source_type = 'opening' AND y.status = 'approved' ORDER BY y.id",
+                [$le, $year]
+            ) as $y
+        ) {
+            $emp = (int) $y['employee_id'];
+            $o = $out[$emp] ?? ['code' => (string) $y['employee_code'], 'name' => (string) $y['name_th'], 'taxable' => 0, 'wht' => 0, 'refs' => []];
+            $o['taxable'] += Money::fromDb($y['taxable_income']);
+            $o['wht'] += Money::fromDb($y['wht']);
+            $o['refs'][] = (string) $y['public_id'] . ':' . $y['taxable_income'] . ':' . $y['wht'];
+            $out[$emp] = $o;
         }
         return $out;
     }
@@ -178,46 +232,72 @@ final class FilingService
             }
             $runs[] = ['pid' => (string) $r['public_id'], 'run_no' => (int) $r['run_no'], 'run_type' => (string) $r['run_type'], 'pay_date' => (string) $r['pay_date'], 'output_hash' => (string) $r['output_hash'], 'intact' => $intact];
         }
+        $annual = $kind === 'wht_annual';
+        $open = $annual ? $this->openings($le, (int) $period) : [];
+        $all = array_keys($src['people'] + $open);
         $ids = [];
-        if ($src['people'] !== []) {
-            foreach (
-                $db->all(
-                    "SELECT employee_id, last4 FROM employee_identifiers WHERE status = 'current' AND id_type IN ('TH_CITIZEN_ID','TH_TAX_ID') AND employee_id IN (" . implode(',', array_map('intval', array_keys($src['people']))) . ') ORDER BY id'
-                ) as $i
-            ) {
+        $addr = [];
+        if ($all !== []) {
+            $in = implode(',', array_map('intval', $all));
+            foreach ($db->all("SELECT employee_id, last4 FROM employee_identifiers WHERE status = 'current' AND id_type IN ('TH_CITIZEN_ID','TH_TAX_ID') AND employee_id IN (" . $in . ') ORDER BY id') as $i) {
                 $ids[(int) $i['employee_id']] = (string) $i['last4'];
+            }
+            if ($annual) {
+                foreach ($db->all('SELECT employee_id FROM employee_tax_addresses WHERE employee_id IN (' . $in . ')') as $a) {
+                    $addr[(int) $a['employee_id']] = true;
+                }
             }
         }
         $people = [];
         foreach ($src['people'] as $emp => $p) {
-            $people[] = ['code' => $p['code'], 'name' => $p['name'], 'id_ok' => isset($ids[$emp]), 'id_last4' => $ids[$emp] ?? '', 'taxable' => $p['taxable'], 'wht' => $p['wht'],
+            $row = ['code' => $p['code'], 'name' => $p['name'], 'id_ok' => isset($ids[$emp]), 'id_last4' => $ids[$emp] ?? '', 'taxable' => $p['taxable'], 'wht' => $p['wht'],
                 'sso_ee' => $p['sso_ee'], 'sso_er' => $p['sso_er'], 'sso_base' => $p['sso_base'], 'sso_wage_used' => $p['sso_wage_used'], 'sso_wage_unknown' => $p['sso_wage_unknown'],
                 'ytd' => $src['ytd'][$emp] ?? null];
+            if ($annual) {
+                $row += ['in_runs' => true, 'opening' => isset($open[$emp]) ? ['taxable' => $open[$emp]['taxable'], 'wht' => $open[$emp]['wht']] : null, 'address_ok' => isset($addr[$emp])];
+            }
+            $people[] = $row;
         }
-        $notPaid = array_values(array_diff_key($src['employed'], $src['people']));
+        foreach (array_diff_key($open, $src['people']) as $emp => $o) {
+            $people[] = ['code' => $o['code'], 'name' => $o['name'], 'id_ok' => isset($ids[$emp]), 'id_last4' => $ids[$emp] ?? '', 'taxable' => 0, 'wht' => 0, 'sso_ee' => 0, 'sso_er' => 0, 'sso_base' => 0,
+                'sso_wage_used' => 0, 'sso_wage_unknown' => false, 'ytd' => null, 'in_runs' => false, 'opening' => ['taxable' => $o['taxable'], 'wht' => $o['wht']], 'address_ok' => isset($addr[$emp])];
+        }
+        $notPaid = array_values(array_diff_key($src['employed'], $src['people'], $open));
         sort($notPaid);
-        $employerKey = $kind === 'wht_monthly' ? 'payroll.wht_payer' : 'payroll.sso_employer';
-        $employer = $this->config($employerKey, $le, $to);
-        $present = is_array($employer?->value) && (string) ($employer->value[$kind === 'wht_monthly' ? 'tax_id' : 'account_no'] ?? '') !== '';
+        $wht = FilingCalc::isWht($kind);
+        $employer = $this->config($wht ? 'payroll.wht_payer' : 'payroll.sso_employer', $le, $to);
+        $present = is_array($employer?->value) && (string) ($employer->value[$wht ? 'tax_id' : 'account_no'] ?? '') !== '';
         $dueCfg = $this->config('payroll.filing_due', $le, $to);
         $inputs = ['kind' => $kind, 'period' => $period, 'schema' => FilingCalc::SCHEMA[$kind], 'employer' => ['present' => $present], 'due_date' => $this->dueDate($le, $kind, $period),
             'runs' => $runs, 'open_runs' => array_map(static fn (array $r): array => ['run_no' => (int) $r['run_no'], 'status' => (string) $r['status']], $src['open_runs']),
             'people' => $people, 'not_paid' => $notPaid];
-        return ['inputs' => $inputs, 'configs' => array_values(array_filter([$employer, $dueCfg])), 'source_hash' => self::sourceHash($runs)];
+        if ($annual) {
+            $inputs['year_open'] = $this->today() <= $to;
+        }
+        return ['inputs' => $inputs, 'configs' => array_values(array_filter([$employer, $dueCfg])), 'source_hash' => self::sourceHash($runs, $annual ? $open : [])];
     }
 
-    /** @param list<array<string, mixed>> $runs */
-    private static function sourceHash(array $runs): string
+    /**
+     * @param list<array<string, mixed>> $runs
+     * @param array<int, array{refs: list<string>}> $openings
+     */
+    private static function sourceHash(array $runs, array $openings = []): string
     {
-        return hash('sha256', implode("\n", array_map(static fn (array $r): string => $r['pid'] . ':' . $r['output_hash'], $runs)));
+        $lines = array_map(static fn (array $r): string => $r['pid'] . ':' . $r['output_hash'], $runs);
+        foreach ($openings as $o) {
+            foreach ($o['refs'] as $ref) {
+                $lines[] = 'opening:' . $ref;
+            }
+        }
+        return hash('sha256', implode("\n", $lines));
     }
 
-    /** the fingerprint of the approved runs paid in a month now (a revision made from other runs is out of date) */
-    public function currentSourceHash(int $le, string $period): string
+    /** the fingerprint of the approved runs paid in a month (and, for the year, the approved opening balances) now — a revision made from others is out of date */
+    public function currentSourceHash(int $le, string $period, string $kind = ''): string
     {
         [$from, $to] = self::range($period) ?? ['', ''];
         $runs = array_map(static fn (array $r): array => ['pid' => (string) $r['public_id'], 'output_hash' => (string) $r['output_hash']], PayrollService::of($this->app)->filingSource($le, $from, $to)['runs']);
-        return self::sourceHash($runs);
+        return self::sourceHash($runs, $kind === 'wht_annual' ? $this->openings($le, (int) $period) : []);
     }
 
     /**
@@ -232,7 +312,7 @@ final class FilingService
             $errors['kind'] = 'filing.error.kind';
         }
         $range = self::range($period);
-        if ($range === null || $range[0] > $this->today()) {
+        if ($range === null || $range[0] > $this->today() || ($kind === 'wht_annual') !== (strlen($period) === 4)) {
             $errors['period'] = 'filing.error.period';
         }
         if ($errors !== []) {
@@ -317,7 +397,7 @@ final class FilingService
         $r['history'] = $db->all('SELECT public_id, revision_no, purpose, status, created_at, people FROM fl_revisions WHERE filing_id = ? ORDER BY revision_no DESC', [$r['filing_id']]);
         $r['events'] = $db->all('SELECT e.event, e.note, e.created_at, COALESCE(u.display_name, u.username) AS actor FROM fl_events e LEFT JOIN users u ON u.id = e.actor_id WHERE e.revision_id = ? ORDER BY e.id', [$r['id']]);
         $r['due'] = $this->dueDate($le, (string) $r['kind'], (string) $r['period']);
-        $r['source_changed'] = !in_array($r['status'], array_merge(['superseded'], self::SUBMITTED), true) && !hash_equals((string) $r['source_hash'], $this->currentSourceHash($le, (string) $r['period']));
+        $r['source_changed'] = !in_array($r['status'], array_merge(['superseded'], self::SUBMITTED), true) && !hash_equals((string) $r['source_hash'], $this->currentSourceHash($le, (string) $r['period'], (string) $r['kind']));
         $r['can_prepare'] = $az->scope('filing.prepare')->coversLegalEntity($le);
         $r['is_latest'] = (int) $r['revision_no'] === (int) ($r['history'][0]['revision_no'] ?? 0);
         $r['additional_next'] = array_filter($r['history'], static fn (array $h): bool => in_array($h['status'], self::SUBMITTED, true)) !== [];
@@ -345,7 +425,7 @@ final class FilingService
         if ((int) $r['created_by'] !== $az->userId) {
             throw new BusinessException('filing.error.not_maker', [], 409);
         }
-        if (!hash_equals((string) $r['source_hash'], $this->currentSourceHash($le, (string) $r['period']))) {
+        if (!hash_equals((string) $r['source_hash'], $this->currentSourceHash($le, (string) $r['period'], (string) $r['kind']))) {
             throw new BusinessException('filing.error.stale', [], 409);
         }
         $db = $this->app->db();
@@ -407,7 +487,7 @@ final class FilingService
         }
         $t = $this->app->translator();
         $m = static fn (int $u): string => Money::format($u, 2, false);
-        $wht = $r['kind'] === 'wht_monthly';
+        $wht = FilingCalc::isWht((string) $r['kind']);
         $approver = (string) ($this->app->db()->scalar('SELECT COALESCE(display_name, username) FROM users WHERE id = ?', [$r['approved_by']]) ?? '');
         $info = [
             [$t->get('filing.xlsx.notice'), ''],
@@ -433,6 +513,14 @@ final class FilingService
                 'rows' => array_map(static fn (array $x): array => [(string) $x['code'], (string) $x['name'], (string) $x['id_last4'], $m((int) $x['wage']), $m((int) $x['wage_used']), $m((int) $x['ee']), $m((int) $x['er']),
                     $x['wage_unknown'] ? $t->get('filing.wage_unknown_short') : ''], $r['rows']),
                 'numeric' => [3, 4, 5, 6], 'widths' => [12, 30, 10, 16, 16, 14, 14, 24]];
+        if ($r['kind'] === 'wht_annual') { // the annual review also shows what came from the opening balances
+            $rows['headers'] = array_merge($rows['headers'], [$t->get('filing.col.opening_income'), $t->get('filing.col.opening_wht')]);
+            foreach ($r['rows'] as $i => $x) {
+                $rows['rows'][$i] = array_merge($rows['rows'][$i], [$m((int) ($x['opening_income'] ?? 0)), $m((int) ($x['opening_wht'] ?? 0))]);
+            }
+            $rows['numeric'] = [3, 4, 5, 6];
+            $rows['widths'] = [12, 30, 10, 16, 16, 16, 16];
+        }
         $bytes = Xlsx::write(['summary' => ['headers' => [$t->get('filing.xlsx.item'), $t->get('filing.xlsx.value')], 'rows' => $info, 'widths' => [36, 60]], 'rows' => $rows], 'Blue OS filing review');
         $hash = hash('sha256', $bytes);
         $name = 'filing-review-' . $r['le_code'] . '-' . $r['kind'] . '-' . $r['period'] . '-r' . $r['revision_no'] . '.xlsx';
@@ -452,7 +540,7 @@ final class FilingService
 
     /**
      * Builds the official upload file of an approved revision in memory (0.46.0 · DEC-115): the text file of the
-     * Revenue Department (P.N.D. 1) or the social security workbook (Sor.Por.Sor. 1-10). Full id numbers are decrypted
+     * Revenue Department (P.N.D. 1, or P.N.D. 1A for the year — 0.47.0) or the social security workbook (Sor.Por.Sor. 1-10). Full id numbers are decrypted
      * only here and not kept; the file is not stored — its SHA-256 goes to the history and the audit (no amounts, no ids).
      * With $build false only the problems are worked out (nothing is decrypted).
      *
@@ -471,18 +559,27 @@ final class FilingService
         }
         $db = $this->app->db();
         $tax = TaxService::of($this->app);
-        $wht = $r['kind'] === 'wht_monthly';
-        $dates = array_values(array_unique(array_map(static fn (array $x): string => (string) $x['pay_date'], $r['runs'])));
+        $wht = FilingCalc::isWht((string) $r['kind']);
+        $annual = $r['kind'] === 'wht_annual';
+        $dates = $annual ? [] : array_values(array_unique(array_map(static fn (array $x): string => (string) $x['pay_date'], $r['runs'])));
         rsort($dates);
         $people = [];
         foreach ($r['rows'] as $x) {
             $emp = $db->one('SELECT id, title, name_th FROM employees WHERE employee_code = ?', [(string) $x['code']]);
+            $addr = $annual && $emp !== null ? $db->one('SELECT house_no, building, alley, road, subdistrict, district, province, postcode FROM employee_tax_addresses WHERE employee_id = ?', [$emp['id']]) : null;
             $id = $build && $emp !== null ? ($tax->idForFiling((int) $emp['id'])['value'] ?? null) : ($emp !== null ? str_repeat('0', 13) : null);
             $base = ['code' => (string) $x['code'], 'title' => (string) ($emp['title'] ?? ''), 'name' => (string) ($emp['name_th'] ?? $x['name']), 'id' => $id];
-            $people[] = $wht ? $base + ['income' => (int) $x['income'], 'wht' => (int) $x['wht']] : $base + ['wage' => (int) $x['wage'], 'ee' => (int) $x['ee']];
+            $people[] = $wht ? $base + ['income' => (int) $x['income'], 'wht' => (int) $x['wht'], 'address' => $addr] : $base + ['wage' => (int) $x['wage'], 'ee' => (int) $x['ee']];
         }
         $period = (string) $r['period'];
-        if ($wht) {
+        if ($annual) {
+            $payer = $tax->payer($le);
+            $out = OfficialFile::pnd1a($tax->filingSetting('rd_file', $le), is_array($payer) ? (string) ($payer['tax_id'] ?? '') : null, $period, (string) $r['purpose'], $people);
+            $bytes = $out['text'];
+            $name = 'PND1A-' . $r['le_code'] . '-' . $period . '-r' . $r['revision_no'] . '.txt';
+            $mime = 'text/plain; charset=utf-8';
+            $format = OfficialFile::PND1A;
+        } elseif ($wht) {
             $payer = $tax->payer($le);
             $out = OfficialFile::pnd1($tax->filingSetting('rd_file', $le), is_array($payer) ? (string) ($payer['tax_id'] ?? '') : null, $period, (string) $r['purpose'], $dates[0] ?? $this->today(), $people);
             $bytes = $out['text'];

@@ -17,6 +17,9 @@ use Blue\Core\Support\Money;
  *  SSO_1_10_XLSX_v1 social security contributions (Sor.Por.Sor. 1-10) — one sheet named with the employer's branch
  *                   sequence (6 digits): citizen id, title, first name, last name, wage, contribution.
  *
+ *  RD_PND1A_TXT_v1  annual withholding tax P.N.D. 1A (0.47.0) — the same layout with form code PND1A, month "00",
+ *                   the paid date 31 December of the year and the registered address in parts at the end of each D line.
+ *
  * Full id numbers are passed in by the caller, used here and never kept. Nothing is worked out again: amounts are the
  * revision's rows. A file is not built while anything is missing (problems).
  */
@@ -25,6 +28,14 @@ final class OfficialFile
     public const PND1 = 'RD_PND1_TXT_v1';
 
     public const SSO = 'SSO_1_10_XLSX_v1';
+
+    public const PND1A = 'RD_PND1A_TXT_v1';
+
+    /** the column-name line of the annual sample file */
+    private const PND1A_NAMES = 'RECORD_TYPE|SEQ_NO|BRANCH|PIN|TIN|TITLE|FIRST_NAME|LAST_NAME|PAID_DATE|TAX_RATE|PAID_AMT|TAX_AMT|COND|HOUSE_NO|BUILDING|ALLEY|ROAD|SUBDISTRICT|DISTRICT|PROVINCE|POSTCODE';
+
+    /** the address parts at the end of each annual D line, in order; an empty part is written "-" as in the sample */
+    public const ADDRESS = ['house_no', 'building', 'alley', 'road', 'subdistrict', 'district', 'province', 'postcode'];
 
     /** the column-name line of the sample file, written when payroll.rd_file says so */
     private const PND1_NAMES = 'HEADER_TYPE|FIELD_1|FIELD_2|FIELD_3|FIELD_4|FIELD_5|FIELD_6|FIELD_7|FIELD_8|FIELD_9|FIELD_10|FIELD_11|FIELD_12|FIELD_13';
@@ -55,11 +66,24 @@ final class OfficialFile
     }
 
     /**
-     * @param array<string, mixed>|null $set payroll.rd_file
-     * @param list<array{code: string, title: string, name: string, id: ?string, income: int, wht: int}> $people
+     * The annual file: $year is "YYYY"; each person needs address parts (house_no … postcode — building, alley, road may
+     * be empty). The fixed codes are the same payroll.rd_file as the monthly file (the samples use the same values).
+     *
+     * @param array<string, mixed>|null $set
+     * @param list<array{code: string, title: string, name: string, id: ?string, income: int, wht: int, address: ?array<string, ?string>}> $people
      * @return array{text: ?string, problems: list<array{key: string, params: array<string, string>}>}
      */
-    public static function pnd1(?array $set, ?string $payerTaxId, string $period, string $purpose, string $paidOn, array $people): array
+    public static function pnd1a(?array $set, ?string $payerTaxId, string $year, string $purpose, array $people): array
+    {
+        return self::pnd1($set, $payerTaxId, $year, $purpose, $year . '-12-31', $people, true);
+    }
+
+    /**
+     * @param array<string, mixed>|null $set payroll.rd_file
+     * @param list<array{code: string, title: string, name: string, id: ?string, income: int, wht: int, address?: ?array<string, ?string>}> $people
+     * @return array{text: ?string, problems: list<array{key: string, params: array<string, string>}>}
+     */
+    public static function pnd1(?array $set, ?string $payerTaxId, string $period, string $purpose, string $paidOn, array $people, bool $annual = false): array
     {
         $problems = [];
         $p = static function (string $key, array $params = []) use (&$problems): void {
@@ -89,17 +113,30 @@ final class OfficialFile
             if ($x['income'] < 0 || $x['wht'] < 0) {
                 $p('filing.official.negative', ['code' => $x['code']]);
             }
+            $addr = [];
+            if ($annual) {
+                $a = $x['address'] ?? null;
+                foreach (self::ADDRESS as $k) {
+                    $v = trim((string) ($a[$k] ?? ''));
+                    $addr[] = $v === '' ? '-' : $v;
+                }
+                $bad = !is_array($a) || array_filter([$a['house_no'] ?? '', $a['subdistrict'] ?? '', $a['district'] ?? '', $a['province'] ?? ''], static fn ($v): bool => trim((string) $v) === '') !== []
+                    || preg_match('/^\d{5}$/', (string) ($a['postcode'] ?? '')) !== 1 || array_filter($addr, static fn (string $v): bool => !self::clean($v)) !== [];
+                if ($bad) {
+                    $p('filing.official.no_address', ['code' => $x['code']]);
+                }
+            }
             if ($set !== null && $name !== null) {
-                $lines[] = implode('|', ['D', (string) ($i + 1), (string) $set['d_branch'], (string) $x['id'], (string) $set['d_tin'], $x['title'], $name[0], $name[1], self::thaiDate($paidOn),
-                    (string) $set['d_tax_rate'], Money::format($x['income'], 2, false), Money::format($x['wht'], 2, false), (string) $set['d_cond']]);
+                $lines[] = implode('|', array_merge(['D', (string) ($i + 1), (string) $set['d_branch'], (string) $x['id'], (string) $set['d_tin'], $x['title'], $name[0], $name[1], self::thaiDate($paidOn),
+                    (string) $set['d_tax_rate'], Money::format($x['income'], 2, false), Money::format($x['wht'], 2, false), (string) $set['d_cond']], $addr));
             }
         }
         if ($problems !== [] || $set === null) {
             return ['text' => null, 'problems' => $problems];
         }
-        $h = implode('|', ['H', (string) $set['h_field1'], (string) $payerTaxId, (string) $set['h_field3'], 'PND1', (string) $payerTaxId, (string) $set['h_field6'], substr($period, 5, 2),
-            (string) ((int) substr($period, 0, 4) + 543), (string) $set[$purpose === 'additional' ? 'type_additional' : 'type_original']]);
-        $all = array_merge(!empty($set['names_line']) ? [self::PND1_NAMES] : [], [$h], $lines);
+        $h = implode('|', ['H', (string) $set['h_field1'], (string) $payerTaxId, (string) $set['h_field3'], $annual ? 'PND1A' : 'PND1', (string) $payerTaxId, (string) $set['h_field6'],
+            $annual ? '00' : substr($period, 5, 2), (string) ((int) substr($period, 0, 4) + 543), (string) $set[$purpose === 'additional' ? 'type_additional' : 'type_original']]);
+        $all = array_merge(!empty($set['names_line']) ? [$annual ? self::PND1A_NAMES : self::PND1_NAMES] : [], [$h], $lines);
         return ['text' => implode("\n", $all), 'problems' => []];
     }
 

@@ -5,6 +5,7 @@
  * @var callable $e @var callable $t @var callable $ui @var callable $url @var callable $date @var array<string, mixed> $v
  * @var array<string, string> $companies @var string $lePid @var int $year @var list<array<string, mixed>> $months
  * @var bool $canPrepare @var string $today @var array<string, string> $errors @var array<string, mixed> $old
+ * @var array{year: int, latest: ?array<string, mixed>, done: bool, runs: int, ended: bool} $annual
  */
 use Blue\Modules\Filing\FilingCalc;
 
@@ -31,12 +32,12 @@ foreach ($months as $m) {
   <div class="table-wrap" role="region" aria-labelledby="fl-m" tabindex="0">
     <table class="table table--stack">
       <thead><tr><th scope="col"><?= $e($t('filing.field.period')) ?></th><th scope="col"><?= $e($t('filing.col.runs')) ?></th>
-        <?php foreach (FilingCalc::KINDS as $k): ?><th scope="col"><?= $e($t('filing.kind.' . $k)) ?></th><?php endforeach; ?></tr></thead>
+        <?php foreach (FilingCalc::MONTHLY as $k): ?><th scope="col"><?= $e($t('filing.kind.' . $k)) ?></th><?php endforeach; ?></tr></thead>
       <tbody>
       <?php foreach ($months as $m): ?>
         <tr><th scope="row" data-label="<?= $e($t('filing.field.period')) ?>"><?= $e((string) $m['period']) ?></th>
           <td data-label="<?= $e($t('filing.col.runs')) ?>"><?= (int) $m['runs'] ?></td>
-          <?php foreach (FilingCalc::KINDS as $k): $c = $m['kinds'][$k]; $l = $c['latest']; ?>
+          <?php foreach (FilingCalc::MONTHLY as $k): $c = $m['kinds'][$k]; $l = $c['latest']; ?>
           <td data-label="<?= $e($t('filing.kind.' . $k)) ?>">
             <?php if ($l !== null): $status = (string) $l['status']; ?>
               <a href="<?= $e($url('/filing/r/' . $l['public_id'])) ?>"><?= $e('#' . $l['revision_no']) ?></a> <?php include __DIR__ . '/_status.php'; ?>
@@ -50,6 +51,27 @@ foreach ($months as $m) {
     </table>
   </div>
 </section>
+<section class="card stack" aria-labelledby="fl-y">
+  <h2 id="fl-y" class="card__title"><?= $e($t('filing.annual_title', ['year' => (string) $year])) ?></h2>
+  <p class="text-sm text-muted"><?= $e($t('filing.annual_help')) ?></p>
+  <dl class="facts">
+    <div><dt><?= $e($t('filing.col.runs')) ?></dt><dd><?= (int) $annual['runs'] ?></dd></div>
+    <div><dt><?= $e($t('filing.annual_latest')) ?></dt><dd>
+      <?php if ($annual['latest'] !== null): $l = $annual['latest']; $status = (string) $l['status']; ?>
+        <a href="<?= $e($url('/filing/r/' . $l['public_id'])) ?>"><?= $e('#' . $l['revision_no']) ?></a> <?php include __DIR__ . '/_status.php'; ?>
+      <?php else: ?><span class="text-muted"><?= $e($t('filing.none_yet')) ?></span><?php endif; ?>
+    </dd></div>
+  </dl>
+  <?php if (!$annual['ended']): ?><p class="text-sm"><?= $ui('badge', ['tone' => 'warning', 'label' => $t('filing.annual_open')]) ?></p><?php endif; ?>
+  <?php if ($canPrepare): ?>
+  <form method="post" action="<?= $e($url('/filing/generate')) ?>" class="stack" novalidate><?= $csrf ?>
+    <input type="hidden" name="le" value="<?= $e($lePid) ?>"><input type="hidden" name="kind" value="wht_annual"><input type="hidden" name="period" value="<?= (int) $year ?>"><input type="hidden" name="year" value="<?= (int) $year ?>">
+    <?= $ui('field', ['name' => 'reason', 'id' => 'fl-y-reason', 'label' => $t('filing.field.reason'), 'value' => $o('kind') === 'wht_annual' ? $o('reason') : '', 'help' => $t('filing.reason_help'),
+        'error' => $o('kind') === 'wht_annual' ? ($errors['reason'] ?? $errors['period'] ?? null) : null]) ?>
+    <div class="row"><?= $ui('button', ['label' => $t('filing.annual_generate', ['year' => (string) $year]), 'type' => 'submit', 'variant' => 'secondary', 'icon' => 'refresh']) ?></div>
+  </form>
+  <?php endif; ?>
+</section>
 <?php if ($canPrepare): ?>
 <section class="card stack" aria-labelledby="fl-g">
   <h2 id="fl-g" class="card__title"><?= $e($t('filing.generate_title')) ?></h2>
@@ -58,10 +80,10 @@ foreach ($months as $m) {
     <input type="hidden" name="le" value="<?= $e($lePid) ?>">
     <div class="grid grid--2">
       <?= $ui('field', ['name' => 'kind', 'type' => 'select', 'label' => $t('filing.field.kind'), 'required' => true, 'value' => $o('kind', 'wht_monthly'),
-          'options' => array_combine(FilingCalc::KINDS, array_map(static fn (string $k): string => $t('filing.kind.' . $k), FilingCalc::KINDS)), 'error' => $errors['kind'] ?? null]) ?>
-      <?= $ui('field', ['name' => 'period', 'type' => 'select', 'label' => $t('filing.field.period'), 'required' => true, 'value' => $o('period', (string) array_key_first($periods)), 'options' => $periods, 'error' => $errors['period'] ?? null]) ?>
+          'options' => array_combine(FilingCalc::MONTHLY, array_map(static fn (string $k): string => $t('filing.kind.' . $k), FilingCalc::MONTHLY)), 'error' => $errors['kind'] ?? null]) ?>
+      <?= $ui('field', ['name' => 'period', 'type' => 'select', 'label' => $t('filing.field.period'), 'required' => true, 'value' => $o('period', (string) array_key_first($periods)), 'options' => $periods, 'error' => $o('kind') !== 'wht_annual' ? ($errors['period'] ?? null) : null]) ?>
     </div>
-    <?= $ui('field', ['name' => 'reason', 'label' => $t('filing.field.reason'), 'value' => $o('reason'), 'help' => $t('filing.reason_help'), 'error' => $errors['reason'] ?? null]) ?>
+    <?= $ui('field', ['name' => 'reason', 'label' => $t('filing.field.reason'), 'value' => $o('kind') !== 'wht_annual' ? $o('reason') : '', 'help' => $t('filing.reason_help'), 'error' => $o('kind') !== 'wht_annual' ? ($errors['reason'] ?? null) : null]) ?>
     <div class="row"><?= $ui('button', ['label' => $t('filing.generate'), 'type' => 'submit', 'variant' => 'primary', 'icon' => 'refresh']) ?></div>
   </form>
 </section>

@@ -36,6 +36,7 @@ foreach (ProfileService::EDUCATION as $lv) {
     <?php foreach (ProfileService::CONTACTS as $ct): ?>
       <dt><?= $e($t('employees.contact.' . $ct)) ?></dt><dd><?= $e((string) ($contacts[$ct] ?? '—')) ?></dd>
     <?php endforeach; ?>
+    <dt><?= $e($t('employees.section.tax_address')) ?></dt><dd><?= $e(\Blue\Modules\Employees\ProfileService::addressLine($profile['tax_address'] ?? null) ?? '—') ?></dd>
     <?php foreach ((array) $profile['emergency'] as $em): ?>
       <dt><?= $e($t('employees.section.emergency')) ?></dt><dd><?= $e($em['name'] . ' (' . $em['relation'] . ') ' . $em['phone']) ?></dd>
     <?php endforeach; ?>

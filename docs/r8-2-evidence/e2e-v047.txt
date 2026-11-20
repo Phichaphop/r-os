@@ -1,0 +1,23 @@
+annual-card: /filing overflow=0 axe=[]
+generate: สร้างและตรวจแล้ว | ไฟล์ทางการยังไม่ได้ทดสอบกับระบบของหน่วยงาน ฉบับตรวจทาน (Excel) ไม่ใช่ไฟล์ยื่น · ไฟล์ทางการอยู่ในส่วน "ไฟล์ทางการ" ด้านล่า · /filing/r/01M7VETQ41GJJGDWWR9S0D1A6R
+rows 35 · opening cells: 495,000.00 / 13,500.00
+annual-revision: /filing/r/01M7VETQ41GJJGDWWR9S0D1A6R overflow=0 axe=[]
+submit: ส่งอนุมัติแล้ว | ไฟล์ทางการยังไม่ได้ทดสอบกับระบบของหน่วยงาน ฉบับตรวจทาน (Excel) ไม่ใช่ไฟล์ยื่น · ไฟล์ทางการอยู่ในส่วน "ไฟล์ทางการ" ด้านล่าง 
+approved 01M7VETQTZZMYWT7G0J4MC952B
+official card (no address yet): D1-0001: ไม่มีที่อยู่ตามทะเบียนบ้านแบบแยกช่อง (ข้อมูลพนักงาน → ข้อมูลส่วนบุคคล)
+annual-official-blocked: /filing/r/01M7VETQ41GJJGDWWR9S0D1A6R overflow=0 axe=[]
+console hr.demo1: Failed to load resource: the server responded with a status of 422 (Unknown Status Code)
+address with errors: กรอกช่องนี้ (หรือเว้นว่างที่อยู่ทั้งหมด) / กรอกช่องนี้ (หรือเว้นว่างที่อยู่ทั้งหมด) / ใส่ตัวเลข 5 หลัก
+address-errors: /employees/01M7P4R6368H35B2MW9Y7VZ7R3/contacts overflow=0 axe=[]
+address saved: บันทึกข้อมูลแล้ว
+address-saved: /employees/01M7P4R6368H35B2MW9Y7VZ7R3 overflow=0 axe=[]
+annual-official-ready: /filing/r/01M7VETQ41GJJGDWWR9S0D1A6R overflow=0 axe=[]
+reauth asked: yes
+file: PND1A-DEMO1-2026-r1.txt
+lines 37 · H|0000|<ID13>|000000|PND1A|<ID13>|0000|00|2569|1
+D|1|000000|<ID13>|0000000000|นาย|ผู้จัดการฝ่ายบุคคล|(DEMO)|31122569|0.00|550000.00|15000.00|1|99/1|-|สุขุมวิท 21|สุขุมวิท|คลองเตยเหนือ|วัฒนา|กรุงเทพมหานคร|10110
+me has address fields: 1
+me-profile: /me/profile overflow=0 axe=[]
+annual-card-390-dark: /filing overflow=0 axe=[]
+annual-revision-390-dark: /filing/r/01M7VETQ41GJJGDWWR9S0D1A6R overflow=0 axe=[]
+address-390-dark: /employees/01M7P4R6368H35B2MW9Y7VZ7R3 overflow=0 axe=[]

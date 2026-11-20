@@ -8,9 +8,13 @@ namespace Blue\Modules\Filing;
  * FILING_V1 — the rows, totals and checks of a monthly government filing, worked out only from the inputs the
  * Calculation Ledger keeps (so a revision can be replayed and compared). Amounts are units of 1/10 000 baht.
  *
- * Inputs: kind (wht_monthly | sso_monthly), employer {present}, due_date, runs [{pid, run_no, run_type, intact}],
- * open_runs [{run_no, status}], people [{code, name, id_ok, id_last4, taxable, wht, sso_ee, sso_er, sso_base,
- * sso_wage_used, sso_wage_unknown, ytd {taxable, wht, sso} | null}], not_paid [codes].
+ * Inputs: kind (wht_monthly | sso_monthly | wht_annual), employer {present}, due_date, runs [{pid, run_no, run_type,
+ * intact}], open_runs [{run_no, status}], people [{code, name, id_ok, id_last4, taxable, wht, sso_ee, sso_er, sso_base,
+ * sso_wage_used, sso_wage_unknown, ytd {taxable, wht, sso} | null, and for the year: in_runs, opening {taxable, wht} |
+ * null, address_ok}], not_paid [codes], year_open (the year has not ended yet).
+ *
+ * The annual filing (0.47.0) adds to what the year's approved runs paid what the approved opening balances say was paid
+ * before the company started using the system; a person with only an opening balance is in it too.
  *
  * The rows are what the company paid and withheld — nothing is worked out again here. Whether this is the content an
  * official form wants (and in which layout) is decided by the official format adapter, not by this class.
@@ -19,9 +23,17 @@ final class FilingCalc
 {
     public const ENGINE = 'FILING_V1';
 
-    public const KINDS = ['wht_monthly', 'sso_monthly'];
+    public const KINDS = ['wht_monthly', 'sso_monthly', 'wht_annual'];
 
-    public const SCHEMA = ['wht_monthly' => 'BLUE_FILING_WHT_REVIEW_v1', 'sso_monthly' => 'BLUE_FILING_SSO_REVIEW_v1'];
+    /** the kinds filed for a month (the annual one is filed for a year) */
+    public const MONTHLY = ['wht_monthly', 'sso_monthly'];
+
+    public const SCHEMA = ['wht_monthly' => 'BLUE_FILING_WHT_REVIEW_v1', 'sso_monthly' => 'BLUE_FILING_SSO_REVIEW_v1', 'wht_annual' => 'BLUE_FILING_WHT_ANNUAL_REVIEW_v1'];
+
+    public static function isWht(string $kind): bool
+    {
+        return $kind === 'wht_monthly' || $kind === 'wht_annual';
+    }
 
     /**
      * @param array<string, mixed> $in
@@ -29,7 +41,8 @@ final class FilingCalc
      */
     public static function build(array $in): array
     {
-        $wht = ($in['kind'] ?? '') === 'wht_monthly';
+        $wht = self::isWht((string) ($in['kind'] ?? ''));
+        $annual = ($in['kind'] ?? '') === 'wht_annual';
         $errors = [];
         $warnings = [];
         $e = static function (string $key, array $params = []) use (&$errors): void {
@@ -54,14 +67,22 @@ final class FilingCalc
         foreach ((array) ($in['people'] ?? []) as $p) {
             $code = (string) $p['code'];
             $y = $p['ytd'] ?? null;
-            if (!is_array($y) || (int) $y['taxable'] !== (int) $p['taxable'] || (int) $y['wht'] !== (int) $p['wht'] || (int) $y['sso'] !== (int) $p['sso_ee']) {
+            if ((bool) ($p['in_runs'] ?? true) && (!is_array($y) || (int) $y['taxable'] !== (int) $p['taxable'] || (int) $y['wht'] !== (int) $p['wht'] || (int) $y['sso'] !== (int) $p['sso_ee'])) {
                 $e('filing.check.ytd_mismatch', ['code' => $code]); // the payroll lines and the year-to-date entries the approval wrote must agree
             }
             if ($wht) {
-                if ((int) $p['taxable'] === 0 && (int) $p['wht'] === 0) {
+                $op = $annual && is_array($p['opening'] ?? null) ? ['taxable' => (int) $p['opening']['taxable'], 'wht' => (int) $p['opening']['wht']] : ['taxable' => 0, 'wht' => 0];
+                if ((int) $p['taxable'] + $op['taxable'] === 0 && (int) $p['wht'] + $op['wht'] === 0) {
                     continue;
                 }
-                $row = ['code' => $code, 'name' => (string) $p['name'], 'id_last4' => (string) ($p['id_last4'] ?? ''), 'income' => (int) $p['taxable'], 'wht' => (int) $p['wht']];
+                $row = ['code' => $code, 'name' => (string) $p['name'], 'id_last4' => (string) ($p['id_last4'] ?? ''), 'income' => (int) $p['taxable'] + $op['taxable'], 'wht' => (int) $p['wht'] + $op['wht']];
+                if ($annual) {
+                    $row['opening_income'] = $op['taxable'];
+                    $row['opening_wht'] = $op['wht'];
+                    if (!(bool) ($p['address_ok'] ?? false)) {
+                        $w('filing.check.no_address', ['code' => $code]); // the annual form asks for the address in parts
+                    }
+                }
                 if ($row['income'] < 0 || $row['wht'] < 0) {
                     $w('filing.check.negative', ['code' => $code]);
                 }
@@ -96,7 +117,11 @@ final class FilingCalc
         if ($notPaid !== []) {
             $w('filing.check.not_paid', ['n' => (string) count($notPaid), 'codes' => implode(', ', array_slice($notPaid, 0, 10)) . (count($notPaid) > 10 ? ' …' : '')]);
         }
-        if (($in['due_date'] ?? null) === null) {
+        if ($annual) {
+            if ((bool) ($in['year_open'] ?? false)) {
+                $w('filing.check.year_open');
+            }
+        } elseif (($in['due_date'] ?? null) === null) {
             $w('filing.check.due_missing');
         }
         return ['rows' => $rows, 'totals' => $tot, 'errors' => $errors, 'warnings' => $warnings];
