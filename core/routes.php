@@ -276,6 +276,13 @@ return static function (Router $r, App $app): void {
 
     $pay = new PaymentsController($app);
     $r->get('/payments', [$pay, 'index'], 'payments');
+    $bf = new \Blue\Core\Payments\BankFormatsController($app);
+    $r->get('/payments/formats', [$bf, 'index']);
+    $r->post('/payments/formats/new', [$bf, 'create']);
+    $r->get('/payments/formats/' . $ulid, [$bf, 'show']);
+    foreach (['save', 'activate', 'copy', 'discard', 'retire'] as $act) {
+        $r->post('/payments/formats/' . $ulid . '/' . $act, [$bf, $act]);
+    }
     $r->get('/payments/new', [$pay, 'createForm']);
     $r->post('/payments/new', [$pay, 'create']);
     $r->get('/payments/' . $ulid, [$pay, 'show']);

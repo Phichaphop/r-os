@@ -1421,3 +1421,8 @@ a.pdf-tool:focus-visible { outline: 3px solid var(--color-action-primary); outli
 .sf-band__label { display: block; font-size: 0.8rem; }
 @media (max-width: 600px) { .sf-sign { grid-template-columns: 1fr; } .sf-matrix { font-size: 0.8rem; } .sf-matrix th, .sf-matrix td { padding: var(--space-1); } }
 @media print { .sf-band--low, .sf-band--medium, .sf-band--high, .sf-band--very_high { print-color-adjust: exact; -webkit-print-color-adjust: exact; } }
+
+/* bank file formats (0.48.0 · R8-3): the preview shows each line as written; spaces as middle dots, line length on the left */
+.bf-preview { font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.6; white-space: pre; margin: 0; padding: var(--space-3); background: var(--color-surface-2); border-radius: var(--radius-control); min-width: max-content; }
+.bf-preview__no { color: var(--color-text-muted); user-select: none; }
+.bf-vars p, .bf-vars li { overflow-wrap: anywhere; }

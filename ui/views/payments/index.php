@@ -9,7 +9,8 @@ $statuses = ['draft', 'in_review', 'returned', 'approved', 'file_generated', 'se
 $types = ['payroll', 'claim', 'ap'];
 ?>
 <?= $ui('page-header', ['title' => $t('payment.title'), 'subtitle' => $t('payment.subtitle'),
-    'actions' => $canPrepare ? $ui('button', ['label' => $t('payment.new.title'), 'href' => $url('/payments/new'), 'variant' => 'primary', 'icon' => 'plus']) : '']) ?>
+    'actions' => $ui('button', ['label' => $t('payment.format.title'), 'href' => $url('/payments/formats'), 'icon' => 'file-text'])
+        . ($canPrepare ? ' ' . $ui('button', ['label' => $t('payment.new.title'), 'href' => $url('/payments/new'), 'variant' => 'primary', 'icon' => 'plus']) : '')]) ?>
 <form method="get" action="<?= $e($url('/payments')) ?>" class="filter-bar" role="search">
   <?= $ui('field', ['name' => 'q', 'label' => $t('common.search'), 'value' => (string) $f['q']]) ?>
   <?= $ui('field', ['name' => 'status', 'label' => $t('payment.field.status'), 'type' => 'select', 'value' => (string) $f['status'],

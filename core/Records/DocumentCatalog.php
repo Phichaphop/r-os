@@ -25,7 +25,7 @@ final class DocumentCatalog
         'core.letter' => ['C', 'core.document.view_confidential', 'core.document.manage_confidential', ['html', 'pdf'], 5, true, 'issued_letter', 'finalized'],
         'core.brand_asset' => ['P', 'core.document.view', 'core.config.approve', ['png', 'jpeg', 'webp', 'ico'], 1, false, null, 'finalized'],
         // phase 3C — bank transfer files (DEC-31): Restricted, encrypted, only people who may download payment files see them
-        'core.payment_file' => ['R', 'core.payment.download', 'core.payment.download', ['xlsx'], 20, true, 'accounting_tax', 'finalized'],
+        'core.payment_file' => ['R', 'core.payment.download', 'core.payment.download', ['xlsx', 'txt', 'csv'], 20, true, 'accounting_tax', 'finalized'],
     ];
 
     /** Retention record classes (04 §6.17.7). Durations are NOT here — they live in retention_rules and need approval. */

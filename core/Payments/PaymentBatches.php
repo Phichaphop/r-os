@@ -444,13 +444,22 @@ final class PaymentBatches implements WorkflowSubject
 
     // ---- bank file ----------------------------------------------------------------------------------
 
-    /** Builds the bank file from the APPROVED batch; refuses when the totals differ or an active file exists. */
-    public function generateFile(Authorizer $az, string $pid): string
+    /**
+     * Builds the bank file from the APPROVED batch; refuses when the totals differ or an active file exists. $format is
+     * the public id of one of the company's active bank formats (0.48.0), or empty for the standard file.
+     */
+    public function generateFile(Authorizer $az, string $pid, string $format = ''): string
     {
         $b = $this->row($pid);
         $le = (int) $b['legal_entity_id'];
         $this->requireLe($az, 'core.payment.download', $le);
-        return $this->db->transactional(function () use ($az, $pid, $le): string {
+        $fmt = null;
+        if ($format !== '') {
+            $fmt = $this->db->one("SELECT * FROM pmt_bank_formats WHERE public_id = ? AND legal_entity_id = ? AND status = 'active'", [$format, $le])
+                ?? throw new BusinessException('payment.format.error_not_active', [], 409);
+            $fmt['params'] = (array) (json_decode((string) $fmt['params_json'], true) ?: []);
+        }
+        return $this->db->transactional(function () use ($az, $pid, $le, $fmt): string {
             $b = $this->db->one('SELECT * FROM pmt_batches WHERE public_id = ? FOR UPDATE', [$pid]) ?? throw HttpException::notFound();
             if ($b['status'] !== 'approved') {
                 throw new BusinessException('payment.error.not_approved', [], 409);
@@ -479,17 +488,43 @@ final class PaymentBatches implements WorkflowSubject
                 [$le]
             );
             $names = $this->db->one('SELECT (SELECT display_name FROM users WHERE id = ?) AS prepared, (SELECT display_name FROM users WHERE id = ?) AS approved', [$b['prepared_by'], $b['approved_by']]) ?? [];
-            $bytes = BankFile::standard([
-                'company' => $company, 'batch_no' => (string) $b['batch_no'], 'payment_type' => (string) $b['payment_type'], 'period' => (string) ($b['period_label'] ?? ''),
-                'pay_date' => (string) $b['pay_date'], 'prepared' => (string) ($names['prepared'] ?? ''), 'approved' => (string) ($names['approved'] ?? ''),
-                'generated_at' => $this->clock->now()->format('Y-m-d H:i:s') . ' UTC', 'currency' => (string) $b['currency_code'],
-            ], $items);
-            // read the file back: the totals written must equal the batch (the file is what the bank will see)
-            $check = BankFile::readTotals($bytes);
-            if ($check['count'] !== count($items) || $check['total'] !== $sum) {
-                throw new BusinessException('payment.error.total_mismatch', [], 500);
+            $formatCode = BankFile::FORMAT;
+            $formatVersion = BankFile::VERSION;
+            $ext = 'xlsx';
+            if ($fmt !== null) {
+                $leCode = (string) $this->db->scalar('SELECT code FROM legal_entities WHERE id = ?', [$le]);
+                $built = BankTemplate::build(['header' => $fmt['header_tpl'], 'detail' => (string) $fmt['detail_tpl'], 'footer' => $fmt['footer_tpl'], 'encoding' => (string) $fmt['encoding'],
+                    'line_end' => (string) $fmt['line_end'], 'final_newline' => (int) $fmt['final_newline'], 'params' => $fmt['params']], [
+                    'batch_no' => (string) $b['batch_no'], 'company_code' => $leCode, 'pay_date' => (string) $b['pay_date'], 'today' => $this->clock->now()->format('Y-m-d'),
+                    'time' => $this->clock->now()->format('His'), 'count' => count($items), 'total' => $sum, 'currency' => (string) $b['currency_code'], 'period' => (string) ($b['period_label'] ?? ''),
+                ], array_map(static fn (array $it): array => ['seq' => $it['seq'], 'ref' => $b['batch_no'] . '-' . str_pad((string) $it['seq'], 4, '0', STR_PAD_LEFT), 'payee_code' => $it['payee_code'],
+                    'payee_name' => $it['payee_name'], 'bank_code' => $it['bank'], 'account' => $it['account'], 'amount' => $it['amount'], 'site' => $it['site']], $items));
+                if ($built['bytes'] === null) {
+                    $p = $built['problems'][0];
+                    throw new BusinessException($p['key'], $p['params'], 422);
+                }
+                // every item must be in the file once (one detail line per item per detail template line)
+                $per = count(array_filter(explode("\n", str_replace("\r", '', (string) $fmt['detail_tpl'])), static fn (string $l): bool => $l !== ''));
+                if ($built['detail_lines'] !== count($items) * $per) {
+                    throw new BusinessException('payment.error.total_mismatch', [], 500);
+                }
+                $bytes = $built['bytes'];
+                $formatCode = (string) $fmt['code'];
+                $formatVersion = (string) $fmt['version'];
+                $ext = (string) $fmt['extension'];
+            } else {
+                $bytes = BankFile::standard([
+                    'company' => $company, 'batch_no' => (string) $b['batch_no'], 'payment_type' => (string) $b['payment_type'], 'period' => (string) ($b['period_label'] ?? ''),
+                    'pay_date' => (string) $b['pay_date'], 'prepared' => (string) ($names['prepared'] ?? ''), 'approved' => (string) ($names['approved'] ?? ''),
+                    'generated_at' => $this->clock->now()->format('Y-m-d H:i:s') . ' UTC', 'currency' => (string) $b['currency_code'],
+                ], $items);
+                // read the file back: the totals written must equal the batch (the file is what the bank will see)
+                $check = BankFile::readTotals($bytes);
+                if ($check['count'] !== count($items) || $check['total'] !== $sum) {
+                    throw new BusinessException('payment.error.total_mismatch', [], 500);
+                }
             }
-            $doc = $this->documents->storeGenerated($az->userId, 'core.payment_file', $bytes, $b['batch_no'] . '_' . BankFile::FORMAT . '.xlsx', [
+            $doc = $this->documents->storeGenerated($az->userId, 'core.payment_file', $bytes, $b['batch_no'] . '_' . $formatCode . ($fmt !== null ? '_v' . $formatVersion : '') . '.' . $ext, [
                 'title' => 'Bank file ' . $b['batch_no'], 'legal_entity_id' => $le, 'related_type' => 'payment_batch', 'related_id' => (string) $b['public_id'],
                 'document_number' => (string) $b['batch_no'], 'is_demo' => (int) $b['is_demo'],
             ], 'system', true);
@@ -499,12 +534,12 @@ final class PaymentBatches implements WorkflowSubject
             $this->db->run(
                 "INSERT INTO pmt_files (public_id, batch_id, format_code, format_version, document_id, sha256, item_count, total_amount, status, generated_by, generated_at)
                  VALUES (?, ?, ?, ?, (SELECT id FROM documents WHERE public_id = ?), ?, ?, ?, 'active', ?, ?)",
-                [$fpid, $b['id'], BankFile::FORMAT, BankFile::VERSION, $doc['document'], $sha, count($items), Money::toDb($sum), $az->userId, $now]
+                [$fpid, $b['id'], $formatCode, $formatVersion, $doc['document'], $sha, count($items), Money::toDb($sum), $az->userId, $now]
             );
             $this->db->run("UPDATE pmt_batches SET status = 'file_generated', updated_at = ?, updated_by = ?, row_version = row_version + 1 WHERE id = ?", [$now, $az->userId, $b['id']]);
-            $this->outbox->record('payment.file.generated', ['batch_public_id' => $b['public_id'], 'format_code' => BankFile::FORMAT, 'sha256' => $sha,
+            $this->outbox->record('payment.file.generated', ['batch_public_id' => $b['public_id'], 'format_code' => $formatCode, 'format_version' => $formatVersion, 'sha256' => $sha,
                 'item_count' => count($items), 'total_amount' => Money::toDb($sum)], 'payment.file.generated:' . $fpid, $le);
-            $this->audit->record('payment.file_generated', 'success', 'payment_batch', (string) $b['public_id'], $le, null, ['sha256' => $sha, 'items' => count($items), 'total' => Money::toDb($sum)]);
+            $this->audit->record('payment.file_generated', 'success', 'payment_batch', (string) $b['public_id'], $le, null, ['sha256' => $sha, 'format' => $formatCode . ' v' . $formatVersion, 'items' => count($items), 'total' => Money::toDb($sum)]);
             return $fpid;
         });
     }

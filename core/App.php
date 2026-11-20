@@ -73,7 +73,7 @@ use Blue\Core\Ui\View;
 final class App
 {
     /** Release shown in backups and on the status page. */
-    public const RELEASE = '0.47.0 (R8-2: annual PND 1A file)';
+    public const RELEASE = '0.48.0 (R8-3: bank file formats)';
 
     private ?Connection $db = null;
     private ?Translator $translator = null;
@@ -523,6 +523,11 @@ final class App
     public function posting(): PostingService
     {
         return $this->posting ??= new PostingService($this->db(), $this->clock, $this->audit(), $this->outbox(), $this->accounts(), $this->postingRules(), $this->journals(), $this->notifier());
+    }
+
+    public function bankFormats(): \Blue\Core\Payments\BankFormats
+    {
+        return new \Blue\Core\Payments\BankFormats($this->db(), $this->clock, $this->audit());
     }
 
     public function payments(): PaymentBatches

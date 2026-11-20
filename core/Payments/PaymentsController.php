@@ -81,6 +81,7 @@ final class PaymentsController extends Controller
                 'download' => $az->scope('core.payment.download')->coversLegalEntity($le), 'reconcile' => $az->scope('core.payment.reconcile')->coversLegalEntity($le),
                 'finance' => $az->scope('core.finance.view')->coversLegalEntity($le),
             ],
+            'formats' => $this->app->bankFormats()->active($le),
             'wf' => $b['workflow_instance_id'] !== null ? $this->app->db()->scalar('SELECT public_id FROM workflow_instances WHERE id = ?', [$b['workflow_instance_id']]) : null,
         ]);
     }
@@ -108,7 +109,7 @@ final class PaymentsController extends Controller
     public function generate(Request $r): Response
     {
         $this->ctx($r)->requireFreshReauth();
-        return $this->act($r, fn (string $pid) => $this->app->payments()->generateFile($this->ctx($r)->az(), $pid), 'payment.flash.generated');
+        return $this->act($r, fn (string $pid) => $this->app->payments()->generateFile($this->ctx($r)->az(), $pid, $this->str($r, 'format', 26)), 'payment.flash.generated');
     }
 
     public function supersede(Request $r): Response

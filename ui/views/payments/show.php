@@ -2,7 +2,7 @@
 /**
  * @var callable $e @var callable $t @var callable $ui @var callable $url @var callable $date @var array<string, mixed> $v
  * @var array<string, mixed> $b @var array{rows: list<array<string, mixed>>, total: int} $items @var string $status @var int $page @var int $per
- * @var array<string, bool> $can @var ?string $wf
+ * @var array<string, bool> $can @var ?string $wf @var list<array<string, mixed>> $formats
  */
 use Blue\Core\Support\Money;
 
@@ -75,7 +75,11 @@ $istatus = ['pending' => ['neutral', 'hourglass'], 'paid' => ['success', 'cash']
     <?php elseif ($st === 'approved'): ?>
       <?php if ($can['download']): ?>
         <p class="text-sm text-muted"><?= $e($t('payment.generate_help')) ?></p>
-        <form method="post" action="<?= $e($url($base . '/generate')) ?>"><?= $csrf ?><?= $back ?><?= $ui('button', ['label' => $t('payment.generate'), 'type' => 'submit', 'variant' => 'primary', 'icon' => 'file-text']) ?></form>
+        <form method="post" action="<?= $e($url($base . '/generate')) ?>" class="stack-sm"><?= $csrf ?><?= $back ?>
+          <?php $opts = ['' => $t('payment.format.standard')]; foreach ($formats as $fm) { $opts[(string) $fm['public_id']] = $fm['code'] . ' v' . $fm['version'] . ' · ' . $fm['name'] . ' (.' . $fm['extension'] . ')'; } ?>
+          <?= $ui('field', ['name' => 'format', 'id' => 'gen-format', 'type' => 'select', 'label' => $t('payment.format.pick'), 'options' => $opts, 'value' => '',
+              'help' => $formats === [] ? $t('payment.format.none_active') : $t('payment.format.pick_help')]) ?>
+          <div class="row"><?= $ui('button', ['label' => $t('payment.generate'), 'type' => 'submit', 'variant' => 'primary', 'icon' => 'file-text']) ?></div></form>
       <?php else: ?><p><?= $e($t('payment.waiting_file')) ?></p><?php endif; ?>
     <?php elseif ($st === 'file_generated'): ?>
       <?php if ($can['download'] && $active !== null): ?>

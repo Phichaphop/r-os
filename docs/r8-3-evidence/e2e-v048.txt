@@ -1,0 +1,26 @@
+formats-empty: /payments/formats overflow=0 axe=[]
+create: สร้างร่างแล้ว | เริ่มจากตัวอย่างสมมุติ รูปแบบนี้เริ่มจากตัวอย่างสมมุติ — ต้องแก้ให้ตรงกับข้อกำหนดของธนาคารจริงก่อนเปิดใช้ · /payments/formats/01M7VK5NF0QJMDJPG0D48KM5HD
+preview (sample):   40 H000000000120112026000003000000005335049 /   94 D000001001000012345670000002500000สมมุติ·ใจดี·····························PAY-SAMPLE-0001·····
+format-draft: /payments/formats/01M7VK5NF0QJMDJPG0D48KM5HD overflow=0 axe=[]
+console payroll.maker: Failed to load resource: the server responded with a status of 422 (Unknown Status Code)
+wrong token: รายการ (หนึ่งบรรทัดต่อผู้รับเงิน): ไม่รู้จักตัวแปร {foo}
+format-error: /payments/formats/01M7VK5NF0QJMDJPG0D48KM5HD/save overflow=0 axe=[]
+save: บันทึกร่างแล้ว | เริ่มจากตัวอย่างสมมุติ รูปแบบนี้เริ่มจากตัวอย่างสมมุติ — ต้องแก้ให้ตรงกับข้อกำหนดของธนาคารจริงก่อนเปิดใช้
+preview:   40 H000000004220112026000003000000005335049 /   84 D000001001000012345670000002500000สมมุติ·ใจดี···················PAY-SAMPLE-0001····· /   84 D000002002000098765430000001835050ตัวอย่าง·รักงาน···············PAY-SAMPLE-0002····· /   84 D000003001000055500010000000999999ทดสอบ·"นามสมมุติ"·············PAY-SAMPLE-0003····· /   22 T000003000000005335049 / 
+format-saved: /payments/formats/01M7VK5NF0QJMDJPG0D48KM5HD overflow=0 axe=[]
+maker can switch on: 0
+console payroll.checker: Failed to load resource: the server responded with a status of 422 (Unknown Status Code)
+activate empty: ยืนยันว่าตรวจกับข้อกำหนดของธนาคารแล้ว / ใส่ข้อกำหนดของธนาคาร 5–200 ตัวอักษร
+activate: เปิดใช้รูปแบบแล้ว | เริ่มจากตัวอย่างสมมุติ รูปแบบนี้เริ่มจากตัวอย่างสมมุติ — ต้องแก้ให้ตรงกับข้อกำหนดของธนาคารจริงก่อนเปิดใช้
+format-active: /payments/formats/01M7VK5NF0QJMDJPG0D48KM5HD overflow=0 axe=[]
+batch-pick-format: /payments/01M7VK5KTQ4MED0GJBP3HMTDQV overflow=0 axe=[]
+formats offered: ไฟล์มาตรฐาน Blue OS (Excel) | BANKX_E2E v1 · ธนาคารทดสอบ X (สมมุติ — e2e) (.txt) | BANKX_TEST v1 · ธนาคารทดสอบ X (สมมุติ — e2e) (.txt)
+  reauth asked: yes
+generate: สร้างไฟล์แล้ว | ข้อมูลจำลอง (DEMO) — ห้ามใช้เลขบัญชีจริง
+file: PAY-202611-0003_BANKX_E2E_v1.txt
+CRLF: true · lines: H000000004225112026000003000000000400000 / D000001001000123456780000000150050ผู้จัดการฝ่ายบุคคล (DEMO)     PAY-202611-0003-0001 / D000002002000123456790000000200000พนักงานตัวอย่าง (DEMO)        PAY-202611-0003-0002 / D000003001000987654320000000049950พนักงานรายวัน (DEMO)          PAY-202611-0003-0003 / T000003000000000400000
+pmt_files: BANKX_E2E v1 active
+batch-file: /payments/01M7VK5KTQ4MED0GJBP3HMTDQV overflow=0 axe=[]
+formats-390-dark: /payments/formats overflow=0 axe=[]
+format-390-dark: /payments/formats/01M7VK5NF0QJMDJPG0D48KM5HD overflow=0 axe=[]
+format-draft-390-dark: /payments/formats/01M7VK5255ZYP3QB2NWNW2A8P1 overflow=0 axe=[]
