@@ -66,6 +66,7 @@ final class CalcService
             'sso' => CalcEngine::sso($rule['rule'], $in),
             'ewf' => CalcEngine::ewf($rule['rule'], $in),
             'pit' => CalcEngine::pit($rule['rule'], $in),
+            'prize' => CalcEngine::prize($rule['rule'], $in),
             default => CalcEngine::severance($rule['rule'], $in),
         };
         return ['rule' => $rule, 'result' => $result, 'at' => $at->format('Y-m-d')];

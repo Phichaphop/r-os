@@ -115,6 +115,7 @@ final class PayrollController extends Controller
             'slips' => PayslipService::of($this->app)->runStatus((int) $run['id']),
             'original' => $run['run_type'] === 'correction' ? $this->app->db()->one('SELECT public_id, label FROM pay_runs WHERE id = ?', [$run['corrects_run_id']]) : null,
             'corrections' => $this->app->db()->all('SELECT public_id, run_no, label, status FROM pay_runs WHERE corrects_run_id = ? ORDER BY id', [$run['id']]),
+            'reviews' => PayrollReviews::of($this->app)->history((int) $run['id']), 'reviewBlock' => PayrollReviews::of($this->app)->blocker($az, $run),
             'reasons' => $this->svc()->correctionReasons($run), 'runWarnings' => $this->svc()->runWarnings($run), 'recon' => $run['status'] === 'approved' ? $this->svc()->reconciliation($run) : null, 'today' => $this->svc()->today(),
             'errors' => $errors, 'old' => $old, 'form' => $form], $status)->withHeader('Cache-Control', 'no-store, max-age=0');
     }
@@ -206,6 +207,34 @@ final class PayrollController extends Controller
         }
         $this->flash($r, 'success', 'payroll.flash.' . $action);
         return $this->redirect($r, '/payroll/runs/' . $pid);
+    }
+
+    // ---- Payroll Checker reviews (R8-4) ----------------------------------------------------------------------------------
+
+    /** Approved runs of a company by pay period with their review state (anyone with payroll.view; reviewing needs payroll.review). */
+    public function reviews(Request $r): Response
+    {
+        [$companies, $lePid, $le] = $this->company($r);
+        $rv = PayrollReviews::of($this->app);
+        $state = (string) ($r->query['state'] ?? '');
+        $state = in_array($state, PayrollReviews::STATES, true) ? $state : '';
+        return $this->page('@payroll/reviews', ['title' => $this->t('payroll.review.title'), 'companies' => $companies, 'lePid' => $lePid, 'periods' => $rv->periods($le, $state),
+            'counts' => $rv->counts($le), 'state' => $state, 'appointed' => $rv->appointed($le), 'canReview' => $this->ctx($r)->az()->scope('payroll.review')->coversLegalEntity($le)])
+            ->withHeader('Cache-Control', 'no-store, max-age=0');
+    }
+
+    public function review(Request $r): Response
+    {
+        $pid = (string) $r->params['id'];
+        try {
+            PayrollReviews::of($this->app)->review($this->ctx($r)->az(), $pid, $this->str($r, 'result', 10), $this->str($r, 'note', 2000));
+        } catch (ValidationException $e) {
+            return $this->show($r, $this->errors($e), $r->body, 'review', 422);
+        } catch (BusinessException $e) {
+            return $this->back($r, '/payroll/runs/' . $pid, $e);
+        }
+        $this->flash($r, 'success', 'payroll.review.flash');
+        return $this->redirect($r, '/payroll/runs/' . $pid . '#review');
     }
 
     public function register(Request $r): Response

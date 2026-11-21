@@ -22,6 +22,8 @@ return static function (Router $r, App $app): void {
     $r->post('/payroll/runs/' . $id . '/manual/{entry:[0-9A-HJKMNP-TV-Z]{26}}/delete', [$c, 'removeManual']);
     $r->post('/payroll/runs/' . $id . '/{action:calculate|submit|cancel|payment|posting}', [$c, 'act']);
     $r->get('/payroll/runs/' . $id . '/register', [$c, 'register']);
+    $r->get('/payroll/reviews', [$c, 'reviews'], 'payroll.reviews');
+    $r->post('/payroll/runs/' . $id . '/review', [$c, 'review']);
     $r->post('/payroll/runs/' . $id . '/correction', [$c, 'correction']);
     $r->get('/payroll/runs/' . $id . '/e/' . $emp, [$c, 'result']);
     $r->get('/payroll/components', [$c, 'components'], 'payroll.components');

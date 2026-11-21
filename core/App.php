@@ -73,7 +73,7 @@ use Blue\Core\Ui\View;
 final class App
 {
     /** Release shown in backups and on the status page. */
-    public const RELEASE = '0.48.0 (R8-3: bank file formats)';
+    public const RELEASE = '0.49.0 (R8-4: checker review, prize tax)';
 
     private ?Connection $db = null;
     private ?Translator $translator = null;

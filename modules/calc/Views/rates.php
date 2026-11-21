@@ -86,6 +86,12 @@ $rounding = array_combine(CalcRules::ROUNDING, array_map(static fn ($r) => $t('c
           <?= $ui('field', ['name' => 'rounding', 'id' => "f-{$type}-rd", 'type' => 'select', 'label' => $t('calc.rates.rounding'), 'value' => $val($type, 'rounding') ?: 'none', 'options' => $rounding]) ?>
         </div>
         <label class="check"><input type="checkbox" name="count_end_day" value="1"<?= $val($type, 'count_end_day') === '1' ? ' checked' : '' ?>> <?= $e($t('calc.rates.count_end_day')) ?></label>
+      <?php elseif ($type === 'prize'): ?>
+        <div class="grid grid--3">
+          <?= $ui('field', ['name' => 'rate', 'id' => 'f-prize-rate', 'label' => $t('calc.rates.prize_rate'), 'required' => true, 'value' => $val($type, 'rate'), 'error' => $err($type, 'rate'), 'inputmode' => 'decimal']) ?>
+          <?= $ui('field', ['name' => 'threshold', 'id' => 'f-prize-min', 'label' => $t('calc.rates.prize_threshold'), 'value' => $val($type, 'threshold'), 'error' => $err($type, 'threshold'), 'inputmode' => 'decimal', 'help' => $t('calc.rates.prize_threshold_help')]) ?>
+          <?= $ui('field', ['name' => 'rounding', 'id' => 'f-prize-rd', 'type' => 'select', 'label' => $t('calc.rates.rounding'), 'value' => $val($type, 'rounding') ?: 'none', 'options' => $rounding, 'error' => $err($type, 'rounding')]) ?>
+        </div>
       <?php else: ?>
         <div class="grid grid--3">
           <?= $ui('field', ['name' => 'expense_rate', 'id' => 'f-pit-xr', 'label' => $t('calc.rates.expense_rate'), 'required' => true, 'value' => $val($type, 'expense_rate'), 'error' => $err($type, 'expense_rate'), 'inputmode' => 'decimal']) ?>

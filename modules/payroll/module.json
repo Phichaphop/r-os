@@ -21,7 +21,8 @@
     "payroll.view": "high",
     "payroll.prepare": "high",
     "payroll.approve": "high",
-    "payroll.export": "high"
+    "payroll.export": "high",
+    "payroll.review": "high"
   },
   "grants": {
     "*": [
@@ -36,6 +37,10 @@
       "payroll.view",
       "payroll.approve",
       "payroll.export"
+    ],
+    "PYC": [
+      "payroll.view",
+      "payroll.review"
     ]
   },
   "menu": [

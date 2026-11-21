@@ -114,11 +114,16 @@ final class Catalog
         // alternate route for complaints about handlers or management (assign to an independent person / board member)
         'CMP' => ['legal_entity', false, false, ['core.org.view']],
         'CMX' => ['legal_entity', false, false, ['core.org.view']],
+        // 0.49.0 (DEC-118 · Q-11): Payroll Checker — reviews approved payroll runs afterwards, one run at a time (payroll.review);
+        // appointed later; may not also prepare or approve payroll in the same company
+        'PYC' => ['legal_entity', true, true, ['core.org.view']],
     ];
 
     /** Roles a single person must not hold in the same legal entity (P0-04 §4.4) — reported as SoD conflicts. */
     public const CONFLICTING_ROLES = [
         ['PYO', 'PYA'],
+        ['PYO', 'PYC'],
+        ['PYA', 'PYC'],
         ['FNM', 'FNC'],
         ['WAL', 'FNC'],
     ];

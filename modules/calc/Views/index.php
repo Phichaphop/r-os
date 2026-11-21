@@ -117,6 +117,10 @@ $f = static fn (string $name, string $label, array $extra = []) => $ui('field', 
         <?= $ui('field', ['name' => 'wage_type', 'type' => 'select', 'label' => $t('calc.field.wage_type'), 'value' => (string) ($in['wage_type'] ?? 'monthly'),
             'options' => ['monthly' => $t('calc.wage_type.monthly'), 'daily' => $t('calc.wage_type.daily')]]) ?>
       </div>
+    <?php elseif ($tab === 'prize'): ?>
+      <?= $f('value', $t('calc.field.prize_value'), ['required' => true, 'inputmode' => 'decimal', 'prefix' => 'THB', 'help' => $t('calc.prize_value_help')]) ?>
+      <?= $ui('field', ['name' => 'mode', 'id' => 'f-mode', 'type' => 'select', 'label' => $t('calc.field.prize_mode'), 'value' => (string) ($in['mode'] ?? 'withhold'),
+          'options' => ['withhold' => $t('calc.prize_mode.withhold'), 'grossup' => $t('calc.prize_mode.grossup')], 'help' => $t('calc.prize_mode_help')]) ?>
     <?php else: ?>
       <?= $f('income', $t('calc.field.annual_income'), ['required' => true, 'inputmode' => 'decimal', 'prefix' => 'THB', 'help' => $t('calc.income_help')]) ?>
       <?php foreach ($allowances as $i => $a): ?>

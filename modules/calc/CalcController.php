@@ -17,8 +17,8 @@ use Blue\Core\Http\Response;
 final class CalcController extends Controller
 {
     public const CLIENT_TABS = ['basic', 'age', 'service', 'unit', 'bmi'];
-    public const SERVER_TABS = ['sso', 'ewf', 'severance', 'retirement', 'pit'];
-    private const INPUTS = ['at', 'wage', 'wage_type', 'start', 'end', 'income'];
+    public const SERVER_TABS = ['sso', 'ewf', 'severance', 'retirement', 'pit', 'prize'];
+    private const INPUTS = ['at', 'wage', 'wage_type', 'start', 'end', 'income', 'value', 'mode'];
 
     public function index(Request $r): Response
     {

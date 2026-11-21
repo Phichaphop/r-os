@@ -36,6 +36,7 @@ final class PayrollDemo
         if (!$db->tableExists('pay_components')) {
             return 0;
         }
+        self::checker($db, $clock);
         $le = $db->scalar("SELECT id FROM legal_entities WHERE code = 'DEMO1' AND is_demo = 1");
         $maker = $db->scalar("SELECT id FROM users WHERE username = 'payroll.maker' AND is_demo = 1");
         $checker = $db->scalar("SELECT id FROM users WHERE username = 'payroll.checker' AND is_demo = 1");
@@ -67,5 +68,29 @@ final class PayrollDemo
             $n++;
         }
         return $n;
+    }
+    /**
+     * 0.49.0 (DEC-118 · Q-11): the demo internal auditor (auditor.demo) is the demo Payroll Checker (PYC) of DEMO1, so the
+     * review list can be tried — every sync, once. A real company appoints its own checker (not a payroll maker/approver).
+     */
+    private static function checker(Connection $db, Clock $clock): void
+    {
+        $uid = $db->scalar("SELECT id FROM users WHERE username = 'auditor.demo' AND is_demo = 1");
+        $role = $db->scalar("SELECT id FROM roles WHERE code = 'PYC'");
+        $le = $db->scalar("SELECT id FROM legal_entities WHERE code = 'DEMO1' AND is_demo = 1");
+        if (
+            $uid === null || $role === null || $le === null
+            || $db->scalar("SELECT id FROM user_role_assignments WHERE user_id = ? AND role_id = ? AND status = 'active'", [$uid, $role]) !== null
+        ) {
+            return;
+        }
+        $now = $clock->now()->format('Y-m-d H:i:s.u');
+        $admin = $db->scalar("SELECT u.id FROM users u JOIN user_role_assignments a ON a.user_id = u.id JOIN roles r ON r.id = a.role_id WHERE r.code = 'SYS' AND u.is_demo = 0 ORDER BY u.id LIMIT 1");
+        $db->run(
+            "INSERT INTO user_role_assignments (public_id, created_at, updated_at, row_version, user_id, role_id, status, valid_from, requested_by, approved_by, approved_at, reason)
+             VALUES (?, ?, ?, 1, ?, ?, 'active', ?, ?, ?, ?, 'DEC-34 demo user (0.49.0 Payroll Checker)')",
+            [Ulid::generate($clock), $now, $now, $uid, $role, $clock->now()->format('Y-m-d'), $admin, $admin, $admin !== null ? $now : null]
+        );
+        $db->run('INSERT INTO access_scopes (assignment_id, scope_level, scope_id) VALUES (?, ?, ?)', [(int) $db->pdo()->lastInsertId(), 'legal_entity', $le]);
     }
 }

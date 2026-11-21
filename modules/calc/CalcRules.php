@@ -14,8 +14,8 @@ use Blue\Core\Support\Money;
  */
 final class CalcRules
 {
-    public const TYPES = ['sso', 'ewf', 'severance', 'pit'];
-    public const KEYS = ['sso' => 'calc.sso.rule', 'ewf' => 'calc.ewf.rule', 'severance' => 'calc.severance.rule', 'pit' => 'calc.pit.rule'];
+    public const TYPES = ['sso', 'ewf', 'severance', 'pit', 'prize'];
+    public const KEYS = ['sso' => 'calc.sso.rule', 'ewf' => 'calc.ewf.rule', 'severance' => 'calc.severance.rule', 'pit' => 'calc.pit.rule', 'prize' => 'calc.prize.rule'];
     public const ROUNDING = ['none', 'nearest', 'down', 'up'];
     public const MAX_ROWS = 12;
 
@@ -146,6 +146,14 @@ final class CalcRules
                     $allow[] = ['label' => $label, 'cap' => Money::format($capU, 2, false)];
                 }
                 $out['allowances'] = $allow;
+                break;
+            case 'prize': // withholding tax on a prize (R8-4 · Q-15): one rate, optional minimum value, rounding
+                $rate('rate');
+                $money('threshold', false);
+                $round();
+                if (!isset($e['rate']) && (Money::parse((string) $out['rate'], 4) ?? 0) >= 100 * 10000) {
+                    $e['rate'] = 'calc.rule_error.rate_below_100';
+                }
                 break;
             default:
                 $e['type'] = 'calc.rule_error.type';

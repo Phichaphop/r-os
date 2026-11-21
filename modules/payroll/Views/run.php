@@ -9,7 +9,7 @@
  * @var array{published: int, viewed: int, map: array<int, string>} $slips
  * @var bool $canExport @var bool $canPay @var array<string, string> $errors @var array<string, mixed> $old @var string $form
  * @var array<string, mixed>|null $original @var list<array<string, mixed>> $corrections @var list<array<string, mixed>> $reasons @var list<string> $runWarnings
- * @var array<string, mixed>|null $recon @var string $today
+ * @var array<string, mixed>|null $recon @var string $today @var list<array<string, mixed>> $reviews @var string $reviewBlock
  */
 use Blue\Core\Support\Money;
 
@@ -190,6 +190,38 @@ $blockingPeople = count(array_filter($results, static fn (array $x): bool => (in
   </div>
   <?php endif; ?>
   <p class="text-sm text-muted"><?= $e($t('payroll.recon_help')) ?></p>
+</section>
+<?php endif; ?>
+
+<?php if ($status === 'approved'): $last = $reviews[0] ?? null; ?>
+<section class="card stack-sm" id="review" aria-labelledby="pr-rv">
+  <h2 id="pr-rv" class="card__title"><?= $e($t('payroll.review.card')) ?>
+    <?= $ui('badge', ['tone' => $last === null ? 'warning' : ($last['result'] === 'ok' ? 'success' : 'danger'), 'label' => $t('payroll.review.state.' . ($last['result'] ?? 'waiting'))]) ?></h2>
+  <p class="text-sm text-muted"><?= $e($t('payroll.review.card_help')) ?></p>
+  <?php if ($reviews !== []): ?>
+  <ul class="plain-list">
+    <?php foreach ($reviews as $rv): ?>
+      <li><?= $ui('badge', ['tone' => $rv['result'] === 'ok' ? 'success' : 'danger', 'label' => $t('payroll.review.state.' . $rv['result'])]) ?> <?= $e((string) $rv['reviewer']) ?>
+        <span class="text-sm text-muted"><?= $e($date((string) $rv['reviewed_at'])) ?></span>
+        <?php if ($rv['calc_hash'] !== $run['calc_hash']): ?><?= $ui('badge', ['tone' => 'warning', 'label' => $t('payroll.review.other_result')]) ?><?php endif; ?>
+        <?php if ($rv['note'] !== null): ?><br><span class="text-sm"><?= $e((string) $rv['note']) ?></span><?php endif; ?></li>
+    <?php endforeach; ?>
+  </ul>
+  <?php endif; ?>
+  <?php if ($reviewBlock === ''): ?>
+  <form method="post" action="<?= $e($url($base . '/review')) ?>" class="stack-sm" novalidate><?= $csrf ?>
+    <fieldset class="stack-sm">
+      <legend class="field__label"><?= $e($t('payroll.review.result')) ?></legend>
+      <?php if (isset($errors['result'])): ?><p class="field__error" role="alert"><?= $e((string) $errors['result']) ?></p><?php endif; ?>
+      <label class="check"><input type="radio" name="result" value="ok"<?= $o('result') === 'ok' ? ' checked' : '' ?>> <?= $e($t('payroll.review.result_ok')) ?></label>
+      <label class="check"><input type="radio" name="result" value="issues"<?= $o('result') === 'issues' ? ' checked' : '' ?>> <?= $e($t('payroll.review.result_issues')) ?></label>
+    </fieldset>
+    <?= $ui('field', ['name' => 'note', 'id' => 'f-review-note', 'type' => 'textarea', 'label' => $t('payroll.review.note'), 'value' => $o('note'), 'help' => $t('payroll.review.note_help'), 'error' => $errors['note'] ?? null]) ?>
+    <div class="row"><?= $ui('button', ['label' => $t('payroll.review.submit'), 'type' => 'submit', 'variant' => 'primary', 'icon' => 'clipboard-check']) ?></div>
+  </form>
+  <?php elseif ($reviewBlock === 'took_part'): ?>
+    <p class="text-sm text-muted"><?= $e($t('payroll.review.error.took_part')) ?></p>
+  <?php endif; ?>
 </section>
 <?php endif; ?>
 

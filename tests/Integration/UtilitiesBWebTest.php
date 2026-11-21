@@ -44,7 +44,7 @@ final class UtilitiesBWebTest extends TestCase
     public function testPagesRenderTranslatedAndFollowRights(): void
     {
         $pages = [
-            'employee.demo1' => ['/calc', '/calc?tab=age', '/calc?tab=service', '/calc?tab=unit', '/calc?tab=bmi', '/calc?tab=sso', '/calc?tab=ewf', '/calc?tab=severance', '/calc?tab=retirement', '/calc?tab=pit', '/fonts'],
+            'employee.demo1' => ['/calc', '/calc?tab=age', '/calc?tab=service', '/calc?tab=unit', '/calc?tab=bmi', '/calc?tab=sso', '/calc?tab=ewf', '/calc?tab=severance', '/calc?tab=retirement', '/calc?tab=pit', '/calc?tab=prize', '/fonts'],
             TestApp::ADMIN => ['/calc/rates', '/fonts/manage', '/calc?tab=pit'],
         ];
         foreach ($pages as $user => $paths) {
@@ -160,6 +160,47 @@ final class UtilitiesBWebTest extends TestCase
             'personal_allowance' => '1', 'brackets' => ['up_to' => ['100000', '50000'], 'rate' => ['0', '10']]]);
         self::assertSame(422, $badPit->status);
         self::assertStringContainsString('field__error', $badPit->body);
+    }
+
+    public function testPrizeTaxCalculatorNeedsAnApprovedRateAndKeepsNoNames(): void
+    {
+        $emp = $this->browser('employee.demo1');
+        $page = $emp->get('/calc', ['tab' => 'prize']);
+        self::assertStringContainsString('name="mode"', $page->body);
+        self::assertStringNotContainsString('class="calc-outputs"', $emp->post('/calc/prize', ['value' => '10000', 'at' => '2026-11-09'])->body, 'no rate shipped → no result');
+
+        $admin = $this->browser(TestApp::ADMIN);
+        self::assertStringContainsString('id="t-prize"', $admin->get('/calc/rates')->body);
+        $base = ['effective_from' => '2026-01-01', 'legal_entity_id' => '', 'source_reference' => 'TEST ONLY — made-up prize rate', 'reason' => 'ทดสอบ', 'rounding' => 'none'];
+        self::assertSame(422, $admin->post('/calc/rates/prize', $base + ['rate' => ''])->status, 'the rate has no default');
+        self::assertSame(422, $admin->post('/calc/rates/prize', $base + ['rate' => '100'])->status);
+        self::assertSame(303, $admin->post('/calc/rates/prize', $base + ['rate' => '5', 'threshold' => '1,000'])->status);
+        $json = json_decode((string) $this->t->app->db()->scalar("SELECT v.value_json FROM config_versions v JOIN config_definitions c ON c.id = v.definition_id WHERE c.config_key = 'calc.prize.rule'"), true);
+        self::assertSame(['rate' => '5.0000', 'threshold' => '1000.00', 'rounding' => 'none'], $json);
+
+        $inst = (string) $this->t->app->db()->scalar("SELECT public_id FROM workflow_instances WHERE subject_type = 'config_version' ORDER BY id DESC LIMIT 1");
+        $checker = $this->browser('sysadmin2.demo');
+        $checker->get('/reauth');
+        $checker->post('/reauth', ['password' => $this->t->demoPassword, 'next' => '/approvals/' . $inst]);
+        $checker->get('/approvals/' . $inst);
+        $checker->post('/approvals/' . $inst . '/decide', ['decision' => 'approve', '_back' => '/approvals/' . $inst]);
+        self::assertSame('approved', $this->t->app->db()->scalar("SELECT v.status FROM config_versions v JOIN config_definitions c ON c.id = v.definition_id WHERE c.config_key = 'calc.prize.rule'"));
+
+        $emp->get('/calc', ['tab' => 'prize']);
+        $w = $emp->post('/calc/prize', ['value' => '10000', 'mode' => 'withhold', 'at' => '2026-11-09']);
+        self::assertStringContainsString('class="calc-outputs"', $w->body);
+        self::assertStringContainsString('9,500.00', $w->body);
+        self::assertStringContainsString('TEST ONLY — made-up prize rate', $w->body);
+        $g = $emp->post('/calc/prize', ['value' => '9500', 'mode' => 'grossup', 'at' => '2026-11-09']);
+        self::assertStringContainsString('10,000.00', $g->body);
+        self::assertStringContainsString('selected', $g->body);
+        $below = $emp->post('/calc/prize', ['value' => '500', 'at' => '2026-11-09']);
+        self::assertStringContainsString('1,000.00', $below->body, 'the minimum value is explained in the steps');
+        self::assertSame(422, $emp->post('/calc/prize', ['value' => 'abc'])->status);
+        $share = $emp->post('/calc/prize/share', ['value' => '10000', 'mode' => 'withhold', 'at' => '2026-11-09']);
+        self::assertSame(303, $share->status);
+        $row = $this->t->app->db()->one('SELECT inputs_json FROM calc_shares WHERE token = ?', [substr((string) $share->headers['Location'], -12)]);
+        self::assertSame(['at', 'value', 'mode'], array_keys(array_filter((array) json_decode((string) $row['inputs_json'], true), static fn ($v) => $v !== '' && $v !== [])), 'numbers only');
     }
 
     public function testFontLibraryLifecycleLicenceMakerCheckerAndDownloads(): void

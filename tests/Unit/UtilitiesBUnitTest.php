@@ -131,6 +131,28 @@ final class UtilitiesBUnitTest extends TestCase
         CalcEngine::pit($pit, ['income' => '600000', 'allowance' => ['-5']]);
     }
 
+    public function testPrizeWithholdingAndGrossUp(): void
+    {
+        $prize = self::table('prize', ['rate' => '5', 'threshold' => '1000', 'rounding' => 'none']); // MADE-UP rate
+        $r = CalcEngine::prize($prize, ['value' => '10000', 'mode' => 'withhold']);
+        self::assertSame(['value' => '10,000.00', 'tax' => '500.00', 'net' => '9,500.00', 'gross' => '10,000.00', 'payer_cost' => '10,000.00'], $r['outputs']);
+        self::assertSame(['calc.step.prize_value', 'calc.step.prize_tax', 'calc.step.prize_net'], array_column($r['steps'], 'key'));
+        $low = CalcEngine::prize($prize, ['value' => '999.99']);
+        self::assertSame('0.00', $low['outputs']['tax'], 'below the minimum value → nothing withheld');
+        self::assertSame('calc.step.prize_below', $low['steps'][1]['key']);
+        self::assertSame('500.00', CalcEngine::prize($prize, ['value' => '10000'])['outputs']['tax'], 'withhold is the default mode');
+        $g = CalcEngine::prize($prize, ['value' => '9500', 'mode' => 'grossup']);
+        self::assertSame(['value' => '9,500.00', 'tax' => '500.00', 'net' => '9,500.00', 'gross' => '10,000.00', 'payer_cost' => '10,000.00'], $g['outputs']);
+        $odd = CalcEngine::prize(self::table('prize', ['rate' => '7', 'threshold' => '', 'rounding' => 'none']), ['value' => '100', 'mode' => 'grossup']);
+        self::assertSame(['7.53', '107.53'], [$odd['outputs']['tax'], $odd['outputs']['gross']], 'gross − 7% of gross = the prize, to the satang');
+        self::assertNull(self::table('prize', ['rate' => '7', 'rounding' => 'none'])['threshold']);
+        self::assertArrayHasKey('rate', CalcRules::validate('prize', ['rate' => '100', 'rounding' => 'none'])[1]);
+        self::assertArrayHasKey('rate', CalcRules::validate('prize', ['rate' => '', 'rounding' => 'none'])[1], 'no default rate');
+        self::assertArrayHasKey('threshold', CalcRules::validate('prize', ['rate' => '5', 'threshold' => '-1', 'rounding' => 'none'])[1]);
+        $this->expectException(ValidationException::class);
+        CalcEngine::prize($prize, ['value' => 'abc']);
+    }
+
     public function testFontFilesAreRecognisedAndRead(): void
     {
         $dir = dirname(__DIR__) . '/fixtures/fonts/';

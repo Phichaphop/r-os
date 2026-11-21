@@ -159,6 +159,47 @@ final class CalcEngine
         return ['outputs' => ['tax' => Money::format($tax), 'monthly' => Money::format(intdiv($tax * 2 + 12, 24)), 'net' => Money::format($net), 'effective_rate' => $effective], 'steps' => $steps];
     }
 
+    /**
+     * Withholding tax on a prize (R8-4 · Q-15) — a stand-alone estimate, not tied to any module.
+     * withhold: the winner receives value − tax · grossup: the payer bears the tax, so the taxable value is grossed up
+     * until value = gross − tax(gross). Below the table's minimum value no tax is withheld.
+     *
+     * @param array<string, mixed> $rule validated prize table
+     * @param array<string, string> $in value, mode (withhold|grossup)
+     * @return array{outputs: array<string, string>, steps: list<array{key: string, p: array<string, string>, v: string}>}
+     */
+    public static function prize(array $rule, array $in): array
+    {
+        $value = self::money($in, 'value');
+        $mode = ($in['mode'] ?? 'withhold') === 'grossup' ? 'grossup' : 'withhold';
+        $r = Money::parse((string) $rule['rate'], 4) ?? 0; // percent × 10 000
+        $min = $rule['threshold'] === null ? null : (Money::parse((string) $rule['threshold'], 2) ?? 0);
+        $steps = [self::step('calc.step.prize_value', [], $value)];
+        $tax = 0;
+        $gross = $value;
+        if ($mode === 'withhold') {
+            if ($min === null || $value >= $min) {
+                $tax = self::round(self::pct($value, (string) $rule['rate']), (string) $rule['rounding']);
+            }
+        } elseif ($r < 1_000_000) {
+            $raw = intdiv($value * 1_000_000 * 2 + (1_000_000 - $r), 2 * (1_000_000 - $r)); // value ÷ (1 − rate), half up
+            if ($min === null || $raw >= $min) {
+                $tax = self::round($raw - $value, (string) $rule['rounding']);
+                $gross = $value + $tax;
+                $steps[] = self::step('calc.step.prize_gross', ['rate' => self::rate((string) $rule['rate'])], $gross);
+            }
+        }
+        if ($tax === 0 && $min !== null && ($mode === 'withhold' ? $value : $gross) < $min) {
+            $steps[] = self::stepText('calc.step.prize_below', ['min' => Money::format($min)], '0.00');
+        } else {
+            $steps[] = self::step('calc.step.prize_tax', ['rate' => self::rate((string) $rule['rate'])], $tax);
+        }
+        $net = $mode === 'withhold' ? $value - $tax : $value;
+        $steps[] = self::step($mode === 'withhold' ? 'calc.step.prize_net' : 'calc.step.prize_net_grossup', [], $net);
+        return ['outputs' => ['value' => Money::format($value), 'tax' => Money::format($tax), 'net' => Money::format($net), 'gross' => Money::format($gross),
+            'payer_cost' => Money::format($mode === 'withhold' ? $value : $gross)], 'steps' => $steps];
+    }
+
     // ---- helpers ------------------------------------------------------------------------------------
 
     /** amount × rate% (rate as decimal text, up to 4 places), half up. */
