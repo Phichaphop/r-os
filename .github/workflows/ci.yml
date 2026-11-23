@@ -1,5 +1,6 @@
 # Blue OS CI (DEC-42, P0-06 §12.1): every push / PR.
 # lint (PSR-12) → PHPStan → static checks (TC-AI-00, secrets, tokens, layering) → PHPUnit (unit + integration on MariaDB) → audits.
+# 0.50.0 (R9, DEC-119 · Q-16/Q-17): a third leg runs the Staging notebook's stack — XAMPP 8.2.12 = PHP 8.2 + MariaDB 10.4.
 name: CI
 
 on:
@@ -17,14 +18,19 @@ concurrency:
 
 jobs:
   test:
+    name: test (${{ matrix.label }})
     runs-on: ubuntu-24.04
+    timeout-minutes: 150
     strategy:
       fail-fast: false
       matrix:
-        php: ['8.1', '8.3']
+        include:
+          - { php: '8.1', db: 'mariadb:10.11', label: 'php8.1-mariadb10.11' }
+          - { php: '8.3', db: 'mariadb:10.11', label: 'php8.3-mariadb10.11' }
+          - { php: '8.2', db: 'mariadb:10.4', label: 'staging-xampp-php8.2-mariadb10.4' }
     services:
       mariadb:
-        image: mariadb:10.11
+        image: ${{ matrix.db }}
         env:
           MARIADB_DATABASE: blue_test
           MARIADB_USER: blue
@@ -32,7 +38,7 @@ jobs:
           MARIADB_ROOT_PASSWORD: root_ci_pw
         ports: ['3306:3306']
         options: >-
-          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-cmd="mariadb-admin ping -h 127.0.0.1 -uroot -proot_ci_pw"
           --health-interval=5s --health-timeout=5s --health-retries=20
     env:
       BLUE_APP_ENV: ci
@@ -72,7 +78,7 @@ jobs:
       - name: PHPUnit (unit + integration + arch)
         run: |
           mkdir -p build
-          vendor/bin/phpunit --log-junit build/junit-php${{ matrix.php }}.xml --testdox-text build/testdox-php${{ matrix.php }}.txt
+          vendor/bin/phpunit --log-junit build/junit-${{ matrix.label }}.xml --testdox-text build/testdox-${{ matrix.label }}.txt
 
       - name: Migration runner — CLI twice (must be a no-op the second time)
         env:
@@ -93,7 +99,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-evidence-php${{ matrix.php }}
+          name: test-evidence-${{ matrix.label }}
           path: build/
           retention-days: 90
 

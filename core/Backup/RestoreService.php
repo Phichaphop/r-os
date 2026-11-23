@@ -273,38 +273,68 @@ final class RestoreService implements WorkflowSubject
         if ($problems !== []) {
             throw new BusinessException('backup.error.verify_failed', ['detail' => implode('; ', array_slice($problems, 0, 2))], 409);
         }
-        @set_time_limit(0);
-        $t0 = hrtime(true);
         $this->db->run("UPDATE restore_requests SET status = 'executing', executed_by = ?, executed_at = ?, updated_at = ? WHERE public_id = ?", [$az->userId, $this->now(), $this->now(), $requestPid]);
         $this->audit->record('backup.restore_started', 'success', 'restore_request', $requestPid, null, null, ['backup' => $r['backup_pid']]);
+        return $this->swapIn(
+            $b,
+            $az->userId,
+            $requestPid,
+            function (array $preRow) use ($requestPid): void {
+                if ($preRow['status'] !== 'verified') {
+                    $this->db->run("UPDATE restore_requests SET status = 'failed', error = 'pre-restore backup failed', finished_at = ? WHERE public_id = ?", [$this->now(), $requestPid]);
+                    return;
+                }
+                $this->db->run('UPDATE restore_requests SET pre_restore_backup_id = ? WHERE public_id = ?', [$preRow['id'], $requestPid]);
+            },
+            function (bool $ok, array $result) use ($requestPid, $r, $az): void {
+                $this->db->run(
+                    'UPDATE restore_requests SET status = ?, finished_at = ?, duration_ms = ?, result_json = ?, error = ?, updated_at = ? WHERE public_id = ?',
+                    [$ok ? 'done' : 'failed', $this->now(), $result['ms'], json_encode($result, JSON_UNESCAPED_UNICODE), $ok ? null : mb_substr((string) ($result['error'] ?? ''), 0, 500), $this->now(), $requestPid]
+                );
+                $this->audit->record($ok ? 'backup.restored' : 'backup.restore_rolled_back', $ok ? 'success' : 'failure', 'restore_request', $requestPid, null, (string) $r['incident_ref'], $result, $az->userId);
+            }
+        );
+    }
 
+    /**
+     * Loads a backup into the live database and documents. Rollback plan first: a fresh full backup of the current
+     * state, loaded back if anything fails. The backup catalogue of this installation (KEEP_TABLES) is kept as it is.
+     *
+     * @param array<string, mixed> $b
+     * @param callable(array<string, mixed>): void $onPre called with the pre-restore backup row
+     * @param callable(bool, array<string, mixed>): void $onDone called after the swap, before the old documents are dropped
+     * @return array<string, mixed>
+     */
+    private function swapIn(array $b, ?int $actorId, string $label, callable $onPre, callable $onDone): array
+    {
+        @set_time_limit(0);
+        $t0 = hrtime(true);
         // 1. rollback plan: a fresh full backup of the current state
-        $pre = $this->backups->start('pre_restore', $az->userId, true);
+        $pre = $this->backups->start('pre_restore', $actorId, true);
         $preRow = $this->backups->runToEnd($pre);
+        $onPre($preRow);
         if ($preRow['status'] !== 'verified') {
-            $this->db->run("UPDATE restore_requests SET status = 'failed', error = 'pre-restore backup failed', finished_at = ? WHERE public_id = ?", [$this->now(), $requestPid]);
             throw new BusinessException('backup.error.pre_backup', [], 500);
         }
-        $this->db->run('UPDATE restore_requests SET pre_restore_backup_id = ? WHERE public_id = ?', [$preRow['id'], $requestPid]);
 
         // 2. keep the backup catalogue as it is now
         $keep = [];
         foreach (self::KEEP_TABLES as $t) {
             $keep[$t] = $this->db->all('SELECT * FROM `' . $t . '`');
         }
-        $this->install->setRestoring(true, $requestPid);
-        $result = ['backup' => $r['backup_pid'], 'pre_restore_backup' => $preRow['public_id']];
+        $this->install->setRestoring(true, $label);
+        $result = ['backup' => $b['public_id'], 'pre_restore_backup' => $preRow['public_id']];
         $moved = null;
         try {
             try {
                 $stats = $this->restoreInto($this->db->pdo(), $this->backups->path($b));
-                $moved = $this->restoreFiles($this->backups->path($b), $requestPid);
+                $moved = $this->restoreFiles($this->backups->path($b), $label);
                 $result += ['tables' => $stats['tables'], 'rows' => $stats['rows'], 'files' => $moved['files']];
                 $ok = true;
             } catch (Throwable $e) {
                 $ok = false;
                 $result['error'] = mb_substr($e->getMessage(), 0, 300);
-                $this->logger->error('restore_failed_rolling_back', ['request' => $requestPid, 'error' => $e->getMessage()]);
+                $this->logger->error('restore_failed_rolling_back', ['restore' => $label, 'error' => $e->getMessage()]);
                 // roll back to the state before: the pre-restore backup
                 $this->restoreInto($this->db->pdo(), $this->backups->path($preRow)); // documents were put back by restoreFiles itself
                 $result['rolled_back'] = true;
@@ -318,13 +348,8 @@ final class RestoreService implements WorkflowSubject
                 }
             }
             $this->db->pdo()->exec('SET FOREIGN_KEY_CHECKS = 1');
-            $ms = (int) ((hrtime(true) - $t0) / 1_000_000);
-            $result['ms'] = $ms;
-            $this->db->run(
-                'UPDATE restore_requests SET status = ?, finished_at = ?, duration_ms = ?, result_json = ?, error = ?, updated_at = ? WHERE public_id = ?',
-                [$ok ? 'done' : 'failed', $this->now(), $ms, json_encode($result, JSON_UNESCAPED_UNICODE), $ok ? null : mb_substr((string) ($result['error'] ?? ''), 0, 500), $this->now(), $requestPid]
-            );
-            $this->audit->record($ok ? 'backup.restored' : 'backup.restore_rolled_back', $ok ? 'success' : 'failure', 'restore_request', $requestPid, null, (string) $r['incident_ref'], $result, $az->userId);
+            $result['ms'] = (int) ((hrtime(true) - $t0) / 1_000_000);
+            $onDone($ok, $result);
             if ($ok && $moved !== null) {
                 $this->dropOldFiles($moved);
             }
@@ -332,6 +357,82 @@ final class RestoreService implements WorkflowSubject
             $this->install->setRestoring(false);
         }
         $result['ok'] = !isset($result['error']);
+        return $result;
+    }
+
+    // ---- disaster recovery onto a NEW installation (CLI) -----------------------------------------------
+
+    /**
+     * Why this installation cannot take a fresh-install restore, or null when it can (DEC-119 · Q-19). A new machine
+     * after a loss has one account — the installer — so the second-administrator approval of a normal restore cannot
+     * happen. The CLI path is allowed only there: nothing on this installation can be lost by it.
+     */
+    public function freshBlocker(): ?string
+    {
+        if ((int) $this->db->scalar('SELECT COUNT(*) FROM users') > 1) {
+            return 'backup.error.not_fresh';
+        }
+        if ($this->db->scalar("SELECT id FROM restore_requests WHERE status IN ('in_review','returned','approved','executing') LIMIT 1") !== null) {
+            return 'backup.error.restore_open';
+        }
+        return null;
+    }
+
+    /** The phrase typed at the command line — from the file itself, so it can be given up front in a script. */
+    public static function freshPhrase(string $file): string
+    {
+        return 'RESTORE ' . strtoupper(substr((string) hash_file('sha256', $file), 0, 6));
+    }
+
+    /**
+     * Disaster recovery onto a freshly installed system (`php bin/blue restore:fresh`): import the file (it must open
+     * with this APP_KEY), pass a full drill in the separate database, then load it — with the same rollback plan as a
+     * normal restore. The audit record is written into the restored database.
+     *
+     * @return array<string, mixed>
+     */
+    public function freshRestore(int $actorId, string $file, string $phrase, string $operator): array
+    {
+        if (!(new Authorizer($this->db, $this->clock, $actorId))->scope('core.backup.restore')->all) {
+            throw HttpException::forbidden();
+        }
+        $blocker = $this->freshBlocker();
+        if ($blocker !== null) {
+            throw new BusinessException($blocker, [], 409);
+        }
+        if (!is_file($file)) {
+            throw new BusinessException('backup.error.import_failed', ['detail' => 'file not found'], 422);
+        }
+        if (trim($phrase) !== self::freshPhrase($file)) {
+            throw new ValidationException(['phrase' => 'backup.error.phrase']);
+        }
+        $pid = $this->backups->importFile($actorId, $file);
+        $b = $this->backups->row($pid);
+        $here = (string) $this->db->scalar('SELECT MAX(version) FROM schema_migrations');
+        if (strcmp((string) $b['schema_version'], $here) > 0) {
+            throw new BusinessException('backup.error.newer_schema', ['backup' => (string) $b['app_version'], 'schema' => (string) $b['schema_version']], 409);
+        }
+        $drillPid = $this->drill(new Authorizer($this->db, $this->clock, $actorId), $pid);
+        $drill = $this->drillRow($drillPid);
+        if ($drill['status'] !== 'passed') {
+            throw new BusinessException('backup.error.drill_failed', ['status' => (string) $drill['status']], 409);
+        }
+        $result = $this->swapIn(
+            $b,
+            $actorId,
+            'fresh-' . $pid,
+            static function (array $preRow): void {
+            },
+            function (bool $ok, array $result) use ($pid, $drillPid, $b, $operator): void {
+                // the installer's account is not part of the restored data: the operator is named, the actor is left empty
+                $this->audit->record($ok ? 'backup.restored_fresh' : 'backup.restore_rolled_back', $ok ? 'success' : 'failure', 'backup', $pid, null, 'disaster recovery onto a new installation', $result + [
+                    'drill' => $drillPid, 'sha256' => (string) $b['sha256'], 'operator' => mb_substr($operator, 0, 80), 'backup_release' => (string) $b['app_version'],
+                ], null);
+            }
+        );
+        $result['drill'] = $drillPid;
+        $result['backup_release'] = (string) $b['app_version'];
+        $result['needs_migrate'] = strcmp((string) $b['schema_version'], $here) < 0;
         return $result;
     }
 

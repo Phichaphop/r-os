@@ -1,0 +1,89 @@
+== [06:09:53] OLD MACHINE A: install (APP_ENV=staging, demo data for volume)
+installed: migrations=81 demo=yes
+  succeeded  system.heartbeat (0 ms)
+  succeeded  outbox.dispatch (1 ms)
+  succeeded  workflow.escalate (56 ms)
+  succeeded  records.schedule (0 ms)
+  succeeded  import.expire (1 ms)
+  succeeded  backup.run (778 ms)
+  succeeded  backup.prune (1 ms)
+  succeeded  dashboard.refresh (12 ms)
+  succeeded  announcements.schedule (0 ms)
+  succeeded  esign.housekeeping (2 ms)
+  succeeded  doccontrol.sync (1 ms)
+  succeeded  privacy.tick (0 ms)
+  succeeded  recruit.retention (0 ms)
+  succeeded  talent.housekeeping (0 ms)
+  succeeded  jd.sync (0 ms)
+-- doctor (A, before backup)
+PASS  environment        APP_ENV=staging
+PASS  php                8.3.6
+PASS  php extensions     pdo_mysql, mbstring, json, openssl/sodium
+PASS  php gd             images are resized on the server
+PASS  app key            backup key fingerprint c5fbd52f9b86767f — keep a copy of APP_KEY away from this machine
+PASS  database version   10.11.14-MariaDB-0ubuntu0.24.04.1
+PASS  database account   blue
+PASS  migrations         81 applied
+PASS  storage            logs, backups, documents, pdf-temp and locks are writable
+PASS  installed          storage/install.lock present
+PASS  scheduler          last run 0 min ago (cron)
+PASS  backup             newest verified 0 h ago (limit 26 h)
+PASS  off-site copy      copies go to the off-site folder
+WARN  restore drill      never done — open a verified backup and run the drill (docs/DR_RUNBOOK.md)
+WARN  demo data          present — the demo accounts share one password; never put real data in this installation
+Result: no FAIL (read the WARN lines).
+== [06:10:04] A: backup + drill
+Backup 01M83GD803VTVE7XW6XTAD9B9P: verified · 354 tables, 30775 rows, 0 files · 1,026,555 bytes
+File:     <work>/A/core/../storage/backups/9881761e874c0897442e1b83c9e87b684dbd524b.bluebak
+SHA-256:  3e460b942559a12f9fd3798cd1343526fd3399a20655d35d4ca15757f09d0c67
+Off-site: copied
+Drill 01M83GD8X205XSP4QJ305EZKRS of backup 01M83GD803VTVE7XW6XTAD9B9P: PASSED · 354 tables, 30775 rows, 0 files, key skipped · 3554 ms
+-- A data:
+users=24 employees=35 audit_events=7 documents=0
+   checksum blue_drA.users 966220149
+   checksum blue_drA.employees 1609377743
+   checksum blue_drA.audit_events 3303333394
+== [06:10:08] DISASTER: machine A is gone (folder + database deleted). Left: the off-site folder + the APP_KEY copy
+   offsite: 4096 .
+   offsite: 4096 ..
+   offsite: 1026555 9881761e874c0897442e1b83c9e87b684dbd524b.bluebak
+   offsite: 1001784 b99cd374286c923a8b04e238b863f8f42e297fc8.bluebak
+== [06:10:09] NEW MACHINE B: install the same release WITHOUT demo data
+installed: migrations=81 demo=no
+-- put the saved APP_KEY back into config/env.php
+== [06:10:18] B: restore:fresh from the off-site copy (phrase typed at the prompt)
+Backup 01M83GD803VTVE7XW6XTAD9B9P · made 2026-11-23 06:10:04.420014 UTC · release 0.50.0 (R9: CI, staging notebook, DR)
+File:   <work>/offsite/9881761e874c0897442e1b83c9e87b684dbd524b.bluebak
+This REPLACES everything in this installation with the backup (a drill runs first; nothing changes if it fails).
+Type the phrase to continue: RESTORE 3E460B
+Importing, checking and drilling the file…
+Restored: 354 tables, 30775 rows, 0 files in 3235 ms (drill 01M83GDNSM76MB6550HWFN9K80 passed). Backup release: 0.50.0 (R9: CI, staging notebook, DR)
+Next: php bin/blue doctor — then sign in with an account from the restored data.
+-- B data:
+users=24 employees=35 audit_events=6 documents=0
+   checksum blue_drA.users 966220149
+   checksum blue_drA.employees 1609377743
+   users + employees: identical to machine A
+   migrations applied: 81
+-- set BACKUP_OFFSITE_PATH again on B (config/env.php is per machine)
+   first backup on B: done
+-- doctor (B)
+PASS  environment        APP_ENV=staging
+PASS  php                8.3.6
+PASS  php extensions     pdo_mysql, mbstring, json, openssl/sodium
+PASS  php gd             images are resized on the server
+PASS  app key            backup key fingerprint c5fbd52f9b86767f — keep a copy of APP_KEY away from this machine
+PASS  database version   10.11.14-MariaDB-0ubuntu0.24.04.1
+PASS  database account   blue
+PASS  migrations         81 applied
+PASS  storage            logs, backups, documents, pdf-temp and locks are writable
+PASS  installed          storage/install.lock present
+PASS  scheduler          last run 0 min ago (cron)
+PASS  backup             newest verified 0 h ago (limit 26 h)
+PASS  off-site copy      copies go to the off-site folder
+PASS  restore drill      passed 0 day(s) ago
+WARN  demo data          present — the demo accounts share one password; never put real data in this installation
+Result: no FAIL (read the WARN lines).
+-- sign-in check: a restored account's password still works (password_verify against the restored hash)
+   hr.demo1 + demo password: OK
+== [06:10:26] RTO (new machine install → doctor): 17 s · RPO: backup taken 1 s before the loss in this rehearsal

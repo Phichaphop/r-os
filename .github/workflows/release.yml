@@ -1,0 +1,47 @@
+# Release (0.50.0 · R9, DEC-119 · Q-16): push a tag vX.Y.Z → the full CI runs → the same zip the delivery has always used
+# (git archive --prefix=blue/ — tracked files only, so never config/env.php, storage data or vendor/) is attached to a
+# GitHub release with its SHA-256. The Staging notebook installs from that zip (docs/STAGING_KATANA17.md).
+name: Release
+
+on:
+  push:
+    tags: ['v*.*.*']
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  release:
+    needs: ci
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Tag matches App::RELEASE
+        run: |
+          ver="${GITHUB_REF_NAME#v}"
+          grep -q "public const RELEASE = '${ver} " core/App.php || { echo "::error::tag ${GITHUB_REF_NAME} does not match App::RELEASE"; exit 1; }
+
+      - name: Build blue-<version>.zip
+        run: |
+          ver="${GITHUB_REF_NAME#v}"
+          git archive --format=zip --prefix=blue/ -o "blue-${ver}.zip" HEAD
+          if unzip -Z1 "blue-${ver}.zip" | grep -Eq '^blue/config/env\.php$|^blue/storage/backups/.+|^blue/vendor/'; then
+            echo "::error::the zip contains a secret or runtime data"; exit 1
+          fi
+          sha256sum "blue-${ver}.zip" > "blue-${ver}.zip.sha256"
+          cat "blue-${ver}.zip.sha256"
+
+      - name: Publish the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ver="${GITHUB_REF_NAME#v}"
+          gh release create "${GITHUB_REF_NAME}" "blue-${ver}.zip" "blue-${ver}.zip.sha256" \
+            --title "Blue OS ${ver}" \
+            --notes "Blue OS ${ver}. What changed and how to upgrade: README.md (newest section first) and docs/. Check the download with the .sha256 file before installing. The zip never contains config/env.php (APP_KEY, DB password) — keep yours."

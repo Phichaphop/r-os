@@ -73,7 +73,7 @@ use Blue\Core\Ui\View;
 final class App
 {
     /** Release shown in backups and on the status page. */
-    public const RELEASE = '0.49.0 (R8-4: checker review, prize tax)';
+    public const RELEASE = '0.50.0 (R9: CI, staging notebook, DR)';
 
     private ?Connection $db = null;
     private ?Translator $translator = null;
@@ -152,7 +152,8 @@ final class App
 
     public function path(string $relative): string
     {
-        return str_starts_with($relative, '/') ? $relative : $this->root . '/' . $relative;
+        // absolute: /var/... or a Windows drive (C:\... — the Staging notebook runs XAMPP on Windows, DEC-119)
+        return str_starts_with($relative, '/') || preg_match('#^[A-Za-z]:[\\\\/]#', $relative) === 1 ? $relative : $this->root . '/' . $relative;
     }
 
     public function db(): Connection
