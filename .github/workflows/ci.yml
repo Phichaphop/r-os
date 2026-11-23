@@ -48,7 +48,7 @@ jobs:
       BLUE_TEST_DB_USER: blue
       BLUE_TEST_DB_PASS: blue_ci_pw
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: shivammathur/setup-php@v2
         with:
@@ -106,7 +106,7 @@ jobs:
   secrets:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: gitleaks
