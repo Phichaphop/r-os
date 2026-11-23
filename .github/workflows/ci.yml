@@ -67,7 +67,7 @@ jobs:
         run: vendor/bin/phpcs
 
       - name: Static analysis (PHPStan)
-        run: vendor/bin/phpstan analyse --no-progress --memory-limit=512M
+        run: vendor/bin/phpstan analyse --no-progress --memory-limit=2G
 
       - name: Blue OS static checks (TC-AI-00, secrets, tokens, architecture)
         run: php bin/blue check:all
