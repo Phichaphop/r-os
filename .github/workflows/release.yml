@@ -1,47 +1,75 @@
-# Release (0.50.0 · R9, DEC-119 · Q-16): push a tag vX.Y.Z → the full CI runs → the same zip the delivery has always used
-# (git archive --prefix=blue/ — tracked files only, so never config/env.php, storage data or vendor/) is attached to a
-# GitHub release with its SHA-256. The Staging notebook installs from that zip (docs/STAGING_KATANA17.md).
+# Release (0.50.0 · R9, DEC-119 · Q-16): the same zip the delivery has always used (git archive --prefix=blue/ — tracked
+# files only, so never config/env.php, storage data or vendor/) is attached to a GitHub release with its SHA-256.
+# The Staging notebook installs from that zip (docs/STAGING_KATANA17.md).
+#   - automatically: CI passes on a push to main and App::RELEASE has no release yet → release vX.Y.Z (tag created here)
+#   - or by hand: push a tag vX.Y.Z (must equal App::RELEASE) → the full CI runs → release
 name: Release
 
 on:
   push:
     tags: ['v*.*.*']
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
 
 permissions:
   contents: read
 
 jobs:
   ci:
+    if: github.event_name == 'push'
     uses: ./.github/workflows/ci.yml
 
   release:
     needs: ci
+    if: >-
+      always() &&
+      ((github.event_name == 'push' && needs.ci.result == 'success') ||
+       (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'))
     runs-on: ubuntu-24.04
     permissions:
       contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.SHA }}
 
-      - name: Tag matches App::RELEASE
+      - name: Version from App::RELEASE
+        id: v
         run: |
-          ver="${GITHUB_REF_NAME#v}"
-          grep -q "public const RELEASE = '${ver} " core/App.php || { echo "::error::tag ${GITHUB_REF_NAME} does not match App::RELEASE"; exit 1; }
+          ver=$(sed -n "s/.*public const RELEASE = '\([0-9][0-9.]*\) .*/\1/p" core/App.php)
+          [ -n "$ver" ] || { echo "::error::App::RELEASE not found"; exit 1; }
+          if [ "$GITHUB_EVENT_NAME" = "push" ] && [ "${GITHUB_REF_NAME#v}" != "$ver" ]; then
+            echo "::error::tag ${GITHUB_REF_NAME} does not match App::RELEASE ${ver}"; exit 1
+          fi
+          echo "ver=${ver}" >> "$GITHUB_OUTPUT"
+          if gh release view "v${ver}" -R "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"; echo "v${ver} is already released — nothing to do"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Build blue-<version>.zip
+        if: steps.v.outputs.exists == 'false'
+        env:
+          VER: ${{ steps.v.outputs.ver }}
         run: |
-          ver="${GITHUB_REF_NAME#v}"
-          git archive --format=zip --prefix=blue/ -o "blue-${ver}.zip" HEAD
-          if unzip -Z1 "blue-${ver}.zip" | grep -Eq '^blue/config/env\.php$|^blue/storage/backups/.+|^blue/vendor/'; then
+          git archive --format=zip --prefix=blue/ -o "blue-${VER}.zip" HEAD
+          if unzip -Z1 "blue-${VER}.zip" | grep -Eq '^blue/config/env\.php$|^blue/storage/backups/.+|^blue/vendor/'; then
             echo "::error::the zip contains a secret or runtime data"; exit 1
           fi
-          sha256sum "blue-${ver}.zip" > "blue-${ver}.zip.sha256"
-          cat "blue-${ver}.zip.sha256"
+          sha256sum "blue-${VER}.zip" > "blue-${VER}.zip.sha256"
+          cat "blue-${VER}.zip.sha256"
 
       - name: Publish the GitHub release
+        if: steps.v.outputs.exists == 'false'
         env:
-          GH_TOKEN: ${{ github.token }}
+          VER: ${{ steps.v.outputs.ver }}
         run: |
-          ver="${GITHUB_REF_NAME#v}"
-          gh release create "${GITHUB_REF_NAME}" "blue-${ver}.zip" "blue-${ver}.zip.sha256" \
-            --title "Blue OS ${ver}" \
-            --notes "Blue OS ${ver}. What changed and how to upgrade: README.md (newest section first) and docs/. Check the download with the .sha256 file before installing. The zip never contains config/env.php (APP_KEY, DB password) — keep yours."
+          gh release create "v${VER}" "blue-${VER}.zip" "blue-${VER}.zip.sha256" -R "$GITHUB_REPOSITORY" --target "$SHA" \
+            --title "Blue OS ${VER}" \
+            --notes "Blue OS ${VER}. What changed and how to upgrade: README.md (newest section first) and docs/. Check the download with the .sha256 file before installing. The zip never contains config/env.php (APP_KEY, DB password) — keep yours."

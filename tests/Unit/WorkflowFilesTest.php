@@ -34,7 +34,9 @@ final class WorkflowFilesTest extends TestCase
         self::assertStringContainsString('git archive --format=zip --prefix=blue/', $rel);
         self::assertStringContainsString('sha256sum', $rel);
         self::assertStringContainsString('config/env', $rel, 'the zip is checked for secrets');
-        self::assertStringContainsString('public const RELEASE', $rel, 'tag must match App::RELEASE');
+        self::assertStringContainsString('public const RELEASE', $rel, 'the version comes from App::RELEASE');
+        self::assertStringContainsString('workflow_run.conclusion == \'success\'', $rel, 'automatic release only after a green CI on main');
+        self::assertStringContainsString('gh release view', $rel, 'a version is released once');
         foreach (glob(self::DIR . '/*.yml') ?: [] as $f) {
             preg_match_all('/secrets\.([A-Z_]+)/', (string) file_get_contents($f), $m);
             self::assertSame([], array_values(array_diff(array_unique($m[1]), ['GITHUB_TOKEN', 'FTP_SERVER', 'FTP_USERNAME', 'FTP_PASSWORD', 'FTP_SERVER_DIR'])), basename($f) . ': no new secret');

@@ -133,7 +133,7 @@
 
 - **GitHub Actions (Q-16)** — โค้ดอยู่ที่ `Phichaphop/r-os`:
   - CI รันทุก push/PR ด้วย 3 ชุดทดสอบ: PHP 8.1 และ 8.3 กับ MariaDB 10.11 + **PHP 8.2 กับ MariaDB 10.4** (ชุดเดียวกับ XAMPP 8.2.12 บน Staging)
-  - ใหม่: `.github/workflows/release.yml` — push tag `vX.Y.Z` → รัน CI ทั้งหมด → สร้าง `blue-X.Y.Z.zip` (git archive ไม่มี `config/env.php`) + ไฟล์ `.sha256` → ลงหน้า Releases
+  - ใหม่: `.github/workflows/release.yml` — CI ผ่านบน `main` และรุ่นใน App::RELEASE ยังไม่มี release → สร้าง tag `vX.Y.Z` + `blue-X.Y.Z.zip` (git archive ไม่มี `config/env.php`) + ไฟล์ `.sha256` ลงหน้า Releases เอง · หรือ push tag `vX.Y.Z` เอง
   - ตรวจ workflow ด้วย actionlint ก่อนส่ง
 - **คู่มือ Staging บน Notebook Katana 17 B13V (Q-17, Q-18)** — `docs/STAGING_KATANA17.md`:
   - XAMPP ใช้บนเครื่องนี้เครื่องเดียว: Apache และ MariaDB รับการเชื่อมต่อจาก 127.0.0.1 เท่านั้น
@@ -1110,7 +1110,7 @@ composer install                          # phpunit 9.6, phpstan, phpcs (dev เ
 BLUE_TEST_DB_NAME=blue_test vendor/bin/phpunit
 vendor/bin/phpstan analyse && vendor/bin/phpcs && php bin/blue check:all
 ```
-CI (`.github/workflows/ci.yml`) รันทั้งหมดนี้ทุก push/PR บน PHP 8.1 และ 8.3 กับ MariaDB 10.11 และบน PHP 8.2 กับ MariaDB 10.4 (ชุดเดียวกับ XAMPP บน Staging) แล้วเก็บผลเป็นหลักฐาน · push tag `vX.Y.Z` → `release.yml` สร้าง zip + SHA-256 ลงหน้า Releases
+CI (`.github/workflows/ci.yml`) รันทั้งหมดนี้ทุก push/PR บน PHP 8.1 และ 8.3 กับ MariaDB 10.11 และบน PHP 8.2 กับ MariaDB 10.4 (ชุดเดียวกับ XAMPP บน Staging) แล้วเก็บผลเป็นหลักฐาน · CI ผ่านบน main → `release.yml` สร้าง release ของรุ่นใน App::RELEASE (zip + SHA-256) ถ้ายังไม่มี
 
 ## กติกาที่โค้ดบังคับ
 - schema เปลี่ยนผ่าน migration เท่านั้น — **ห้ามแก้ไฟล์ migration ที่รันแล้ว** (ระบบจะขึ้น DRIFT และหยุด) ให้เพิ่มไฟล์ใหม่
