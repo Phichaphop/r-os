@@ -72,6 +72,11 @@ jobs:
       - name: Blue OS static checks (TC-AI-00, secrets, tokens, architecture)
         run: php bin/blue check:all
 
+      - name: Databases — utf8mb4 (the 10.4 image defaults to latin1) + drill database for the restore tests
+        run: |
+          docker exec ${{ job.services.mariadb.id }} mysql -uroot -proot_ci_pw -e \
+            "ALTER DATABASE blue_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; CREATE DATABASE IF NOT EXISTS blue_test_drill CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci; GRANT ALL PRIVILEGES ON blue_test_drill.* TO 'blue'@'%';"
+
       - name: Publish UI assets
         run: php bin/blue assets:publish
 

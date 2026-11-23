@@ -63,6 +63,7 @@ final class OpsCliTest extends TestCase
     public function testDoctorListsWhatToFixAndPrintsNoSecret(): void
     {
         [$code, $out] = $this->cli('doctor');
+        self::assertStringNotContainsString('ERROR:', $out);
         self::assertStringStartsWith('PASS  environment', self::lineOf($out, 'environment'));
         self::assertStringStartsWith('PASS  migrations', self::lineOf($out, 'migrations'));
         self::assertStringStartsWith('PASS  installed', self::lineOf($out, 'installed'));
@@ -88,7 +89,7 @@ final class OpsCliTest extends TestCase
         self::assertStringStartsWith('PASS  backup', self::lineOf($after, 'backup'));
         self::assertStringStartsWith('PASS  restore drill', self::lineOf($after, 'restore drill'));
         self::assertStringStartsWith('PASS  scheduler', self::lineOf($after, 'scheduler'));
-        self::assertSame(str_contains($out, "\nFAIL ") || str_starts_with($out, 'FAIL ') ? 1 : 0, $code, 'exit 1 exactly when a check fails');
+        self::assertSame(str_contains($out, "\nFAIL ") || str_starts_with($out, 'FAIL ') ? 1 : 0, $code, "exit 1 exactly when a check fails:\n" . $out);
     }
 
     public function testProductionWithDemoDataFails(): void
