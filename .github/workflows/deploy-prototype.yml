@@ -25,7 +25,7 @@ jobs:
       - name: Build UI assets
         run: php bin/blue assets:publish
       - name: Upload via FTP (no tests, no dev tools, never config/env.php)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
